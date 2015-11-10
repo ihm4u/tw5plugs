@@ -14,8 +14,11 @@ clean:
 	rm $(TARGETS)
 
 index:
-	tiddlywiki editions/tidgraph --build index
-	cp editions/tidgraph/output/index.html index.html
+	rm -rf editions/tidgraph-github/{plugins,tiddlers}
+	cp -R editions/tidgraph/plugins editions/tidgraph-github/
+	cp -R editions/tidgraph/tiddlers editions/tidgraph-github/
+	tiddlywiki editions/tidgraph-github --build index
+	cp editions/tidgraph-github/output/index.html index.html
 
 serve:
 	rm -f $(DISTDIR)/utils.js
