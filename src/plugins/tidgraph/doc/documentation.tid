@@ -30,6 +30,7 @@ All  options:
 |`nodetitle` |Field to use as title for the node. | //title// (or //caption// if present) |
 |`tooltip` |List of fields to use for node tooltip. The first field with a non empty value is used. | //summary// |
 |`filter` |Only tiddlers matching filter will be used | none |
+|`nocollapse` |Disable ability to collapse nodes. The graph allows node collapsing by default. | false |
 
 !CSS classes
 You can also change colors, and other styles with the following CSS classes.
