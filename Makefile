@@ -13,7 +13,7 @@ all: unlink $(TARGETS)
 clean:
 	rm $(TARGETS)
 
-index:
+index: unlink $(TARGETS)
 	rm -rf editions/tidgraph-github/{plugins,tiddlers}
 	cp -R editions/tidgraph/plugins editions/tidgraph-github/
 	cp -R editions/tidgraph/tiddlers editions/tidgraph-github/
