@@ -8,7 +8,7 @@ $(info $(SRC))
 
 .PHONY: all clean serve
 
-all: $(TARGETS)
+all: unlink $(TARGETS)
 
 clean:
 	rm $(TARGETS)
@@ -28,6 +28,9 @@ serve:
 		bin/serve -k; \
 		bin/serve editions/tidgraph; \
 	done
+
+unlink:
+	if [ -L "$(DISTDIR)/utils.js" ]; then rm -f "$(DISTDIR)/utils.js"; fi
 
 $(DISTDIR)/%.js: $(SRCDIR)/%.js
 	if [ -L "$@" ]; then rm -f "$@"; fi

@@ -62,4 +62,13 @@ type: text/css
    display:block;
    margin: 6px 10px;
    font-size: 1em;
+   position: relative;
+}
+
+/* Collapse feature */
+.ihm-tgr-collapse {
+   position: absolute;
+   right: 1px;
+   top: -15px;
+   cursor: pointer;
 }

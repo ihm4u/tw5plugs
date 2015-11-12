@@ -27,6 +27,7 @@ function getOffsetRect(elem) {
 }
 
 exports.buildTable = function(rootTid, tidtree) {
+  var dm = $tw.utils.domMaker;
   function getTooltip(tid) {
      var ta=$tw.utils.parseStringArray(tidtree.tooltip);
      var len = ta.length,res="";
@@ -52,26 +53,56 @@ exports.buildTable = function(rootTid, tidtree) {
               title = tid.getFieldString(tidtree.nodetitle);
         }
         if (currdepth >= tidtree.startat) {
-           var tidlink = '<a class="tc-tiddlylink tc-tiddlylink-resolves ihm-tgr-node tgr-node"  href="#'+esctitle+'" id="'+tidtree.id+'-'+esctitle+'"  title="'+tooltip+'">'+title+'</a>';
-           table.str = table.str + '<tr><td  rowspan="'+cnt+'">'+tidlink+'</td></tr>';
+           var linkclass = "tc-tiddlylink tc-tiddlylink-resolves" 
+           var tidlink = dm('a',{"class": linkclass,
+                                 text: title,
+                                 attributes: { href: '#'+esctitle }
+                                }
+                           ) 
+           var div;
+           //Add collapse link if node has children
+           if ( ( tidtree.nocollapse === false ) &&
+                 node.children && node.children.length > 0) {
+				  var collapse = dm('a',{"class": 'ihm-tgr-collapse tc-tiddlylink',
+                                     text: node.collapse ?   '+' : '-'});
+              // Add a click event handler for the collapse + or -
+              $tw.utils.addEventListeners(collapse,[
+                    {name: "click", handlerObject: node, handlerMethod: "collapseClickEvent"}
+              ]);
+              div = dm('div',{"class": "ihm-tgr-node tgr-node",
+                              children:[tidlink,collapse],
+                              attributes: { id: tidtree.id+'-'+esctitle,
+                                            title: tooltip
+                              }})
+           } else {
+              div = dm('div',{"class": "ihm-tgr-node tgr-node",
+                              children:[tidlink],
+                              attributes: { id: tidtree.id+'-'+esctitle,
+                                            title: tooltip
+                              }})
+           }
+           
+           var td = dm('td',{attributes:{rowspan: cnt}, children: [div]}); 
+           var tr = dm('tr',{children: [td]});
+           table.appendChild(tr);
         }
 
-     },table,{skipvisited:true})
+     },{},{skipvisited:true})
   }
 
   var   filter, tiddlers = [],
-        data = [], out;
+        data = [];
   tidtree.id = (new Date()).valueOf();
-  tidtree.root = makeTidTree(rootTid,tidtree)
   //DEBUG printtree(tidtree.root,false)
-  out = { "str" : '<table id="'+tidtree.id+'-table">' };
-  addChildren(out);
-
-  out.str  = out.str  + '</table>';
+  var table = dm('table',{attributes: {id: tidtree.id+'-table'}});
+  //{ "str" : '<table id="'+tidtree.id+'-table">' };
+  addChildren(table);
+  console.log("table=",table)
+  //out.str  = out.str  + '</table>';
 
   //DEBUG console.log(" table = ", out.str, "\ntidtree: ",tidtree);
   console.log("outliers=",tidtree.outliers)
-  return out.str;
+  return table;
 }
 
 function getPort(tgrdiv,edge,criteria) {
@@ -159,7 +190,7 @@ function connect(tgrdiv,e1, e2) {
    //if ( hdist < 5) qoff = 18 //Larger loop if horizontal distance is less than 5px (ont )
    return '<path d="M'+p1[0]+','+p1[1]       +' Q'+(p1[0]+qoff)+','+p1[1]+
           '  '+(p1[0]+qoff) +','+(p1[1]+offy)+' Q'+(p1[0]+qoff)+','+p2[1]+
-          '  '+(p2[0]+offx) +','+p2[1]+'" marker-end="url(#vm-arrow)"/>'
+          '  '+(p2[0]+offx) +','+p2[1]+'" marker-end="url(#tgr-arrow)"/>'
 /*#aeb0b5 */
 }
 
@@ -171,25 +202,33 @@ exports.buildSVG = function (tgrdiv, tidtree) {
       // visibe any more or is deleted 
       return;
    }
-   var table_rect =  div.getBoundingClientRect();
-return '<svg  xmlns="http://www.w3.org/2000/svg" height="'+table_rect.height+'px" width="'+table_rect.width+
-       'px" style="overflow: visible"> <defs> <marker id="vm-arrow" viewBox="0 0 10 10" refX="1" refY="5" '+
+
+   // from http://youmightnotneedjquery.com/
+   var style = getComputedStyle(div);
+   var height = div.offsetHeight;
+   var width = div.offsetWidth;
+
+   width += parseInt(style.marginLeft) + parseInt(style.marginRight);
+   //Don't know why we need the -5 so a vert. scrollbar
+   //is not shown unless needed
+   height += parseInt(style.marginTop) + parseInt(style.marginBottom) - 5;
+
+return '<svg  xmlns="http://www.w3.org/2000/svg" height="'+height+'px" width="'+width+
+       'px" style="overflow: visible">'+
+       '<defs> <marker id="tgr-arrow" viewBox="0 0 10 10" refX="1" refY="5" '+
        'markerUnits="strokeWidth" orient="auto" '+
        'markerWidth="8" markerHeight="6"> '+
-       '<polyline class="ihm-tgr-arrow tgr-arrow" points="0,0 10,5 0,10 0,5" style="opacity:1;"/>'+
-       '</marker>'+
-       '<marker id="vm-circle" viewBox="-25 0 50 50" refX="0" refY="0" '+ 
-       'markerUnits="strokeWidth" orient="0" '+
-       'markerWidth="50" markerHeight="50"> '+
-       '<text x = "-10" y = "12.5" fill = "navy" font-size = "15"> '+
-       ' It was the best of times '+
-       '</text> '+
-       '<rect x="-15" y="0" width="30" height="15" rx="0px" ry="0px" style="opacity:0.5" /> '+
-       '<circle cx="1" cy="5" r="1" stroke="darkblue" stroke-width="1" fill="red" /> '+
-       '</marker> '+
+       '<polyline class="ihm-tgr-arrow tgr-arrow" points="0,0 10,5 0,10 0,5" style="opacity:1;" />'+
+       '</marker>'+ //FIXME: drop-shadow??
+       /*'<filter id="shadow" x="0" y="0" width="200%" height="200%">'+
+       '<feOffset result="offOut" in="SourceGraphic" dx="3" dy="3" />'+
+       '<feColorMatrix result="matrixOut" in="offOut" type="matrix"'+
+       'values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0" />'+
+       '<feGaussianBlur result="blurOut" in="matrixOut" stdDeviation="10" />'+
+       '<feBlend in="SourceGraphic" in2="blurOut" mode="normal" />'+
+		 '</filter>'+*/
        '</defs> '+
-       '<g class="ihm-tgr-link tgr-link"  height="'+table_rect.height+'px" '+
-       'width="'+table_rect.width+'px" style="overflow: visible"> '+
+       '<g class="ihm-tgr-link tgr-link" style="overflow: visible"> '+
        connectAll(tgrdiv,tidtree) +
        '</g> </svg>';
 }
@@ -292,7 +331,7 @@ function connectAll(tgrdiv,tidtree) {
 function dfvisit(n,cb,accInit,opts) {
    var opts = opts || {}
    var done=opts.done || []
-   var getCh = opts.getCh || function (o) { return o.children }
+   var getCh = opts.getCh || function (o) { return o.collapse ? []:o.children }
    var lvl=opts.lvl || 0
    var skipvisited = opts.skipvisited===undefined ? true:opts.skipvisited
    opts.leave = opts.leave ||  false
@@ -341,7 +380,7 @@ function bfvisit(n,cb,accInit,opts) {
   }
 
   var opts = opts || {}
-  var getCh = opts.getCh || function (o) { return o.children }
+  var getCh = opts.getCh || function (o) { return o.collapse ? []:o.children }
   var getId = opts.getId || function (o) { return o.id }
   var skipvisited = opts.skipvisited===undefined ? true:opts.skipvisited
   var maxdepth = opts.maxdepth || -1
@@ -401,20 +440,18 @@ function bfvisit(n,cb,accInit,opts) {
  * Parameters:
  *    tid: the starting tiddler
  */
-function makeTidTree(tid,tidtree,opts) {
+exports.makeTidTree = function(tid,tidtree,opts) {
   var opts = opts || {}
   tidtree.outliers = [];
 
   //Get id of Tiddler
   function getId(n) {
      return n;
-     //FIXME: return n.id
   }
 
   //Get Children of Tiddler
   function getCh(n) {
      return getChildren(n,tidtree)
-     //FIXME: return n.children
   }
 
   //Lookup id in array of tidtree nodes
@@ -427,7 +464,7 @@ function makeTidTree(tid,tidtree,opts) {
   }
 
   //Build the tidtree
-  var root=new tnode(undefined,getId(tid),false);
+  var root=new tnode(undefined,getId(tid),opts.widget);
   bfvisit(tid,function(n,p,acc) {
 	 var node,added;
     //console.log("visited=",n.id," parent=",p ? p.id:"undef")
@@ -435,7 +472,7 @@ function makeTidTree(tid,tidtree,opts) {
 	 if (p) {
       var n_id = getId(n), p_id = getId(p);
 		node = inArray(acc.visited,p_id);
-		added = node.addChild(n_id,false);
+		added = node.addChild(n_id,opts.widget);
 		acc.visited.push(added)
 	 }
 	 return true
@@ -470,17 +507,19 @@ function countDescendants(node,skipvisited) {
  * - toString
 */
 //Tree node constructor
-function tnode(parent,id,collapse) {
+function tnode(parent,id,widget) {
   if ( !(this instanceof tnode) )
           throw "Error: call new tnode(id="+id+")";
-  this.parent = parent
-  this.id = id
-  this.children = []
+  this.parent = parent;
+  this.id = id;
+  this.children = [];
+  this.collapse = false;
+  this.widget = widget;
 }
 
 //Return child that was added
-tnode.prototype.addChild = function(id,collapse) {
-  var ch =new tnode(this,id,collapse)
+tnode.prototype.addChild = function(id,widget) {
+  var ch =new tnode(this,id,widget)
   this.children.push(ch)
   return ch;
 }
@@ -489,6 +528,13 @@ tnode.prototype.toString = function() {
   return "tnode(id="+this.id+")"
 };
 
+
+//Node click event
+tnode.prototype.collapseClickEvent= function(ev) {
+   this.collapse = !this.collapse;
+   console.log(this.id+" collapse=",this.collapse,this.widget)
+   this.widget.paint()
+}
 
 function printtree(n,skipvisited,getStr) {
   var spaces = "├";

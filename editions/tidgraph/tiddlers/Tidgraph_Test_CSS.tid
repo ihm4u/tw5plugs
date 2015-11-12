@@ -1,19 +1,19 @@
 created: 20151026054558101
 creator: ihm4u
-modified: 20151026063816687
+modified: 20151111074150616
 modifier: ihm4u
-title: vecmap Test CSS
+title: Tidgraph Test CSS
 type: text/css
 
-.vmap-node {
+.tgr-node {
    background-color: blue;
-   color: white;
+   color: white !important;
 }
 
-.vmap-link {
+.tgr-link {
    stroke: red;
 }
 
-.vmap-arrow {
+.tgr-arrow {
    fill: red;
 }

@@ -1,0 +1,13 @@
+created: 20151111073943345
+modified: 20151111074053022
+tags: 
+title: Test stylesheets
+type: text/vnd.tiddlywiki
+
+<$tidgraph start="Virtues" />
+
+<$fieldmangler tiddler="Tidgraph Test CSS"-->
+<$button class="tc-btn-invisible tc-tiddlylink" message="tm-add-tag" param="$:/tags/Stylesheet">Custom stylesheet</$button>
+<br>
+<$button class="tc-btn-invisible tc-tiddlylink" message="tm-remove-tag" param="$:/tags/Stylesheet">Default stylesheet</$button>
+<$fieldmangler>

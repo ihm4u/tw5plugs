@@ -28,64 +28,88 @@ Render this widget into the DOM
 */
 TidgraphWidget.prototype.render = function(parent,nextSibling) {
 	this.parentDomNode = parent;
+   this.nextSiblingDomNode = nextSibling;
 	this.computeAttributes();
 	this.execute();
 
-    // Create container divs
-    var div = this.document.createElement("div");
-    div.className =  "tgr-container tgr";
-    var svgdiv = this.document.createElement("div");
-    svgdiv.className = "tgr-svg-int";
-    div.appendChild(svgdiv);
-    var tablediv = this.document.createElement("div");
-    div.appendChild(tablediv);
-    parent.insertBefore(div,nextSibling);
-    this.domNodes.push(div);
+   this.tidtree = [];
+   this.tidtree.mode = this.mode;
+   this.tidtree.maxdepth = this.maxdepth;
+   this.tidtree.startat = this.startat;
+   this.tidtree.nodetitle = this.nodetitle;
+   this.tidtree.tooltip = this.tooltip;
+   this.tidtree.filter = this.filter;
+   this.tidtree.nocollapse = this.nocollapse;
 
-    // Construct a table starting at the root tiddler
-    this.tidtree = [];
-    this.tidtree.mode = this.mode;
-    this.tidtree.maxdepth = this.maxdepth;
-    this.tidtree.startat = this.startat;
-    this.tidtree.nodetitle = this.nodetitle;
-    this.tidtree.tooltip = this.tooltip;
-    this.tidtree.filter = this.filter;
+   // Create container divs
+   //    Widget div
+   this.div = this.document.createElement("div");
+   this.div.className =  "tgr-container tgr";
 
+   //    Table div
+   this.tablediv = this.document.createElement("div");
+   this.table = undefined;
+   this.div.appendChild(this.tablediv);
+
+   //    SVG div
+   this.svgdiv = this.document.createElement("div");
+   this.svgdiv.className = "tgr-svg-int";
+   this.div.appendChild(this.svgdiv);
+
+   this.parentDomNode.insertBefore(this.div,this.nextSiblingDomNode);
+   this.domNodes.push(this.div);
+
+   //Build tidtree from tiddlers
+   this.tidtree.root = utils.makeTidTree(this.startTid,this.tidtree,{"widget": this})
+   this.paint();
+
+   var timeOut = null;
+   var self = this;
+
+   var resize_updateSVG = function() { 
+      self.svgdiv.innerHTML = utils.buildSVG(self.div,self.tidtree);
+      if (self.oldresize) self.oldresize();
+   }
+
+   var scroll_updateSVG = function() { 
+      self.svgdiv.innerHTML = utils.buildSVG(self.div,self.tidtree);
+   }
+
+   this.div.onscroll = function(){
+      if(!self.scroll_to) clearTimeout(self.scroll_to);
+      self.scroll_to = setTimeout(scroll_updateSVG, 100);
+   }
+
+   if (!this.onresize_updated) {
+      //Handle window resize
+      if (window.onresize && this.oldresize == undefined ) 
+         this.oldresize = window.onresize;
+      
+      window.onresize = function(){
+         if(!self.resize_to) clearTimeout(self.resize_to);
+         self.resize_to = setTimeout(resize_updateSVG, 100);
+      }
+      this.onresize_updated = true;
+   }
+
+   //DEBUG console.log("widget = ",this);
+}
+
+TidgraphWidget.prototype.paint = function() {
     //We need to redraw arrows if sidebar is closed/opened
     //this variable is used to check if sidebar status has changed on refresh
     this.sidebar = $tw.wiki.getTiddlerText("$:/state/sidebar");
+
+    // Construct a table starting at the root tiddler
     var tbl = utils.buildTable(this.startTid,this.tidtree);
 
-    // Add the table and the SVG to the DOM 
-    tablediv.innerHTML = tbl;
-    svgdiv.innerHTML = utils.buildSVG(div,this.tidtree);
+    // Add/replace the table and the SVG in the DOM 
+    if (this.table) this.tablediv.replaceChild(tbl,this.table);
+    else this.tablediv.appendChild(tbl);
 
-    //Handle window resize
-    if (window.onresize && this.oldresize == undefined ) 
-       this.oldresize = window.onresize;
+    this.svgdiv.innerHTML = utils.buildSVG(this.div,this.tidtree);
 
-    var timeOut = null;
-    var self = this;
-
-    var resize_updateSVG = function() { 
-       svgdiv.innerHTML = utils.buildSVG(div,self.tidtree);
-       if (self.oldresize) self.oldresize();
-    }
-
-    var scroll_updateSVG = function() { 
-       svgdiv.innerHTML = utils.buildSVG(div,self.tidtree);
-    }
-
-    div.onscroll = function(){
-       if(!self.scroll_to) clearTimeout(self.scroll_to);
-       self.scroll_to = setTimeout(scroll_updateSVG, 100);
-    }
-    window.onresize = function(){
-       if(!self.resize_to) clearTimeout(self.resize_to);
-       self.resize_to = setTimeout(resize_updateSVG, 100);
-    }
-    
-    //DEBUG console.log("widget = ",this);
+    this.table = tbl;
 }
 
 /*
@@ -100,6 +124,7 @@ TidgraphWidget.prototype.execute = function() {
     this.nodetitle = this.getAttribute("nodetitle");
     this.tooltip = this.getAttribute("tooltip","summary");
     this.filter  = this.getAttribute("filter","[!is[system]]");
+    this.nocollapse = this.hasAttribute("nocollapse");
   
 
     if ( ["tagging","linking"].indexOf(this.mode) == -1 ) this.mode="tagging";
