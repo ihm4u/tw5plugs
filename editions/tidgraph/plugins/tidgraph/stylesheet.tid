@@ -7,10 +7,22 @@ title: $:/plugins/ihm/tidgraph/stylesheet
 type: text/css
 
 /*Eliminate border in table and cells*/
-.tgr-container table {
+.ihm-tgr-table {
    border-collapse: collapse;
    border: none;
    background-color: transparent;
+   padding: 0;
+   margin: 0;
+}
+
+.ihm-tgr-tablediv {
+   /* We need this margin to prevent spurius vertical scroll
+   * in tgr-container. It needs to have the SAME pixel value
+   * as top and left in tgr-svg-int class so that the SVG
+   * arrows match properly (this assures same origin coordinates
+   * for table and svg)
+   */
+   margin: 10px; 
 }
 
 .tgr-container table  td {
@@ -25,8 +37,8 @@ type: text/css
 
 .tgr-container {
    position:relative; 
-   left:0; 
-   top:0; 
+   left:0px; 
+   top:0px; 
    background-color: transparent;
    overflow: auto; /* This is needed to scroll on big maps */
    z-index:1;
@@ -36,8 +48,8 @@ type: text/css
 	position:absolute;
 	background-color:transparent;
 	opacity: 1;
-        left: 0;
-        top:0;
+   left: 10px;
+   top: 10px;
 }
 
 /* SVG arrows */

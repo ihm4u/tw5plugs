@@ -8,7 +8,10 @@ $(info $(SRC))
 
 .PHONY: all clean serve
 
-all: unlink $(TARGETS)
+targets: $(TARGETS)
+
+
+prod: unlink $(TARGETS)
 
 clean:
 	rm $(TARGETS)
@@ -33,7 +36,6 @@ unlink:
 	if [ -L "$(DISTDIR)/utils.js" ]; then rm -f "$(DISTDIR)/utils.js"; fi
 
 $(DISTDIR)/%.js: $(SRCDIR)/%.js
-	if [ -L "$@" ]; then rm -f "$@"; fi
 	if [ "$(PROD)" ]; then \
 		sed -ne '\#/\*\\#,\#\\\*/# p' "$^" > "$@" && \
 		closure "$^" >> "$@"; \

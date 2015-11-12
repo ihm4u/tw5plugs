@@ -48,6 +48,7 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
 
    //    Table div
    this.tablediv = this.document.createElement("div");
+   this.tablediv.className = "ihm-tgr-tablediv";
    this.table = undefined;
    this.div.appendChild(this.tablediv);
 
@@ -67,12 +68,12 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    var self = this;
 
    var resize_updateSVG = function() { 
-      self.svgdiv.innerHTML = utils.buildSVG(self.div,self.tidtree);
+      self.svgdiv.innerHTML = utils.buildSVG(self.tablediv,self.tidtree);
       if (self.oldresize) self.oldresize();
    }
 
    var scroll_updateSVG = function() { 
-      self.svgdiv.innerHTML = utils.buildSVG(self.div,self.tidtree);
+      self.svgdiv.innerHTML = utils.buildSVG(self.tablediv,self.tidtree);
    }
 
    this.div.onscroll = function(){
@@ -107,7 +108,7 @@ TidgraphWidget.prototype.paint = function() {
     if (this.table) this.tablediv.replaceChild(tbl,this.table);
     else this.tablediv.appendChild(tbl);
 
-    this.svgdiv.innerHTML = utils.buildSVG(this.div,this.tidtree);
+    this.svgdiv.innerHTML = utils.buildSVG(this.tablediv,this.tidtree);
 
     this.table = tbl;
 }

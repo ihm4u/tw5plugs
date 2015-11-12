@@ -94,7 +94,8 @@ exports.buildTable = function(rootTid, tidtree) {
         data = [];
   tidtree.id = (new Date()).valueOf();
   //DEBUG printtree(tidtree.root,false)
-  var table = dm('table',{attributes: {id: tidtree.id+'-table'}});
+  var table = dm('table',{"class": "ihm-tgr-table",
+                          attributes: {id: tidtree.id+'-table'}});
   //{ "str" : '<table id="'+tidtree.id+'-table">' };
   addChildren(table);
   console.log("table=",table)
@@ -205,13 +206,14 @@ exports.buildSVG = function (tgrdiv, tidtree) {
 
    // from http://youmightnotneedjquery.com/
    var style = getComputedStyle(div);
-   var height = div.offsetHeight;
-   var width = div.offsetWidth;
+   var height = tgrdiv.offsetHeight;
+   var width = tgrdiv.offsetWidth;
 
-   width += parseInt(style.marginLeft) + parseInt(style.marginRight);
+   console.log("style=",style,"div=",tgrdiv)
+   //width += parseInt(style.marginLeft) + parseInt(style.marginRight);
    //Don't know why we need the -5 so a vert. scrollbar
    //is not shown unless needed
-   height += parseInt(style.marginTop) + parseInt(style.marginBottom) - 5;
+   //height += parseInt(style.marginTop) + parseInt(style.marginBottom);
 
 return '<svg  xmlns="http://www.w3.org/2000/svg" height="'+height+'px" width="'+width+
        'px" style="overflow: visible">'+
