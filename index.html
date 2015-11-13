@@ -211,6 +211,8 @@ Error message and password prompt
 
 <li>Three</li>
 
+<li>Tidgraph - Changelog</li>
+
 <li>Tidgraph - Easy tiddler graphs for TW5</li>
 
 <li>Tidgraph Test CSS</li>
@@ -6479,7 +6481,7 @@ exports.run = function(text, tiddler) {
     }
 }</pre>
 </div>
-<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog" plugin-type="plugin" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.8.16">
+<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog documentation" plugin-type="plugin" source="https://ihm4u.github.io/tw5plugs" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.8.17">
 <pre>{
     &quot;tiddlers&quot;: {
         &quot;$:/plugins/ihm/tidgraph/changelog&quot;: {
@@ -6489,7 +6491,7 @@ exports.run = function(text, tiddler) {
             &quot;modifier&quot;: &quot;ihm4u&quot;,
             &quot;tags&quot;: &quot;&quot;,
             &quot;title&quot;: &quot;$:/plugins/ihm/tidgraph/changelog&quot;,
-            &quot;text&quot;: &quot;''Version {{$:/plugins/ihm/tidgraph!!version}}''\n\n* Add support for back connections in the tree\n* Add support for list of fields in tooltip attribute \n* Change name to tidgraph\n\n''Version 0.8.9''\n\n* Fix bug when start tiddler does not exist\n\n''Version 0.8.8''\n\n* Fix compatibility wih older browsers by not using string templates\n\n''Version 0.8.6''\n\n* Add filter attribute\n\n''Version 0.8.4''\n\n* fix debug info being printed\n\n''Version 0.8.3''\n\n* add user CSS classes: vmap-link, vmap-node, vmap-arrow\n\n''Version 0.8.2''\n\n* add nodetitle attribute\n* add tooltip attribute\n* use caption field as node title if present\n\n''Version 0.1.3''\n\n* fix export to static html\n&quot;
+            &quot;text&quot;: &quot;For the complete changelog see\n\nhttps://ihm4u.github.io/tw5plugs/#Tidgraph%20-%20Changelog\n&quot;
         },
         &quot;$:/plugins/ihm/tidgraph/documentation&quot;: {
             &quot;created&quot;: &quot;20151024061703960&quot;,
@@ -6504,7 +6506,7 @@ exports.run = function(text, tiddler) {
             &quot;modified&quot;: &quot;20151024065317719&quot;,
             &quot;tags&quot;: &quot;&quot;,
             &quot;title&quot;: &quot;$:/plugins/ihm/tidgraph/readme&quot;,
-            &quot;text&quot;: &quot;!!Screenshot\nThis is how it looks like with 7 tiddlers tagged by the [[Virtues]] tiddler:\n\n{{$:/plugins/ihm/tidgraph/tidgraph.png}}\n\n!!Why?\nI needed a very lightweight plugin to show a mind-map like diagram of tiddlers. I also use tiddlymap, it is very nice, but it is not lightweight. I wanted no third-party libraries, and a simple one-liner to make the graph.\n\n!!How\nSimply put this on your tiddler:\n\n``&lt;$tidgraph start=\&quot;MyRootTiddler\&quot; /&gt;``\n\nThere are other options covered in the [[documentation|$:/plugins/ihm/tidgraph/documentation]].\n\n!!Features\n* No third-party libraries\n* Light weight\n* Rendering of map/graph with HTML5 and SVG (no heavy png or jpg images)\n* Automatic map/graph creation, no need for dragging/connecting/etc\n* Figures out tree-graph by means of tags or links\n\n!!Limitations\n* Layout is horizontal from left to right, if needed a vertical layout will be added later\n\n&quot;
+            &quot;text&quot;: &quot;!!How\nSimply put this in your tiddler:\n\n``&lt;$tidgraph start=\&quot;MyRootTiddler\&quot; /&gt;``\n\nThere are other options covered in the [[documentation|$:/plugins/ihm/tidgraph/documentation]].\n\n!!Features\n* No third-party libraries\n* Light weight\n* Rendering of map/graph with HTML5 and SVG (no heavy png or jpg images)\n* Automatic map/graph creation, no need for dragging/connecting/etc\n* Figures out tree-graph by means of tags or links\n* Collapse/expand nodes\n\n!!Limitations\n* Layout is horizontal from left to right, if needed a vertical layout will be added later\n&quot;
         },
         &quot;$:/plugins/ihm/tidgraph/stylesheet&quot;: {
             &quot;created&quot;: &quot;20151022030256786&quot;,
@@ -6514,10 +6516,10 @@ exports.run = function(text, tiddler) {
             &quot;tags&quot;: &quot;$:/tags/Stylesheet&quot;,
             &quot;title&quot;: &quot;$:/plugins/ihm/tidgraph/stylesheet&quot;,
             &quot;type&quot;: &quot;text/css&quot;,
-            &quot;text&quot;: &quot;/*Eliminate border in table and cells*/\n.ihm-tgr-table {\n   border-collapse: collapse;\n   border: none;\n   background-color: transparent;\n   padding: 0;\n   margin: 0;\n}\n\n.ihm-tgr-tablediv {\n   /* We need this margin to prevent spurius vertical scroll\n   * in tgr-container. It needs to have the SAME pixel value\n   * as top and left in tgr-svg-int class so that the SVG\n   * arrows match properly (this assures same origin coordinates\n   * for table and svg)\n   */\n   margin: 10px; \n}\n\n.tgr-container table  td {\n   border: none;\n   background-color: transparent;\n}\n\n/*nice round box around tiddlers*/\n.tgr-container td  a  {\n \n}\n\n.tgr-container {\n   position:relative; \n   left:0px; \n   top:0px; \n   background-color: transparent;\n   overflow: auto; /* This is needed to scroll on big maps */\n   z-index:1;\n}\n.tgr-svg-int { \n\tz-index: -1;\n\tposition:absolute;\n\tbackground-color:transparent;\n\topacity: 1;\n   left: 10px;\n   top: 10px;\n}\n\n/* SVG arrows */\n.ihm-tgr-link {\n   fill: none;\n   stroke-width: 2;\n   stroke: #aeb0b5;\n}\n\n.tgr-arrow {\n   fill: #aeb0b5;\n}\n\n.ihm-tgr-node {\n   background-color: #dce4ef;\n   border-radius: 15px;\n   padding: 0.1em 0.4em;\n   /* border: 0px dashed #cd2026; */\n   box-shadow: 4px 4px 5px #888888;\n   text-align: center;\n   vertical-align: middle;\n   display:block;\n   margin: 6px 10px;\n   font-size: 1em;\n   position: relative;\n}\n\n/* Collapse feature */\n.ihm-tgr-collapse {\n   position: absolute;\n   right: 1px;\n   top: -15px;\n   cursor: pointer;\n}\n&quot;
+            &quot;text&quot;: &quot;/*Eliminate border in table and cells*/\n.ihm-tgr-table {\n   border-collapse: collapse;\n   border: none;\n   background-color: transparent;\n   padding: 0;\n   margin: 0;\n}\n\n.ihm-tgr-tablediv {\n   /* We need this margin to prevent spurius vertical scroll\n   * in tgr-container. It needs to have the SAME pixel value\n   * as top and left in tgr-svg-int class so that the SVG\n   * arrows match properly (this assures same origin coordinates\n   * for table and svg)\n   */\n   margin: 10px; \n}\n\n.tgr-container table  td {\n   border: none;\n   background-color: transparent;\n}\n\n/*nice round box around tiddlers*/\n.tgr-container td  a  {\n \n}\n\n.tgr-container {\n   position:relative; \n   left:0px; \n   top:0px; \n   background-color: transparent;\n   overflow: auto; /* This is needed to scroll on big maps */\n   z-index:1;\n}\n.tgr-svg-int { \n\tz-index: -1;\n\tposition:absolute;\n\tbackground-color:transparent;\n\topacity: 1;\n   left: 10px;\n   top: 10px;\n}\n\n/* SVG arrows */\n.ihm-tgr-link {\n   fill: none;\n   stroke-width: 2;\n   stroke: #aeb0b5;\n}\n\n.tgr-arrow {\n   fill: #aeb0b5;\n}\n\n.ihm-tgr-node {\n   background-color: #dce4ef;\n   border-radius: 15px;\n   padding: 0.1em 0.4em;\n   /* border: 0px dashed #cd2026; */\n   box-shadow: 4px 4px 5px #888888;\n   text-align: center;\n   vertical-align: middle;\n   display:block;\n   margin: 6px 10px;\n   font-size: 1em;\n   position: relative;\n}\n\n/* Collapse feature */\n.ihm-tgr-collapse {\n    position: absolute;\n    cursor: pointer;\n    color: white !important;\n    border-radius: 20px;\n    line-height: 14px;\n    width: 15px;\n    height: 15px;\n    background: #aeb0b5;\n    top: 50%;\n    transform: translateY(-50%);\n    -ms-transform: translateY(-50%);\n    -webkit-transform: translateY(-50%);\n    right: -14px;\n    font: 12px Arial, sans-serif;\n}\n\na.ihm-tgr-collapse:hover {\n    text-decoration: none;\n    background: #999999;\n}\n&quot;
         },
         &quot;$:/plugins/ihm/tidgraph/utils.js&quot;: {
-            &quot;text&quot;: &quot;/*\\\ntitle: $:/plugins/ihm/tidgraph/utils.js\ntype: application/javascript\nmodule-type: library\n\nInternal utility functions for tidgraph plugin.\n\n\\*/\n(function(){function u(b){var d=b.getBoundingClientRect(),a=document.body,c=document.documentElement,e=d.top-(b.scrollTop||window.pageYOffset||c.scrollTop||a.scrollTop)-(c.clientTop||a.clientTop||0);b=d.left-(b.scrollLeft||window.pageXOffset||c.scrollLeft||a.scrollLeft)-(c.clientLeft||a.clientLeft||0);return{top:e,left:b,width:d.width,height:d.height,right:b+d.width,bottom:e+d.height}}function y(b,d,a){var c;b=u(b);if(\&quot;string\&quot;===typeof a){if(c=document.querySelector(a),null==c)return null}else a instanceof\nHTMLElement&amp;&amp;(c=a);var e=u(c);a=e.bottom-b.top;c=e.left-b.left;var f=e.right-b.left;b=e.top-b.top;e=\&quot;\&quot;;switch(d.toUpperCase()){case \&quot;L\&quot;:e=[Math.round(c),Math.round(a/2+b/2)];break;case \&quot;R\&quot;:e=[Math.round(f),Math.round(a/2+b/2)];break;case \&quot;T\&quot;:e=[Math.round(f/2+c/2),Math.round(b)];break;case \&quot;B\&quot;:e=[Math.round(f/2+c/2),Math.round(a)]}return e}function w(b){return'&lt;span style=\&quot;color:green\&quot;&gt;vecmap:&lt;/span&gt;&lt;span style=\&quot;color:red\&quot;&gt;'+b+\&quot;&lt;/span&gt;\&quot;}function z(b,d,a){var c;c=u(d);var e=u(a);c=4&gt;e.left+e.width/\n2-(c.left+c.width/2)?[\&quot;R\&quot;,\&quot;R\&quot;]:[\&quot;R\&quot;,\&quot;L\&quot;];e=y(b,c[0],d);b=y(b,c[1],a);var f,g,h=10;if(null==d||null==a)return w(\&quot;can't connect null element\&quot;);if(null==e)return w(\&quot;port not found for \&quot;+d.tagName+\&quot; - \&quot;+d.innerHTML);if(null==b)return w(\&quot;port not found for \&quot;+a.tagName+\&quot; - \&quot;+a.innerHTML);d=Math.abs(b[1]-e[1]);b[1]&gt;e[1]&amp;&amp;(f=d/2);b[1]&lt;e[1]&amp;&amp;(f=-d/2);5&gt;d&amp;&amp;(f=0);\&quot;L\&quot;==c[1]&amp;&amp;(g=-10);\&quot;R\&quot;==c[1]&amp;&amp;(g=10,h=20);return'&lt;path d=\&quot;M'+e[0]+\&quot;,\&quot;+e[1]+\&quot; Q\&quot;+(e[0]+h)+\&quot;,\&quot;+e[1]+\&quot;  \&quot;+(e[0]+h)+\&quot;,\&quot;+(e[1]+f)+\&quot; Q\&quot;+(e[0]+h)+\&quot;,\&quot;+b[1]+\n\&quot;  \&quot;+(b[0]+g)+\&quot;,\&quot;+b[1]+'\&quot; marker-end=\&quot;url(#tgr-arrow)\&quot;/&gt;'}function x(b,d){var a;switch(d.mode.toLowerCase()){case \&quot;tagging\&quot;:a=\&quot;[[\&quot;+b+\&quot;]tagging[]]+\&quot;+d.filter;a=$tw.wiki.filterTiddlers(a);break;case \&quot;linking\&quot;:a=\&quot;[[\&quot;+b+\&quot;]links[]!is[missing]]+\&quot;+d.filter,a=$tw.wiki.filterTiddlers(a)}return a}function A(b,d){function a(a,n){g=n;h=a;l=escape(g);k=escape(h);e=document.getElementById(d.id+\&quot;-\&quot;+l);f=document.getElementById(d.id+\&quot;-\&quot;+k);e&amp;&amp;f&amp;&amp;c.push(z(b,e,f))}var c=[],e,f,g,h,l,k;v(d.root,function(c,b,d){(b=c.parent)&amp;&amp;\na(c.id,b.id)},{},{skipvisited:!1});for(var r=d.outliers.length,m=0;m&lt;r;m++)a(d.outliers[m][0],d.outliers[m][1],!0);return c.join(\&quot; \&quot;)}function v(b,d,a,c){c=c||{};var e=c.done||[],f=c.getCh||function(a){return a.collapse?[]:a.children},g=c.lvl||0,h=void 0===c.skipvisited?!0:c.skipvisited;c.leave=c.leave||!1;if(h&amp;&amp;-1!==e.indexOf(b))return a;e.push(b);f=f(b);h=f.length;a=a||{};c.lvl=g+1;c.done=e;if(!1===d(b,a,g))return c.leave=!0,a;for(b=0;b&lt;h;b++)if(a=v(f[b],d,a,c),c.leave)return a;c.lvl--;return a}\nfunction B(b,d,a,c){c=c||{};var e=c.getCh||function(a){return a.collapse?[]:a.children},f=c.getId||function(a){return a.id},g=void 0===c.skipvisited?!0:c.skipvisited,h=c.maxdepth||-1;a=a||{};var l=[],k=[],r=[],m=0;l.push(b);r[f(b)]=void 0;do{b=l.length;for(var p=0;p&lt;b;p++){var n=l.shift(),q;q=g?-1===k.indexOf(n)?!1:!0:!1;if(!q&amp;&amp;!1===d(n,r[f(n)],a))return a;k.push(n);q=e(n);l=l.concat(q);q&amp;&amp;q.forEach(function(a){var b=r[f(a)];b?f(b)!==f(n)&amp;&amp;c.outlier&amp;&amp;c.outlier(a,n):r[f(a)]=n})}m++}while(0!==l.length&amp;&amp;\nm&lt;=h);return a}function C(b,d){return v(b,function(a,b){b.cnt++;return!0},{cnt:0},{skipvisited:d}).cnt-1}function p(b,d,a){if(!(this instanceof p))throw\&quot;Error: call new tnode(id=\&quot;+d+\&quot;)\&quot;;this.parent=b;this.id=d;this.children=[];this.collapse=!1;this.widget=a}exports.buildTable=function(b,d){var a=$tw.utils.domMaker;d.id=(new Date).valueOf();var c=a(\&quot;table\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-table\&quot;,attributes:{id:d.id+\&quot;-table\&quot;}});(function(b){var c=$tw.wiki;v(d.root,function(g,h,l){var k=c.getTiddler(g.id);h=1+C(g,\nd);var r=escape(g.id),m;if(k){m=$tw.utils.parseStringArray(d.tooltip);for(var p=m.length,n=\&quot;\&quot;,q=0;q&lt;p&amp;&amp;!(n=k.getFieldString(m[q]));q++);m=n}else m=\&quot;\&quot;;var t;k&amp;&amp;(t=d.nodetitle?k.getFieldString(d.nodetitle):k.hasField(\&quot;caption\&quot;)?k.fields.caption:k.fields.title);l&gt;=d.startat&amp;&amp;(l=a(\&quot;a\&quot;,{\&quot;class\&quot;:\&quot;tc-tiddlylink tc-tiddlylink-resolves\&quot;,text:t,attributes:{href:\&quot;#\&quot;+r}}),!1===d.nocollapse&amp;&amp;g.children&amp;&amp;0&lt;g.children.length?(t=a(\&quot;a\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-collapse tc-tiddlylink\&quot;,text:g.collapse?\&quot;+\&quot;:\&quot;-\&quot;}),$tw.utils.addEventListeners(t,\n[{name:\&quot;click\&quot;,handlerObject:g,handlerMethod:\&quot;collapseClickEvent\&quot;}]),g=a(\&quot;div\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-node tgr-node\&quot;,children:[l,t],attributes:{id:d.id+\&quot;-\&quot;+r,title:m}})):g=a(\&quot;div\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-node tgr-node\&quot;,children:[l],attributes:{id:d.id+\&quot;-\&quot;+r,title:m}}),g=a(\&quot;td\&quot;,{attributes:{rowspan:h},children:[g]}),g=a(\&quot;tr\&quot;,{children:[g]}),b.appendChild(g))},{},{skipvisited:!0})})(c);console.log(\&quot;table=\&quot;,c);console.log(\&quot;outliers=\&quot;,d.outliers);return c};exports.buildSVG=function(b,d){var a=document.getElementById(d.id+\n\&quot;-table\&quot;);if(a){var a=getComputedStyle(a),c=b.offsetHeight,e=b.offsetWidth;console.log(\&quot;style=\&quot;,a,\&quot;div=\&quot;,b);return'&lt;svg  xmlns=\&quot;http://www.w3.org/2000/svg\&quot; height=\&quot;'+c+'px\&quot; width=\&quot;'+e+'px\&quot; style=\&quot;overflow: visible\&quot;&gt;&lt;defs&gt; &lt;marker id=\&quot;tgr-arrow\&quot; viewBox=\&quot;0 0 10 10\&quot; refX=\&quot;1\&quot; refY=\&quot;5\&quot; markerUnits=\&quot;strokeWidth\&quot; orient=\&quot;auto\&quot; markerWidth=\&quot;8\&quot; markerHeight=\&quot;6\&quot;&gt; &lt;polyline class=\&quot;ihm-tgr-arrow tgr-arrow\&quot; points=\&quot;0,0 10,5 0,10 0,5\&quot; style=\&quot;opacity:1;\&quot; /&gt;&lt;/marker&gt;&lt;/defs&gt; &lt;g class=\&quot;ihm-tgr-link tgr-link\&quot; style=\&quot;overflow: visible\&quot;&gt; '+\nA(b,d)+\&quot;&lt;/g&gt; &lt;/svg&gt;\&quot;}};exports.isDescendant=function(b,d,a){var c;a:switch(a.mode.toLowerCase()){case \&quot;tagging\&quot;:c=(c=$tw.wiki.getTiddler(b))?c.hasTag(d):!1;break a;default:c=x(d,a),c=-1!==c.indexOf(b)}if(c)return!0;d=x(d,a);c=d.length;for(var e=!1,f=0;f&lt;c&amp;&amp;!(e=exports.isDescendant(b,d[f],a));f++);return e};exports.makeTidTree=function(b,d,a){a=a||{};d.outliers=[];var c=new p(void 0,b,a.widget);B(b,function(b,c,d){if(c){a:{for(var h=d.visited,l=h.length,k=0;k&lt;l;k++)if(h[k].id===c){c=h[k];break a}c=\nvoid 0}b=c.addChild(b,a.widget);d.visited.push(b)}return!0},{visited:[c]},{getId:function(a){return a},getCh:function(a){return x(a,d)},maxdepth:d.maxdepth,skipvisited:!0,outlier:function(a,b){d.outliers.push([a,b])}});return c};p.prototype.addChild=function(b,d){var a=new p(this,b,d);this.children.push(a);return a};p.prototype.toString=function(){return\&quot;tnode(id=\&quot;+this.id+\&quot;)\&quot;};p.prototype.collapseClickEvent=function(b){this.collapse=!this.collapse;console.log(this.id+\&quot; collapse=\&quot;,this.collapse,this.widget);\nthis.widget.paint()}})();\n&quot;,
+            &quot;text&quot;: &quot;/*\\\ntitle: $:/plugins/ihm/tidgraph/utils.js\ntype: application/javascript\nmodule-type: library\n\nInternal utility functions for tidgraph plugin.\n\n\\*/\n(function(){function u(b){var d=b.getBoundingClientRect(),a=document.body,c=document.documentElement,e=d.top-(b.scrollTop||window.pageYOffset||c.scrollTop||a.scrollTop)-(c.clientTop||a.clientTop||0);b=d.left-(b.scrollLeft||window.pageXOffset||c.scrollLeft||a.scrollLeft)-(c.clientLeft||a.clientLeft||0);return{top:e,left:b,width:d.width,height:d.height,right:b+d.width,bottom:e+d.height}}function y(b,d,a){var c;b=u(b);if(\&quot;string\&quot;===typeof a){if(c=document.querySelector(a),null==c)return null}else a instanceof\nHTMLElement&amp;&amp;(c=a);var e=u(c);a=e.bottom-b.top;c=e.left-b.left;var f=e.right-b.left;b=e.top-b.top;e=\&quot;\&quot;;switch(d.toUpperCase()){case \&quot;L\&quot;:e=[Math.round(c),Math.round(a/2+b/2)];break;case \&quot;R\&quot;:e=[Math.round(f),Math.round(a/2+b/2)];break;case \&quot;T\&quot;:e=[Math.round(f/2+c/2),Math.round(b)];break;case \&quot;B\&quot;:e=[Math.round(f/2+c/2),Math.round(a)]}return e}function w(b){return'&lt;span style=\&quot;color:green\&quot;&gt;vecmap:&lt;/span&gt;&lt;span style=\&quot;color:red\&quot;&gt;'+b+\&quot;&lt;/span&gt;\&quot;}function z(b,d,a){var c;c=u(d);var e=u(a);c=4&gt;e.left+e.width/\n2-(c.left+c.width/2)?[\&quot;R\&quot;,\&quot;R\&quot;]:[\&quot;R\&quot;,\&quot;L\&quot;];e=y(b,c[0],d);b=y(b,c[1],a);var f,g,h=10;if(null==d||null==a)return w(\&quot;can't connect null element\&quot;);if(null==e)return w(\&quot;port not found for \&quot;+d.tagName+\&quot; - \&quot;+d.innerHTML);if(null==b)return w(\&quot;port not found for \&quot;+a.tagName+\&quot; - \&quot;+a.innerHTML);d=Math.abs(b[1]-e[1]);b[1]&gt;e[1]&amp;&amp;(f=d/2);b[1]&lt;e[1]&amp;&amp;(f=-d/2);5&gt;d&amp;&amp;(f=0);\&quot;L\&quot;==c[1]&amp;&amp;(g=-10);\&quot;R\&quot;==c[1]&amp;&amp;(g=10,h=20);return'&lt;path d=\&quot;M'+e[0]+\&quot;,\&quot;+e[1]+\&quot; Q\&quot;+(e[0]+h)+\&quot;,\&quot;+e[1]+\&quot;  \&quot;+(e[0]+h)+\&quot;,\&quot;+(e[1]+f)+\&quot; Q\&quot;+(e[0]+h)+\&quot;,\&quot;+b[1]+\n\&quot;  \&quot;+(b[0]+g)+\&quot;,\&quot;+b[1]+'\&quot; marker-end=\&quot;url(#tgr-arrow)\&quot;/&gt;'}function x(b,d){var a;switch(d.mode.toLowerCase()){case \&quot;tagging\&quot;:a=\&quot;[[\&quot;+b+\&quot;]tagging[]]+\&quot;+d.filter;a=$tw.wiki.filterTiddlers(a);break;case \&quot;linking\&quot;:a=\&quot;[[\&quot;+b+\&quot;]links[]!is[missing]]+\&quot;+d.filter,a=$tw.wiki.filterTiddlers(a)}return a}function A(b,d){function a(a,n){g=n;h=a;l=escape(g);k=escape(h);e=document.getElementById(d.id+\&quot;-\&quot;+l);f=document.getElementById(d.id+\&quot;-\&quot;+k);e&amp;&amp;f&amp;&amp;c.push(z(b,e,f))}var c=[],e,f,g,h,l,k;v(d.root,function(c,b,d){(b=c.parent)&amp;&amp;\na(c.id,b.id)},{},{skipvisited:!1});for(var r=d.outliers.length,m=0;m&lt;r;m++)a(d.outliers[m][0],d.outliers[m][1],!0);return c.join(\&quot; \&quot;)}function v(b,d,a,c){c=c||{};var e=c.done||[],f=c.getCh||function(a){return a.collapse?[]:a.children},g=c.lvl||0,h=void 0===c.skipvisited?!0:c.skipvisited;c.leave=c.leave||!1;if(h&amp;&amp;-1!==e.indexOf(b))return a;e.push(b);f=f(b);h=f.length;a=a||{};c.lvl=g+1;c.done=e;if(!1===d(b,a,g))return c.leave=!0,a;for(b=0;b&lt;h;b++)if(a=v(f[b],d,a,c),c.leave)return a;c.lvl--;return a}\nfunction B(b,d,a,c){c=c||{};var e=c.getCh||function(a){return a.collapse?[]:a.children},f=c.getId||function(a){return a.id},g=void 0===c.skipvisited?!0:c.skipvisited,h=c.maxdepth||-1;a=a||{};var l=[],k=[],r=[],m=0;l.push(b);r[f(b)]=void 0;do{b=l.length;for(var p=0;p&lt;b;p++){var n=l.shift(),q;q=g?-1===k.indexOf(n)?!1:!0:!1;if(!q&amp;&amp;!1===d(n,r[f(n)],a))return a;k.push(n);q=e(n);l=l.concat(q);q&amp;&amp;q.forEach(function(a){var b=r[f(a)];b?f(b)!==f(n)&amp;&amp;c.outlier&amp;&amp;c.outlier(a,n):r[f(a)]=n})}m++}while(0!==l.length&amp;&amp;\nm&lt;=h);return a}function C(b,d){return v(b,function(a,b){b.cnt++;return!0},{cnt:0},{skipvisited:d}).cnt-1}function p(b,d,a){if(!(this instanceof p))throw\&quot;Error: call new tnode(id=\&quot;+d+\&quot;)\&quot;;this.parent=b;this.id=d;this.children=[];this.collapse=!1;this.widget=a}exports.buildTable=function(b,d){var a=$tw.utils.domMaker;d.id=(new Date).valueOf();var c=a(\&quot;table\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-table\&quot;,attributes:{id:d.id+\&quot;-table\&quot;}});(function(b){var c=$tw.wiki;v(d.root,function(g,h,l){var k=c.getTiddler(g.id);h=1+C(g,\nd);var r=escape(g.id),m;if(k){m=$tw.utils.parseStringArray(d.tooltip);for(var p=m.length,n=\&quot;\&quot;,q=0;q&lt;p&amp;&amp;!(n=k.getFieldString(m[q]));q++);m=n}else m=\&quot;\&quot;;var t;k&amp;&amp;(t=d.nodetitle?k.getFieldString(d.nodetitle):k.hasField(\&quot;caption\&quot;)?k.fields.caption:k.fields.title);l&gt;=d.startat&amp;&amp;(l=a(\&quot;a\&quot;,{\&quot;class\&quot;:\&quot;tc-tiddlylink tc-tiddlylink-resolves\&quot;,text:t,attributes:{href:\&quot;#\&quot;+r}}),!1===d.nocollapse&amp;&amp;g.children&amp;&amp;0&lt;g.children.length?(t=a(\&quot;a\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-collapse tc-tiddlylink\&quot;,text:g.collapse?\&quot;\\u2295\&quot;:\&quot;\\u2296\&quot;}),\n$tw.utils.addEventListeners(t,[{name:\&quot;click\&quot;,handlerObject:g,handlerMethod:\&quot;collapseClickEvent\&quot;}]),g=a(\&quot;div\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-node tgr-node\&quot;,children:[l,t],attributes:{id:d.id+\&quot;-\&quot;+r,title:m}})):g=a(\&quot;div\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-node tgr-node\&quot;,children:[l],attributes:{id:d.id+\&quot;-\&quot;+r,title:m}}),g=a(\&quot;td\&quot;,{attributes:{rowspan:h},children:[g]}),g=a(\&quot;tr\&quot;,{children:[g]}),b.appendChild(g))},{},{skipvisited:!0})})(c);console.log(\&quot;table=\&quot;,c);console.log(\&quot;outliers=\&quot;,d.outliers);return c};exports.buildSVG=function(b,\nd){var a=document.getElementById(d.id+\&quot;-table\&quot;);if(a){var a=getComputedStyle(a),c=b.offsetHeight,e=b.offsetWidth;console.log(\&quot;style=\&quot;,a,\&quot;div=\&quot;,b);return'&lt;svg  xmlns=\&quot;http://www.w3.org/2000/svg\&quot; height=\&quot;'+c+'px\&quot; width=\&quot;'+e+'px\&quot; style=\&quot;overflow: visible\&quot;&gt;&lt;defs&gt; &lt;marker id=\&quot;tgr-arrow\&quot; viewBox=\&quot;0 0 10 10\&quot; refX=\&quot;1\&quot; refY=\&quot;5\&quot; markerUnits=\&quot;strokeWidth\&quot; orient=\&quot;auto\&quot; markerWidth=\&quot;8\&quot; markerHeight=\&quot;6\&quot;&gt; &lt;polyline class=\&quot;ihm-tgr-arrow tgr-arrow\&quot; points=\&quot;0,0 10,5 0,10 0,5\&quot; style=\&quot;opacity:1;\&quot; /&gt;&lt;/marker&gt;&lt;/defs&gt; &lt;g class=\&quot;ihm-tgr-link tgr-link\&quot; style=\&quot;overflow: visible\&quot;&gt; '+\nA(b,d)+\&quot;&lt;/g&gt; &lt;/svg&gt;\&quot;}};exports.isDescendant=function(b,d,a){var c;a:switch(a.mode.toLowerCase()){case \&quot;tagging\&quot;:c=(c=$tw.wiki.getTiddler(b))?c.hasTag(d):!1;break a;default:c=x(d,a),c=-1!==c.indexOf(b)}if(c)return!0;d=x(d,a);c=d.length;for(var e=!1,f=0;f&lt;c&amp;&amp;!(e=exports.isDescendant(b,d[f],a));f++);return e};exports.makeTidTree=function(b,d,a){a=a||{};d.outliers=[];var c=new p(void 0,b,a.widget);B(b,function(b,c,d){if(c){a:{for(var h=d.visited,l=h.length,k=0;k&lt;l;k++)if(h[k].id===c){c=h[k];break a}c=\nvoid 0}b=c.addChild(b,a.widget);d.visited.push(b)}return!0},{visited:[c]},{getId:function(a){return a},getCh:function(a){return x(a,d)},maxdepth:d.maxdepth,skipvisited:!0,outlier:function(a,b){d.outliers.push([a,b])}});return c};p.prototype.addChild=function(b,d){var a=new p(this,b,d);this.children.push(a);return a};p.prototype.toString=function(){return\&quot;tnode(id=\&quot;+this.id+\&quot;)\&quot;};p.prototype.collapseClickEvent=function(b){this.collapse=!this.collapse;console.log(this.id+\&quot; collapse=\&quot;,this.collapse,this.widget);\nthis.widget.paint()}})();\n&quot;,
             &quot;title&quot;: &quot;$:/plugins/ihm/tidgraph/utils.js&quot;,
             &quot;type&quot;: &quot;application/javascript&quot;,
             &quot;module-type&quot;: &quot;library&quot;
@@ -6965,7 +6967,65 @@ or in Greek ``&lt;&lt;bqb Mt 1,1 NA28&gt;&gt;``. Notice the verse numbers are no
 <div created="20151024065607184" modified="20151024065612461" tags="One" title="Three">
 <pre></pre>
 </div>
-<div created="20151024065631952" creator="ihm4u" modified="20151112213548784" modifier="ihm4u" tags="home" title="Tidgraph - Easy tiddler graphs for TW5" type="text/vnd.tiddlywiki">
+<div created="20151024161547099" creator="ihm4u" modified="20151113044333596" modifier="ihm4u" tags="tidgraph" title="Tidgraph - Changelog" type="text/vnd.tiddlywiki">
+<pre>For more information see [[Tidgraph - Easy tiddler graphs for TW5]]
+
+''Version 0.8.17''
+
+* Much nicer collapse glyph (thanks to Tobias Beer)
+* Reduce size of plugin (move much of readme and chagelog to demo wiki)
+
+''Version 0.8.16''
+
+* Fix regression added by vertical scroll bar fix 
+* Fix arrow display problem with some browsers 
+* Add demo of collapse/expand to demo wiki 
+
+''Version 0.8.15''
+
+* New collapse/expand feature 
+* Add nocollapse attribute to disable collapsing links 
+* Fix bug with vertical scroll bars appearing in some cases when they are not needed 
+* Fix bug which could cause indefinite adding of functions to onresize event 
+
+''Version 0.8.14''
+
+* Add support for back connections in the tree
+* Add support for list of fields in tooltip attribute 
+* Change name to tidgraph
+
+''Version 0.8.9''
+
+* Fix bug when start tiddler does not exist
+
+''Version 0.8.8''
+
+* Fix compatibility wih older browsers by not using string templates
+
+''Version 0.8.6''
+
+* Add filter attribute
+
+''Version 0.8.4''
+
+* fix debug info being printed
+
+''Version 0.8.3''
+
+* add user CSS classes: vmap-link, vmap-node, vmap-arrow
+
+''Version 0.8.2''
+
+* add nodetitle attribute
+* add tooltip attribute
+* use caption field as node title if present
+
+''Version 0.1.3''
+
+* fix export to static html
+</pre>
+</div>
+<div created="20151024065631952" creator="ihm4u" modified="20151113044016294" modifier="ihm4u" tags="home tidgraph" title="Tidgraph - Easy tiddler graphs for TW5" type="text/vnd.tiddlywiki">
 <pre>!Introduction
 The [[tidgraph|$:/plugins/ihm/tidgraph]] plugin shows tiddlers with an SVG/HTML5 diagram like the following:
 &lt;$tidgraph start=&quot;Virtues&quot; /&gt;
@@ -6978,9 +7038,18 @@ It uses the tags to figure out the tree structure. It can optionally use links a
 To install simply drag this link to your wiki:
 [[$:/plugins/ihm/tidgraph]]
 
+!!Screenshot
+This is how it looks like with 7 tiddlers tagged by the [[Virtues]] tiddler:
+
+{{$:/plugins/ihm/tidgraph/tidgraph.png}}
+
+!!Why?
+I needed a very lightweight plugin to show a mind-map like diagram of tiddlers. I also use tiddlymap, it is very nice, but it is not lightweight. I wanted no third-party libraries, and a simple one-liner to make the graph.
 
 {{$:/plugins/ihm/tidgraph/readme}}
-</pre>
+
+!! Changelog
+[[Tidgraph - Changelog]]</pre>
 </div>
 <div created="20151026054558101" creator="ihm4u" modified="20151111074150616" modifier="ihm4u" title="Tidgraph Test CSS" type="text/css">
 <pre>.tgr-node {

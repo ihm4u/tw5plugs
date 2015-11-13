@@ -1,8 +1,8 @@
 created: 20151024065631952
 creator: ihm4u
-modified: 20151112213548784
+modified: 20151113044016294
 modifier: ihm4u
-tags: home
+tags: home tidgraph
 title: Tidgraph - Easy tiddler graphs for TW5
 type: text/vnd.tiddlywiki
 
@@ -18,5 +18,15 @@ It uses the tags to figure out the tree structure. It can optionally use links a
 To install simply drag this link to your wiki:
 [[$:/plugins/ihm/tidgraph]]
 
+!!Screenshot
+This is how it looks like with 7 tiddlers tagged by the [[Virtues]] tiddler:
+
+{{$:/plugins/ihm/tidgraph/tidgraph.png}}
+
+!!Why?
+I needed a very lightweight plugin to show a mind-map like diagram of tiddlers. I also use tiddlymap, it is very nice, but it is not lightweight. I wanted no third-party libraries, and a simple one-liner to make the graph.
 
 {{$:/plugins/ihm/tidgraph/readme}}
+
+!! Changelog
+[[Tidgraph - Changelog]]

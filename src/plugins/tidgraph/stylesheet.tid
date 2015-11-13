@@ -79,8 +79,23 @@ type: text/css
 
 /* Collapse feature */
 .ihm-tgr-collapse {
-   position: absolute;
-   right: 1px;
-   top: -15px;
-   cursor: pointer;
+    position: absolute;
+    cursor: pointer;
+    color: white !important;
+    border-radius: 20px;
+    line-height: 14px;
+    width: 15px;
+    height: 15px;
+    background: #aeb0b5;
+    top: 50%;
+    transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    right: -14px;
+    font: 12px Arial, sans-serif;
+}
+
+a.ihm-tgr-collapse:hover {
+    text-decoration: none;
+    background: #999999;
 }

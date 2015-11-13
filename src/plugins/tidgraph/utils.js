@@ -64,7 +64,7 @@ exports.buildTable = function(rootTid, tidtree) {
            if ( ( tidtree.nocollapse === false ) &&
                  node.children && node.children.length > 0) {
 				  var collapse = dm('a',{"class": 'ihm-tgr-collapse tc-tiddlylink',
-                                     text: node.collapse ?   '+' : '-'});
+                                     text: node.collapse ?   '⊕' : '⊖'});
               // Add a click event handler for the collapse + or -
               $tw.utils.addEventListeners(collapse,[
                     {name: "click", handlerObject: node, handlerMethod: "collapseClickEvent"}
