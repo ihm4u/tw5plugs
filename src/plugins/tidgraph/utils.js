@@ -27,7 +27,10 @@ function getOffsetRect(elem) {
 }
 
 exports.buildTable = function(rootTid, tidtree) {
-  var dm = $tw.utils.domMaker;
+  function dm(tag,opts) {
+     return $tw.utils.domMaker(tag, $tw.utils.extend(opts,{document: tidtree.document }) );
+  }
+
   function getTooltip(tid) {
      var ta=$tw.utils.parseStringArray(tidtree.tooltip);
      var len = ta.length,res="";

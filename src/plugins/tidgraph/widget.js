@@ -40,6 +40,7 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    this.tidtree.tooltip = this.tooltip;
    this.tidtree.filter = this.filter;
    this.tidtree.nocollapse = this.nocollapse;
+   this.tidtree.document = this.document;
 
    // Create container divs
    //    Widget div
