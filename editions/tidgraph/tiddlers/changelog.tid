@@ -1,12 +1,16 @@
 created: 20151024161547099
 creator: ihm4u
-modified: 20151113044333596
+modified: 20151113211555296
 modifier: ihm4u
 tags: tidgraph
 title: Tidgraph - Changelog
 type: text/vnd.tiddlywiki
 
 For more information see [[Tidgraph - Easy tiddler graphs for TW5]]
+
+''Version 0.8.18''
+
+* Fix bug handling utf-8 characters
 
 ''Version 0.8.17''
 

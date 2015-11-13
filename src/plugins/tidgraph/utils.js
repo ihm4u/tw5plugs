@@ -46,7 +46,7 @@ exports.buildTable = function(rootTid, tidtree) {
      dfvisit(tidtree.root,function(node,acc,currdepth) {
         var tid = wiki.getTiddler(node.id);
         var cnt = 1+countDescendants(node,tidtree);
-        var esctitle = escape(node.id);
+        var esctitle = encodeURIComponent(node.id);
         var tooltip = tid ? getTooltip(tid):"";
         var title;
         if (tid) {
@@ -292,8 +292,8 @@ function connectAll(tgrdiv,tidtree) {
    function addPath(c,p) {
       title1 = p;
       title2 = c;
-      esctitle1 = escape(title1);
-      esctitle2 = escape(title2);
+      esctitle1 = encodeURIComponent(title1);
+      esctitle2 = encodeURIComponent(title2);
       el1 = document.getElementById(tidtree.id+'-'+esctitle1);
       el2 = document.getElementById(tidtree.id+'-'+esctitle2);
       if ( el1 && el2 ) res.push( connect(tgrdiv, el1, el2) )//DEBUG,console.log(`${p} -----> ${c}`,el1,el2);
