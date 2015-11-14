@@ -1,12 +1,18 @@
 created: 20151024161547099
 creator: ihm4u
-modified: 20151113211555296
+modified: 20151114010553674
 modifier: ihm4u
 tags: tidgraph
 title: Tidgraph - Changelog
 type: text/vnd.tiddlywiki
 
 For more information see [[Tidgraph - Easy tiddler graphs for TW5]]
+
+''Version 0.8.19''
+
+* Fix bug with cyclic tags/links
+* speedup of tree traversal
+* Fix printing unneeded debug info to console
 
 ''Version 0.8.18''
 

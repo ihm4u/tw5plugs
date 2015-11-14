@@ -45,7 +45,7 @@ exports.buildTable = function(rootTid, tidtree) {
 
      dfvisit(tidtree.root,function(node,acc,currdepth) {
         var tid = wiki.getTiddler(node.id);
-        var cnt = 1+countDescendants(node,tidtree);
+        var cnt = 1+countDescendants(node,true);//skipvisited shouldn't matter, tree is already prunned
         var esctitle = encodeURIComponent(node.id);
         var tooltip = tid ? getTooltip(tid):"";
         var title;
@@ -96,16 +96,14 @@ exports.buildTable = function(rootTid, tidtree) {
   var   filter, tiddlers = [],
         data = [];
   tidtree.id = (new Date()).valueOf();
-  //DEBUG printtree(tidtree.root,false)
+  //DEBUG printtree(tidtree.root,true)
   var table = dm('table',{"class": "ihm-tgr-table",
                           attributes: {id: tidtree.id+'-table'}});
   //{ "str" : '<table id="'+tidtree.id+'-table">' };
   addChildren(table);
-  console.log("table=",table)
-  //out.str  = out.str  + '</table>';
 
   //DEBUG console.log(" table = ", out.str, "\ntidtree: ",tidtree);
-  console.log("outliers=",tidtree.outliers)
+  //DEBUG console.log("outliers=",tidtree.outliers)
   return table;
 }
 
@@ -212,11 +210,6 @@ exports.buildSVG = function (tgrdiv, tidtree) {
    var height = tgrdiv.offsetHeight;
    var width = tgrdiv.offsetWidth;
 
-   console.log("style=",style,"div=",tgrdiv)
-   //width += parseInt(style.marginLeft) + parseInt(style.marginRight);
-   //Don't know why we need the -5 so a vert. scrollbar
-   //is not shown unless needed
-   //height += parseInt(style.marginTop) + parseInt(style.marginBottom);
 
 return '<svg  xmlns="http://www.w3.org/2000/svg" height="'+height+'px" width="'+width+
        'px" style="overflow: visible">'+
@@ -254,22 +247,22 @@ function getChildren(tid,tidtree) {
    return res;
 }
 
-/* Return true if the child tiddler is a descendant parent */
+/* Return true if the child tiddler is a descendant of parent */
 exports.isDescendant = function (child,parent,tidtree) {
    if ( isChild(child,parent, tidtree) ) return true;
-   
-   //Traverse the tree to find out if it is a child
-   var children = getChildren(parent,tidtree);
-   var len = children.length;
-   var res = false;
-   for( var i = 0; i<len; i++ ) {
-      res = exports.isDescendant(child,children[i],tidtree);
-      if (res) {
-         //DEBUG console.log(`${child} is descendant of ${children[i]}`);
-         break;
+   var isAChild = false;
+
+   dfvisit(parent,function(node,acc,currdepth) {
+      if (node===child) {
+        isAChild = true;
+        return false;
       }
-   } 
-   return res;
+   },{},{skipvisited:true, getCh: function(n) {
+      return getChildren(n,tidtree)
+   }
+   });
+
+   return isAChild;
 }
 
 /* Return true if the child tiddler is a child of parent */
@@ -303,7 +296,7 @@ function connectAll(tgrdiv,tidtree) {
       //We skip root
       var parent=child.parent;
       if (parent) addPath(child.id,parent.id)
-   },{},{"skipvisited":false})
+   },{},{skipvisited:true})
 
    //Now collect SVG paths for outliers
    var len = tidtree.outliers.length;
@@ -341,6 +334,7 @@ function dfvisit(n,cb,accInit,opts) {
    var skipvisited = opts.skipvisited===undefined ? true:opts.skipvisited
    opts.leave = opts.leave ||  false
 
+   //DEBUG console.log('dfvisit node=',n,'skip=',skipvisited);
    // return if node already visited
    if ( skipvisited && (done.indexOf(n)!==-1) )
    return accInit
@@ -446,7 +440,8 @@ function bfvisit(n,cb,accInit,opts) {
  *    tid: the starting tiddler
  */
 exports.makeTidTree = function(tid,tidtree,opts) {
-  var opts = opts || {}
+  var opts = opts || {};
+  var alreadyThere=false;
   tidtree.outliers = [];
 
   //Get id of Tiddler
@@ -484,7 +479,14 @@ exports.makeTidTree = function(tid,tidtree,opts) {
   }, 
   {visited:[root]},{"getId":getId, "getCh":getCh, maxdepth: tidtree.maxdepth, skipvisited: true,
                       outlier: function (child,parent) {
-                         tidtree.outliers.push([child,parent])
+                         //Is thia an existing outlier pair?
+                         alreadyThere=false;
+                         $tw.utils.each(tidtree.outliers,function(el) {
+                            if ( (el[0]===child) && (el[1]===parent) )
+                               alreadyThere = true;
+                         })
+                         //Add pair if not repeated
+                         if (!alreadyThere) tidtree.outliers.push([child,parent])
                       }
 })
 
@@ -549,7 +551,7 @@ function printtree(n,skipvisited,getStr) {
 	 spaces = new Array( lvl + 1 ).join( "-" )
 	 str += spaces+getStr(n)+"\n"
 	 return true
-  },{"skipvisited":skipvisited})
+  },{},{"skipvisited":skipvisited})
   console.log(str)
 }
 
