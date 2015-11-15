@@ -32,6 +32,7 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
 	this.computeAttributes();
 	this.execute();
 
+
    this.tidtree = [];
    this.tidtree.mode = this.mode;
    this.tidtree.maxdepth = this.maxdepth;
@@ -41,6 +42,9 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    this.tidtree.filter = this.filter;
    this.tidtree.nocollapse = this.nocollapse;
    this.tidtree.document = this.document;
+
+   //Don't output anything if root tiddler doesn't exist
+   if ( !$tw.wiki.getTiddler(this.startTid) ) return; 
 
    // Create container divs
    //    Widget div

@@ -41,40 +41,44 @@ exports.buildTable = function(rootTid, tidtree) {
      return $tw.utils.domMaker(tag, $tw.utils.extend(opts,{document: tidtree.document }) );
   }
 
-  function getNodeTitle(tid,tidtree) {
+  function getNodeTitle(title,tidtree) {
      //Note we don't use a closure on tidtree to prevent creation
      //of a new function for every tidtree
-   
-    // Handle non existent tiddler 
-     if (!tid) return "Start tiddler doesn't exist!";
+  
+    //Find tiddler
+    var tid = $tw.wiki.getTiddler(title);
 
-     //Get title from caption or title if nodetitle attribute doesn't exist or
-     //from the first non-empty field in the fields listed in the nodetitle 
-     //attribute.
-     if (!tidtree.nodetitle) {
-        return tid.hasField("caption") ? tid.fields.caption:tid.fields.title;
-     } else {
-        return firstField(tidtree.nodetitle,tid);
-     }
+    // Handle non existent tiddler 
+    if (!tid) return title;
+
+    //Get title from caption or title if nodetitle attribute doesn't exist or
+    //from the first non-empty field in the fields listed in the nodetitle 
+    //attribute.
+    if (!tidtree.nodetitle) {
+       return tid.hasField("caption") ? tid.fields.caption:tid.fields.title;
+    } else {
+       return firstField(tidtree.nodetitle,tid);
+    }
   }
 
-  function getTooltip(tid,tidtree) {
-     return firstField(tidtree.tooltip,tid)
+  function getTooltip(title,tidtree) {
+     var tid = $tw.wiki.getTiddler(title);
+     return tid ? firstField(tidtree.tooltip,tid):"";
   }
 
   /*Add children to the unfinished table*/
   var addChildren = function(table) {
-     var wiki = $tw.wiki;
 
      dfvisit(tidtree.root,function(node,acc,currdepth) {
-        var tid = wiki.getTiddler(node.id);
         var cnt = 1+countDescendants(node,true);//skipvisited shouldn't matter, tree is already prunned
         var esctitle = encodeURIComponent(node.id);
-        var tooltip = tid ? getTooltip(tid,tidtree):"";
-        var title =  getNodeTitle(tid,tidtree);
+        var tooltip = getTooltip(node.id,tidtree);
+        var title =  getNodeTitle(node.id,tidtree);
         
         if (currdepth >= tidtree.startat) {
-           var linkclass = "tc-tiddlylink tc-tiddlylink-resolves" 
+           var isMissing = !$tw.wiki.tiddlerExists(node.id);
+           var linkclass = isMissing ? "tc-tiddlylink-missing":"tc-tiddlylink-resolves";
+           var linkclass = "tc-tiddlylink " + linkclass;
            var tidlink = dm('a',{"class": linkclass,
                                  text: title,
                                  attributes: { href: '#'+esctitle }
