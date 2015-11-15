@@ -1,4 +1,4 @@
-/*\
+      /*\
 title: $:/plugins/ihm/tidgraph/utils.js
 type: application/javascript
 module-type: library
@@ -34,6 +34,22 @@ function firstField(fieldStrArray,tid) {
      for(var i=0; i<len; i++)
         if ( res=tid.getFieldString(fa[i]) ) break;
      return res;
+}
+
+function getNodeClasses(node) {
+   var def = "ihm-tgr-node tgr-node";
+   var classField = "_tgr_node_class";
+   var template = (node.widget.nodetemplate) ? $tw.wiki.getTiddler(node.widget.nodetemplate):null;
+   if (template) {
+      var custclass = template.getFieldString(classField);
+      return custclass ? custclass:def;
+   } else {
+      return def;
+   }
+}
+
+function getRenderedNode(node) {
+   return $tw.wiki.renderTiddler("text/html",node.tiddler);
 }
 
 exports.buildTable = function(rootTid, tidtree) {
@@ -79,29 +95,37 @@ exports.buildTable = function(rootTid, tidtree) {
            var isMissing = !$tw.wiki.tiddlerExists(node.id);
            var linkclass = isMissing ? "tc-tiddlylink-missing":"tc-tiddlylink-resolves";
            var linkclass = "tc-tiddlylink " + linkclass;
-           var tidlink = dm('a',{"class": linkclass,
-                                 text: title,
-                                 attributes: { href: '#'+esctitle }
-                                }
-                           ) 
+           var nodeclass = getNodeClasses(node);
+           var nodecontent;
+           if ( tidtree.nodetemplate ) {
+              nodecontent = dm('div',{ class: nodeclass,
+                                       innerHTML: getRenderedNode(node) } );
+           } else {
+              var tidlink = dm('a',{"class": linkclass,
+                                     text: title,
+                                     attributes: { href: '#'+esctitle }
+                                   });
+              nodecontent = dm('div', {class: nodeclass, children: [tidlink] });
+           }
+
            var div;
            //Add collapse link if node has children
            if ( ( tidtree.nocollapse === false ) &&
                  node.children && node.children.length > 0) {
-				  var collapse = dm('a',{"class": 'ihm-tgr-collapse tc-tiddlylink',
+				  var collapse = dm('a',{"class": "ihm-tgr-collapse tc-tiddlylink",
                                      text: node.collapse ?   '⊕' : '⊖'});
               // Add a click event handler for the collapse + or -
               $tw.utils.addEventListeners(collapse,[
                     {name: "click", handlerObject: node, handlerMethod: "collapseClickEvent"}
               ]);
-              div = dm('div',{"class": "ihm-tgr-node tgr-node",
-                              children:[tidlink,collapse],
+              div = dm('div',{"class": "ihm-tgr-node-container",
+                              children:[nodecontent,collapse],
                               attributes: { id: tidtree.id+'-'+esctitle,
                                             title: tooltip
                               }})
            } else {
-              div = dm('div',{"class": "ihm-tgr-node tgr-node",
-                              children:[tidlink],
+              div = dm('div',{"class": "ihm-tgr-node-container",
+                              children:[nodecontent],
                               attributes: { id: tidtree.id+'-'+esctitle,
                                             title: tooltip
                               }})
@@ -117,7 +141,6 @@ exports.buildTable = function(rootTid, tidtree) {
 
   var   filter, tiddlers = [],
         data = [];
-  tidtree.id = (new Date()).valueOf();
   //DEBUG printtree(tidtree.root,true)
   var table = dm('table',{"class": "ihm-tgr-table",
                           attributes: {id: tidtree.id+'-table'}});
@@ -188,8 +211,8 @@ function whichPort(e1,e2) {
    else return [ "R", "L" ]
 }
 
-function error(msg) {
-   return '<span style="color:green">vecmap:</span><span style="color:red">'+msg+'</span>';
+exports.error = function(msg) {
+   return '<span style="color:green; font-size:1.5em">⚠ Tidgraph: </span><span style="color:red">'+msg+'</span>';
 }
 
 /* Produces an svg path element to connect e1 and e2 */
@@ -545,6 +568,12 @@ function tnode(parent,id,widget) {
   this.children = [];
   this.collapse = false;
   this.widget = widget;
+  if (widget.nodetemplate) {
+     var text =  "{{"+   id + "||" + widget.nodetemplate +  "}}";
+     var title = "$:/temp/tidgraph/" + widget.tidtree.id + "/" + id;
+     this.tiddler = title;
+     $tw.wiki.addTiddler( new $tw.Tiddler({"title": title, "text": text}) );
+  }
 }
 
 //Return child that was added
