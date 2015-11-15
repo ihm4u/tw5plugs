@@ -129,8 +129,6 @@ TidgraphWidget.prototype.execute = function() {
     this.nocollapse = this.hasAttribute("nocollapse");
   
 
-    if ( ["tagging","linking"].indexOf(this.mode) == -1 ) this.mode="tagging";
-
 	// FIXME: We could build the descendant tree here?
 };
 

@@ -254,14 +254,15 @@ function getChildren(tid,tidtree) {
    var filter,res;
    switch ( tidtree.mode.toLowerCase() ) {
       case 'tagging':
-         filter = '[['+tid+']tagging[]]+'+tidtree.filter;
-         res = $tw.wiki.filterTiddlers(filter);
+         filter = '[[' + tid + ']tagging[]]+' + tidtree.filter;
          break;
       case 'linking':
-         filter = '[['+tid+']links[]!is[missing]]+'+tidtree.filter;
-         res = $tw.wiki.filterTiddlers(filter);
+         filter = '[[' + tid + ']links[]!is[missing]]+' + tidtree.filter;
          break;
+      default:
+         filter = '[[' + tid + ']' + tidtree.mode + ']+' + tidtree.filter;
    }
+   res = $tw.wiki.filterTiddlers(filter);
    return res;
 }
 
