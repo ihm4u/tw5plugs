@@ -26,17 +26,40 @@ function getOffsetRect(elem) {
   return { top: top, left: left, width: box.width, height: box.height, right: left+box.width, bottom: top+box.height}
 }
 
+//Return value of first non-empty field in StringArray
+//tid: tiddler in which the field(s) are sought
+function firstField(fieldStrArray,tid) {
+     var fa=$tw.utils.parseStringArray(fieldStrArray);
+     var len = fa.length,res="";
+     for(var i=0; i<len; i++)
+        if ( res=tid.getFieldString(fa[i]) ) break;
+     return res;
+}
+
 exports.buildTable = function(rootTid, tidtree) {
   function dm(tag,opts) {
      return $tw.utils.domMaker(tag, $tw.utils.extend(opts,{document: tidtree.document }) );
   }
 
-  function getTooltip(tid) {
-     var ta=$tw.utils.parseStringArray(tidtree.tooltip);
-     var len = ta.length,res="";
-     for(var i=0; i<len; i++)
-        if ( res=tid.getFieldString(ta[i]) ) break;
-     return res;
+  function getNodeTitle(tid,tidtree) {
+     //Note we don't use a closure on tidtree to prevent creation
+     //of a new function for every tidtree
+   
+    // Handle non existent tiddler 
+     if (!tid) return "Start tiddler doesn't exist!";
+
+     //Get title from caption or title if nodetitle attribute doesn't exist or
+     //from the first non-empty field in the fields listed in the nodetitle 
+     //attribute.
+     if (!tidtree.nodetitle) {
+        return tid.hasField("caption") ? tid.fields.caption:tid.fields.title;
+     } else {
+        return firstField(tidtree.nodetitle,tid);
+     }
+  }
+
+  function getTooltip(tid,tidtree) {
+     return firstField(tidtree.tooltip,tid)
   }
 
   /*Add children to the unfinished table*/
@@ -47,14 +70,9 @@ exports.buildTable = function(rootTid, tidtree) {
         var tid = wiki.getTiddler(node.id);
         var cnt = 1+countDescendants(node,true);//skipvisited shouldn't matter, tree is already prunned
         var esctitle = encodeURIComponent(node.id);
-        var tooltip = tid ? getTooltip(tid):"";
-        var title;
-        if (tid) {
-           if (!tidtree.nodetitle)
-              title = tid.hasField("caption") ? tid.fields.caption:tid.fields.title;
-           else
-              title = tid.getFieldString(tidtree.nodetitle);
-        }
+        var tooltip = tid ? getTooltip(tid,tidtree):"";
+        var title =  getNodeTitle(tid,tidtree);
+        
         if (currdepth >= tidtree.startat) {
            var linkclass = "tc-tiddlylink tc-tiddlylink-resolves" 
            var tidlink = dm('a',{"class": linkclass,
