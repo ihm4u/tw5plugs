@@ -32,6 +32,7 @@ dev:
 	   echo "Deleting production $(DISTDIR)"; \
 		rm -rf $(DISTDIR); \
 		echo "Making symlink to $(SRCDIR)"; \
+		mkdir -p "$(dir $(DISTDIR))"; \
 		ln -s `readlink -f $(SRCDIR)` $(DISTDIR); \
 	fi
 	bin/serve editions/tidgraph;
