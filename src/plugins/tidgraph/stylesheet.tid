@@ -60,7 +60,7 @@ type: text/css
 }
 
 .tgr-arrow {
-   stroke-width: 1;
+   stroke-width: 0;
    fill: #aeb0b5;
 }
 
