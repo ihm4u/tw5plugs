@@ -35,7 +35,6 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    //Start new rendering
 	this.parentDomNode = parent;
    this.nextSiblingDomNode = nextSibling;
-   this.templatesInUse = [];
 	this.computeAttributes();
 	this.execute();
 
@@ -50,6 +49,8 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    this.tidtree.nocollapse = this.nocollapse;
    this.tidtree.document = this.document;
    this.tidtree.nodetemplate = this.nodetemplate;
+   //templatesInUse is used for refresh only
+   this.templatesInUse = $tw.utils.parseStringArray(this.nodetemplate);
 
    this.tidtree.id = (new Date()).valueOf();
    

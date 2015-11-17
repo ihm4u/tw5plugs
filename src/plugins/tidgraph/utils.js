@@ -580,16 +580,30 @@ function findNodeTemplate(title,level,nodetemplate) {
    //If tiddler has a _tgr_node_template field, that is the template
    var template = firstField("_tgr_node_template",[title]);
 
+   //Discard templates whose filter excludes this tiddler
+   var remove = [];
+   $tw.utils.each(usertemplates,function(templtitle) {
+      var tid = $tw.wiki.getTiddler(templtitle);
+      var filter = (tid) ? tid.getFieldString("_tgr_node_filter"):"";
+
+      var tids = $tw.wiki.filterTiddlers(filter);
+      if ( filter && tids.indexOf(title) === -1 )
+         remove.push(templtitle);
+   });
+
+   if (remove.length > 0)
+      $tw.utils.removeArrayEntries(usertemplates,remove);
+
    //If tiddler does not have individual template
    //1. seek for template that matches level, if not found
    //2. use generic template that has no level indication, if not found
    //3. use tgr-default template
    if (!template) {
       //Seek level template
-      firstField("_tgr_node_level",usertemplates,function(val,field,title) {
+      firstField("_tgr_node_level",usertemplates,function(val,field,templtitle) {
          var levels=$tw.utils.parseStringArray(val);
          if (levels.indexOf( level.toString() ) !== -1) {
-            template = title;
+            template = templtitle;
             return true;
          }
       });
@@ -635,7 +649,8 @@ function tnode(parent,id,level,widget) {
         this.transcluder = title;
         this.template = template;
         $tw.wiki.addTiddler( new $tw.Tiddler({"title": title, "text": text}) );
-        widget.templatesInUse.push(template); //This is used only for refresh
+        if ( widget.templatesInUse.indexOf(template) === -1 )
+           widget.templatesInUse.push(template); //This is used only for refresh
   }
 }
 
