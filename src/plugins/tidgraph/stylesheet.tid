@@ -93,7 +93,7 @@ type: text/css
     color: white !important;
     border-radius: 20px;
     line-height: 14px;
-    width: 15px;
+    width: 12px;
     height: 15px;
     background: #aeb0b5;
     top: 50%;
