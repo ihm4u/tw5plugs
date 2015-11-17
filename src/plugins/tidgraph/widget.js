@@ -38,6 +38,14 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
 	this.computeAttributes();
 	this.execute();
 
+   //Read mode from tiddler with _tgr_mode field if it is not
+   //a default mode
+   if (["tagging","linking"].indexOf(this.mode) === -1)  {
+      var tids = $tw.wiki.filterTiddlers("[_tgr_mode["+this.mode+"]!has[draft.of]]");
+      if (tids.length && $tw.wiki.tiddlerExists(tids[0])) {
+         this.mode = $tw.wiki.getTiddlerText(tids[0]);
+      }
+   }
 
    this.tidtree = [];
    this.tidtree.mode = this.mode;
@@ -49,8 +57,10 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    this.tidtree.nocollapse = this.nocollapse;
    this.tidtree.document = this.document;
    this.tidtree.nodetemplate = this.nodetemplate;
+
    //templatesInUse is used for refresh only
    this.templatesInUse = $tw.utils.parseStringArray(this.nodetemplate);
+   
 
    this.tidtree.id = (new Date()).valueOf();
    
@@ -142,17 +152,16 @@ TidgraphWidget.prototype.paint = function() {
 Compute the internal state of the widget
 */
 TidgraphWidget.prototype.execute = function() {
-	// Get parameters from our attributes
-    this.startTid = this.getAttribute("start");
-	 this.mode = this.getAttribute("mode","tagging");
-    this.maxdepth = parseInt(this.getAttribute("maxdepth","10"));
-    this.startat = this.getAttribute("startat","0");
-    this.nodetitle = this.getAttribute("nodetitle");
-    this.tooltip = this.getAttribute("tooltip","summary");
-    this.filter  = this.getAttribute("filter","[!is[system]]");
-    this.nocollapse = this.hasAttribute("nocollapse");
-    this.nodetemplate = this.getAttribute("nodetemplate","");
-  
+   // Get parameters from our attributes
+   this.startTid = this.getAttribute("start");
+   this.mode = this.getAttribute("mode","tagging");
+   this.maxdepth = parseInt(this.getAttribute("maxdepth","10"));
+   this.startat = this.getAttribute("startat","0");
+   this.nodetitle = this.getAttribute("nodetitle");
+   this.tooltip = this.getAttribute("tooltip","summary");
+   this.filter  = this.getAttribute("filter","[!is[system]]");
+   this.nocollapse = this.hasAttribute("nocollapse");
+   this.nodetemplate = this.getAttribute("nodetemplate","");
 
 	// FIXME: We could build the descendant tree here?
 };
@@ -186,13 +195,20 @@ TidgraphWidget.prototype.refresh = function(changedTiddlers) {
     function isDescendant(t) {
        return utils.isDescendant(t,self.startTid,self.tidtree);
     }
+
+    function isMode(t) {
+       var tid = $tw.wiki.getTiddler(t);
+       if (tid && tid.hasField("_tgr_mode")) return true;
+       return false;
+    }
     
     //Set dirty flag if children have changed
     for(t in changedTiddlers) {
        if (  isInDom(t)       ||  //for node deletion/change
              isDescendant(t)  ||  //for node addition 
              isTemplate(t)    ||  //for nodetemplate
-             isStylesheet(t)      //for CSS stylesheet
+             isStylesheet(t)  ||  //for CSS stylesheet
+             isMode(t)            //for mode tiddlers
           )
        {
           //DEBUG console.log(`change triggered by "${t}"`);

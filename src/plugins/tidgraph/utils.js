@@ -306,9 +306,7 @@ function getChildren(tid,tidtree) {
          filter = '[[' + tid + ']links[]!is[missing]]+' + tidtree.filter;
          break;
       default:
-         var mode = $tw.wiki.getTiddlerText(tidtree.mode);
-         if (!mode) mode = "tagging[]";
-         filter = '[[' + tid + ']' + mode + ']+' + tidtree.filter;
+         filter = '[[' + tid + ']' + tidtree.mode + ']+' + tidtree.filter;
    }
    res = $tw.wiki.filterTiddlers(filter);
    return res;
