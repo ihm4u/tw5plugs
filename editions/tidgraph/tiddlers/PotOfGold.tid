@@ -1,6 +1,6 @@
 _tgr_node_class_add: my-gold-node
 created: 20151117031704784
-modified: 20151117033834776
+modified: 20151117041218149
 tags: 
 title: PotOfGold
 type: text/vnd.tiddlywiki
@@ -41,4 +41,4 @@ type: text/vnd.tiddlywiki
                  S 23,25 15,20 S5,22 10,25
                  Q 5,27 5,35 C5,45 15,50 30,50Z"
           />
-</svg>{{!!title}}</div>
+</svg><$link>{{!!title}}</$link></div>

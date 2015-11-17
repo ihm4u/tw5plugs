@@ -35,6 +35,7 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    //Start new rendering
 	this.parentDomNode = parent;
    this.nextSiblingDomNode = nextSibling;
+   this.templatesInUse = [];
 	this.computeAttributes();
 	this.execute();
 
@@ -164,11 +165,10 @@ TidgraphWidget.prototype.refresh = function(changedTiddlers) {
     var dirty=false,t;
     this.computeAttributes();
     this.execute();
-    var templates = $tw.utils.parseStringArray(this.nodetemplate);
     var self = this;
 
     function isTemplate(t) {
-       return templates.indexOf(t) !== -1;
+       return self.templatesInUse.indexOf(t) !== -1;
     }
 
     function isStylesheet(t) {

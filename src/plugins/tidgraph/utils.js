@@ -633,6 +633,7 @@ function tnode(parent,id,level,widget) {
         this.transcluder = title;
         this.template = template;
         $tw.wiki.addTiddler( new $tw.Tiddler({"title": title, "text": text}) );
+        widget.templatesInUse.push(template); //This is used only for refresh
   }
 }
 
