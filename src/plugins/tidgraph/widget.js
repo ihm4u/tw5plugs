@@ -51,16 +51,7 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    this.tidtree.nodetemplate = this.nodetemplate;
 
    this.tidtree.id = (new Date()).valueOf();
-
-   // Validate parameters
-   if ( this.nodetemplate && !$tw.wiki.getTiddler(this.nodetemplate) ) {
-      var err = utils.error("Node template ''" + 
-            this.nodetemplate + "' does not exist!");
-      var span = $tw.utils.domMaker("span",{innerHTML: err});
-      this.parentDomNode.insertBefore(span,this.nextSiblingDomNode);
-      return;
-   }
-
+   
    //Don't output anything if root tiddler doesn't exist
    if ( !$tw.wiki.getTiddler(this.startTid) ) return; 
 
@@ -173,19 +164,40 @@ TidgraphWidget.prototype.refresh = function(changedTiddlers) {
     var dirty=false,t;
     this.computeAttributes();
     this.execute();
+    var templates = $tw.utils.parseStringArray(this.nodetemplate);
+    var self = this;
 
+    function isTemplate(t) {
+       return templates.indexOf(t) !== -1;
+    }
+
+    function isStylesheet(t) {
+       var tid = $tw.wiki.getTiddler(t);
+       if (tid && tid.hasTag("$:/tags/Stylesheet")) return true;
+       return false;
+    }
+
+    function isInDom(t) {
+       return document.getElementById(self.tidtree.id + '-' + 
+             encodeURIComponent(t)); 
+    }
+
+    function isDescendant(t) {
+       return utils.isDescendant(t,self.startTid,self.tidtree);
+    }
     
     //Set dirty flag if children have changed
     for(t in changedTiddlers) {
-        if ( document.getElementById(this.tidtree.id+'-'+escape(t)) ||  //for deletion/change
-            utils.isDescendant(t,this.startTid,this.tidtree) ||   //for addition 
-            ( t === this.nodetemplate )                        // for nodetemplate
-           )
-        {
-           //DEBUG console.log(`change triggered by "${t}"`);
-           dirty = true;
-           break;
-        }
+       if (  isInDom(t)       ||  //for node deletion/change
+             isDescendant(t)  ||  //for node addition 
+             isTemplate(t)    ||  //for nodetemplate
+             isStylesheet(t)      //for CSS stylesheet
+          )
+       {
+          //DEBUG console.log(`change triggered by "${t}"`);
+          dirty = true;
+          break;
+       }
     }
 
     // Refresh if sidebar has been closed/opened since previous rendering
