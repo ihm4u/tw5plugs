@@ -1,11 +1,11 @@
 created: 20151117003633437
-modified: 20151117004655850
+modified: 20151117054256278
 tags: Demo
 title: Custom Mode Demo
 type: text/vnd.tiddlywiki
 
-''Custom Modes'' allow you to define the way in which children of a node are chosen. It uses a //user defined// subfilter, in this case `fields[]` which returns the fields in a tiddler. The following graph is generated with:
+''Custom Modes'' allow you to define the way in which children of a node are chosen. It uses a //user defined// subfilter, stored in a tiddler whose title is the mode name. In this case the tiddler is called MyMode and the text of it is  `fields[]`. This filter returns the fields in a tiddler. The following graph is generated with:
 
-``<$tidgraph start="Faith" mode="fields[]">``
+``<$tidgraph start="Faith" mode="MyMode">``
 
-<$tidgraph start="Faith" mode="fields[]">
+<$tidgraph start="Faith" mode="MyMode">

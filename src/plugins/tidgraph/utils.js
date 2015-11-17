@@ -298,7 +298,7 @@ return '<svg  xmlns="http://www.w3.org/2000/svg" height="'+height+'px" width="'+
 /* Return an array of the children of tiddler tid */
 function getChildren(tid,tidtree) {
    var filter,res;
-   switch ( tidtree.mode.toLowerCase() ) {
+   switch ( tidtree.mode ) {
       case 'tagging':
          filter = '[[' + tid + ']tagging[]]+' + tidtree.filter;
          break;
@@ -306,7 +306,9 @@ function getChildren(tid,tidtree) {
          filter = '[[' + tid + ']links[]!is[missing]]+' + tidtree.filter;
          break;
       default:
-         filter = '[[' + tid + ']' + tidtree.mode + ']+' + tidtree.filter;
+         var mode = $tw.wiki.getTiddlerText(tidtree.mode);
+         if (!mode) mode = "tagging[]";
+         filter = '[[' + tid + ']' + mode + ']+' + tidtree.filter;
    }
    res = $tw.wiki.filterTiddlers(filter);
    return res;

@@ -8,8 +8,7 @@ type: text/vnd.tiddlywiki
 
 ! New! Node Templates!
 
-We have exciting new features thanks to Tobias Beer from the Tiddlywiki group. This is a release candidate, version
-0.9.0-rc1. You can see a demo of what you can do with custom node templates in the [[Node Templates Demo]].
+We have exciting new features thanks to Tobias Beer from the Tiddlywiki group. This is a release candidate version {{$:/plugins/ihm/tidgraph!!version}}, You can see a demo of what you can do with custom node templates in the [[Node Templates Demo]].
 
 It also supports custom modes to find the children of a node, see the [[Custom Mode Demo]] for an example.
 

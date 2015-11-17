@@ -143,7 +143,7 @@ Compute the internal state of the widget
 TidgraphWidget.prototype.execute = function() {
 	// Get parameters from our attributes
     this.startTid = this.getAttribute("start");
-	 this.mode = this.getAttribute("mode","tagging").toLowerCase();
+	 this.mode = this.getAttribute("mode","tagging");
     this.maxdepth = parseInt(this.getAttribute("maxdepth","10"));
     this.startat = this.getAttribute("startat","0");
     this.nodetitle = this.getAttribute("nodetitle");
