@@ -23,4 +23,5 @@ The `div`(s) are simply to center the text horizontally and vertically. If you d
 
 `<$transclude tiddler={{!!icon}}/><$link>{{!!title}}</$link>`
 
+!! Advanced Node Templates
 This is just scratching the surface of what can be done with Node templates, see [[Advanced Node Templates]] for more than you ever wanted to know.

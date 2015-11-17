@@ -117,14 +117,14 @@ exports.buildTable = function(rootTid, tidtree) {
            var nodeclass = getNodeClasses(node);
            var nodecontent;
            if ( node.template ) {
-              nodecontent = dm('div',{ class: nodeclass,
+              nodecontent = dm('div',{ "class": nodeclass,
                                        innerHTML: getRenderedNode(node) } );
            } else {
               var tidlink = dm('a',{"class": linkclass,
                                      text: title,
                                      attributes: { href: '#'+esctitle }
                                    });
-              nodecontent = dm('div', {class: nodeclass, children: [tidlink] });
+              nodecontent = dm('div', {"class": nodeclass, children: [tidlink] });
            }
 
            var div;
