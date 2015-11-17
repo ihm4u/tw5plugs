@@ -1,0 +1,32 @@
+created: 20151117224225944
+modified: 20151117224257617
+tags: Demo
+title: Advanced Node Templates
+type: text/vnd.tiddlywiki
+
+!! Advanced templates
+You can also make very advanced templates, as you can see in the graph below.
+
+This is the line that draws the graph:
+
+``<$tidgraph start="Virtues" nodetemplate="PotOfGold CloudTemplate GoldTemplate" />``
+
+The templates are applied in the order specified, if the conditions match.
+It uses these user defined  templates:
+
+;PotOfGold
+* simple SVG icon
+* uses `_tgr_node_filter` to select one node
+
+;GoldTemplate
+*One-liner with three fields:
+** uses the  `_tgr_node_class_add` field to add a CSS class to the node
+** uses the `_tgr_node_level` field to apply only to levels 2 and 3
+** uses the `_tgr_node_filter` field which excludes the [[Others]] node
+
+;CloudTemplate 
+* has advanced SVG inside to render a cloud with text
+* uses the `_tgr_node_level` field to only apply to level 1
+* uses the `_tgr_node_class` field to replace the default node class with a non-existent CSS class (in effect erasing it)
+
+<$tidgraph start="Virtues" nodetemplate="PotOfGold  CloudTemplate  GoldTemplate " />

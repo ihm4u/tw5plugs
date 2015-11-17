@@ -1,8 +1,8 @@
 _tgr_node_class_add: my-gold-node
-_tgr_node_filter: [![Purity]]
+_tgr_node_filter: [![Others]]
 _tgr_node_level: 2 3
 created: 20151116230444607
-modified: 20151117174925231
+modified: 20151117223517549
 tags: 
 title: GoldTemplate
 type: text/vnd.tiddlywiki

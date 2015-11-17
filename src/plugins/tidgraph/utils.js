@@ -593,34 +593,67 @@ function findNodeTemplate(title,level,nodetemplate) {
       $tw.utils.removeArrayEntries(usertemplates,remove);
 
    //If tiddler does not have individual template
-   //1. seek for template that matches level, if not found
-   //2. use generic template that has no level indication, if not found
-   //3. use tgr-default template
+   //1. seek for template with a matching filter, if not found,
+   //2. seek for template that matches level, if not found
+   //3. use generic template that has no level indication, if not found
+   //4. use tgr-default template
+
+   function matchesLevel(templtitle,templLevels) {
+      var levels=$tw.utils.parseStringArray(templLevels);
+      if (levels.indexOf( level.toString() ) !== -1) 
+         return true;
+   }
+
    if (!template) {
-      //Seek level template
+      //Seek filter template
+      firstField("_tgr_node_filter",usertemplates,function(val,field,templtitle) {
+         var tids = $tw.wiki.filterTiddlers(val);
+         if ( val && tids.indexOf(title) !== -1 ) {
+            var templLevels = $tw.wiki.getTiddler(templtitle)
+                              .getFieldString("_tgr_node_level");
+            if (templLevels) {
+               //Process level field if it also has one.
+               //Choose template if it also matches level field.
+               if (matchesLevel(templtitle,templLevels)) {
+                  template = templtitle;
+                  return true;
+               }
+            //This is the template because the filter matched
+            //and it has no _tgr_node_level field
+            } else {
+               template = templtitle;
+               return true;
+            }
+         }
+      });
+   }
+
+   // If not found seek level template
+   if (!template) {
       firstField("_tgr_node_level",usertemplates,function(val,field,templtitle) {
-         var levels=$tw.utils.parseStringArray(val);
-         if (levels.indexOf( level.toString() ) !== -1) {
+         if (matchesLevel(templtitle,val)) {
             template = templtitle;
             return true;
          }
       });
+   }
 
-      //if not found, Seek template without level condition
-      if (!template) {
-         var len = usertemplates.length;
-         for(var i=0;i<len;i++) {
-            var tid = $tw.wiki.getTiddler(usertemplates[i]);
-            if (tid && !tid.hasField("_tgr_node_level")) {
-               template = usertemplates[i];
-               break;
-            }
+   //if not found, Seek template without level or filter
+   if (!template) {
+      var len = usertemplates.length;
+      for(var i=0;i<len;i++) {
+         var tid = $tw.wiki.getTiddler(usertemplates[i]);
+         if (tid && !tid.hasField("_tgr_node_level") 
+               && !tid.hasField("_tgr_node_filter")) {
+            template = usertemplates[i];
+            break;
          }
       }
-
-      //if not found, use default template
-      if (!template) template = "tgr-default"
    }
+
+   //if nothing found, use default template
+   if (!template) template = "tgr-default"
+   
    return template;
 }
 

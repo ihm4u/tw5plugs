@@ -1,6 +1,7 @@
 _tgr_node_class_add: my-gold-node
+_tgr_node_filter: [[Chastity]]
 created: 20151117031704784
-modified: 20151117041218149
+modified: 20151117205844237
 tags: 
 title: PotOfGold
 type: text/vnd.tiddlywiki
