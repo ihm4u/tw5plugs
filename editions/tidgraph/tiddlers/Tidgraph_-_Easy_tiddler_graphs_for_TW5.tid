@@ -1,12 +1,21 @@
 created: 20151024065631952
 creator: ihm4u
-modified: 20151113044016294
+modified: 20151117012057826
 modifier: ihm4u
 tags: home tidgraph
 title: Tidgraph - Easy tiddler graphs for TW5
 type: text/vnd.tiddlywiki
 
-!Introduction
+! New! Node Templates!
+
+We have exciting new features thanks to Tobias Beer from the Tiddlywiki group. This is a release candidate, version
+0.9.0-rc1. You can see a demo of what you can do with custom node templates in the [[Node Templates Demo]].
+
+It also supports custom modes to find the children of a node, see the [[Custom Mode Demo]] for an example.
+
+Please report any bugs in the Tiddlywiki [[google group|https://groups.google.com/forum/#!forum/tiddlywiki]].
+
+!!Introduction
 The [[tidgraph|$:/plugins/ihm/tidgraph]] plugin shows tiddlers with an SVG/HTML5 diagram like the following:
 <$tidgraph start="Virtues" />
 
