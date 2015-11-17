@@ -1,12 +1,21 @@
 created: 20151024161547099
 creator: ihm4u
-modified: 20151114010553674
+modified: 20151117005532732
 modifier: ihm4u
 tags: tidgraph
 title: Tidgraph - Changelog
 type: text/vnd.tiddlywiki
 
 For more information see [[Tidgraph - Easy tiddler graphs for TW5]]
+
+''Version 0.9.0-rc1''
+
+* Node templates!! (many thanks to Tobias!)
+* No output for non-existent tree root
+* Fix handling of missing children
+* Custom user modes with subfilters ( Tobias again! ☺ )
+* Support field list in nodetitle (first non-empty field is used)
+* Minor bugfixes
 
 ''Version 0.8.19''
 

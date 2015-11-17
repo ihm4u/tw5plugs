@@ -60,8 +60,18 @@ type: text/css
 }
 
 .tgr-arrow {
-   stroke-width: 1;
+   stroke-width: 0;
    fill: #aeb0b5;
+}
+
+.ihm-tgr-node-container {
+   position: relative;
+   margin: 6px 10px;
+}
+
+.ihm-tgr-node-container p {
+   margin-top: 0px;
+   margin-bottom: 0px;
 }
 
 .ihm-tgr-node {
@@ -72,10 +82,8 @@ type: text/css
    box-shadow: 4px 4px 5px #888888;
    text-align: center;
    vertical-align: middle;
-   display:block;
-   margin: 6px 10px;
    font-size: 1em;
-   position: relative;
+   color: #0071bc;
 }
 
 /* Collapse feature */
@@ -85,7 +93,7 @@ type: text/css
     color: white !important;
     border-radius: 20px;
     line-height: 14px;
-    width: 15px;
+    width: 12px;
     height: 15px;
     background: #aeb0b5;
     top: 50%;

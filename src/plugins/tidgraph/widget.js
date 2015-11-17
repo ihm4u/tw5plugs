@@ -27,6 +27,12 @@ TidgraphWidget.prototype = new Widget();
 Render this widget into the DOM
 */
 TidgraphWidget.prototype.render = function(parent,nextSibling) {
+
+   //Delete temp tiddlers if this widget had some
+   if (this.tidtree)
+      this.delTempTiddlers();
+
+   //Start new rendering
 	this.parentDomNode = parent;
    this.nextSiblingDomNode = nextSibling;
 	this.computeAttributes();
@@ -42,7 +48,10 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    this.tidtree.filter = this.filter;
    this.tidtree.nocollapse = this.nocollapse;
    this.tidtree.document = this.document;
+   this.tidtree.nodetemplate = this.nodetemplate;
 
+   this.tidtree.id = (new Date()).valueOf();
+   
    //Don't output anything if root tiddler doesn't exist
    if ( !$tw.wiki.getTiddler(this.startTid) ) return; 
 
@@ -101,6 +110,15 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    //DEBUG console.log("widget = ",this);
 }
 
+//Delete temporary tiddlers used for node content transclusion
+TidgraphWidget.prototype.delTempTiddlers = function() {
+   var tmptids = $tw.wiki.filterTiddlers("[prefix[$:/temp/tidgraph/"
+         + this.tidtree.id + "]]");
+   $tw.utils.each(tmptids,function(tid) {
+      $tw.wiki.deleteTiddler(tid);
+   });
+}
+
 TidgraphWidget.prototype.paint = function() {
     //We need to redraw arrows if sidebar is closed/opened
     //this variable is used to check if sidebar status has changed on refresh
@@ -131,6 +149,7 @@ TidgraphWidget.prototype.execute = function() {
     this.tooltip = this.getAttribute("tooltip","summary");
     this.filter  = this.getAttribute("filter","[!is[system]]");
     this.nocollapse = this.hasAttribute("nocollapse");
+    this.nodetemplate = this.getAttribute("nodetemplate","");
   
 
 	// FIXME: We could build the descendant tree here?
@@ -142,18 +161,43 @@ Selectively refreshes the widget if needed. Returns true if the widget or any of
 TidgraphWidget.prototype.refresh = function(changedTiddlers) {
     //DEBUG   console.log("changedtiddlers=",changedTiddlers);
 
-    //Set dirty flag if children have changed
     var dirty=false,t;
     this.computeAttributes();
     this.execute();
+    var templates = $tw.utils.parseStringArray(this.nodetemplate);
+    var self = this;
+
+    function isTemplate(t) {
+       return templates.indexOf(t) !== -1;
+    }
+
+    function isStylesheet(t) {
+       var tid = $tw.wiki.getTiddler(t);
+       if (tid && tid.hasTag("$:/tags/Stylesheet")) return true;
+       return false;
+    }
+
+    function isInDom(t) {
+       return document.getElementById(self.tidtree.id + '-' + 
+             encodeURIComponent(t)); 
+    }
+
+    function isDescendant(t) {
+       return utils.isDescendant(t,self.startTid,self.tidtree);
+    }
+    
+    //Set dirty flag if children have changed
     for(t in changedTiddlers) {
-        if ( document.getElementById(this.tidtree.id+'-'+escape(t)) ||  //for deletion/change
-            utils.isDescendant(t,this.startTid,this.tidtree) )  //for addition 
-        {
-           //DEBUG console.log(`change triggered by "${t}"`);
-           dirty = true;
-           break;
-        }
+       if (  isInDom(t)       ||  //for node deletion/change
+             isDescendant(t)  ||  //for node addition 
+             isTemplate(t)    ||  //for nodetemplate
+             isStylesheet(t)      //for CSS stylesheet
+          )
+       {
+          //DEBUG console.log(`change triggered by "${t}"`);
+          dirty = true;
+          break;
+       }
     }
 
     // Refresh if sidebar has been closed/opened since previous rendering

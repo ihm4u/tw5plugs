@@ -26,14 +26,53 @@ function getOffsetRect(elem) {
   return { top: top, left: left, width: box.width, height: box.height, right: left+box.width, bottom: top+box.height}
 }
 
-//Return value of first non-empty field in StringArray
-//tid: tiddler in which the field(s) are sought
-function firstField(fieldStrArray,tid) {
-     var fa=$tw.utils.parseStringArray(fieldStrArray);
-     var len = fa.length,res="";
-     for(var i=0; i<len; i++)
-        if ( res=tid.getFieldString(fa[i]) ) break;
-     return res;
+//Return value of first field matching criteria in StringArray
+//titles: tiddlers in which the field(s) are sought
+//
+//The default criteria is to have a non-empty value
+function firstField(fieldStrArray,titles,criteria) {
+   var criteria = criteria || function (value,field,title) { if (value) return true; }
+   var fa=$tw.utils.parseStringArray(fieldStrArray);
+   var lenfa = fa.length;
+   var lenta = titles.length;
+   for(var j=0; j<lenta; j++)
+      for(var i=0; i<lenfa; i++) {
+         var tid = $tw.wiki.getTiddler(titles[j]);
+         if (tid) {
+            var val=tid.getFieldString(fa[i]);
+            if ( criteria(val, fa[i], titles[j]) ) 
+               return val;
+         }
+      }
+   return "";
+}
+
+function getNodeClasses(node) {
+   var def = "ihm-tgr-node tgr-node";
+   //Chose css class for node
+   //1. If tiddler has a _tgr_node class(_add) field use that, if not
+   //2. If template has a _tgr_node_class(_add) field use that, if not
+   //3. use default classes
+   //4. use default classes if _tgr_node_class in any of the above
+   //   is tgr-default
+   //
+   //   _tgr_node_class_add appends the class rather than replacing it
+   var add = false;
+   var nodeclass = firstField("_tgr_node_class _tgr_node_class_add",
+         [node.id,node.template], function (val,field,title) {
+            if (val) {
+               add = (field==='_tgr_node_class_add') ? true:false;
+               return true;
+            }
+         });
+   if ( !nodeclass || (nodeclass === "tgr-default") ) return def
+   else 
+      if (add) return def + " " + nodeclass;
+   return nodeclass;
+}
+
+function getRenderedNode(node) {
+   return $tw.wiki.renderTiddler("text/html",node.transcluder);
 }
 
 exports.buildTable = function(rootTid, tidtree) {
@@ -45,25 +84,21 @@ exports.buildTable = function(rootTid, tidtree) {
      //Note we don't use a closure on tidtree to prevent creation
      //of a new function for every tidtree
   
-    //Find tiddler
-    var tid = $tw.wiki.getTiddler(title);
-
     // Handle non existent tiddler 
-    if (!tid) return title;
+    if (!$tw.wiki.tiddlerExists(title)) return title;
 
     //Get title from caption or title if nodetitle attribute doesn't exist or
     //from the first non-empty field in the fields listed in the nodetitle 
     //attribute.
     if (!tidtree.nodetitle) {
-       return tid.hasField("caption") ? tid.fields.caption:tid.fields.title;
+       return firstField("caption title",[title]);
     } else {
-       return firstField(tidtree.nodetitle,tid);
+       return firstField(tidtree.nodetitle,[title]);
     }
   }
 
   function getTooltip(title,tidtree) {
-     var tid = $tw.wiki.getTiddler(title);
-     return tid ? firstField(tidtree.tooltip,tid):"";
+     return  firstField(tidtree.tooltip,[title]);
   }
 
   /*Add children to the unfinished table*/
@@ -79,29 +114,37 @@ exports.buildTable = function(rootTid, tidtree) {
            var isMissing = !$tw.wiki.tiddlerExists(node.id);
            var linkclass = isMissing ? "tc-tiddlylink-missing":"tc-tiddlylink-resolves";
            var linkclass = "tc-tiddlylink " + linkclass;
-           var tidlink = dm('a',{"class": linkclass,
-                                 text: title,
-                                 attributes: { href: '#'+esctitle }
-                                }
-                           ) 
+           var nodeclass = getNodeClasses(node);
+           var nodecontent;
+           if ( node.template ) {
+              nodecontent = dm('div',{ class: nodeclass,
+                                       innerHTML: getRenderedNode(node) } );
+           } else {
+              var tidlink = dm('a',{"class": linkclass,
+                                     text: title,
+                                     attributes: { href: '#'+esctitle }
+                                   });
+              nodecontent = dm('div', {class: nodeclass, children: [tidlink] });
+           }
+
            var div;
            //Add collapse link if node has children
            if ( ( tidtree.nocollapse === false ) &&
                  node.children && node.children.length > 0) {
-				  var collapse = dm('a',{"class": 'ihm-tgr-collapse tc-tiddlylink',
+				  var collapse = dm('a',{"class": "ihm-tgr-collapse tc-tiddlylink",
                                      text: node.collapse ?   '⊕' : '⊖'});
               // Add a click event handler for the collapse + or -
               $tw.utils.addEventListeners(collapse,[
                     {name: "click", handlerObject: node, handlerMethod: "collapseClickEvent"}
               ]);
-              div = dm('div',{"class": "ihm-tgr-node tgr-node",
-                              children:[tidlink,collapse],
+              div = dm('div',{"class": "ihm-tgr-node-container",
+                              children:[nodecontent,collapse],
                               attributes: { id: tidtree.id+'-'+esctitle,
                                             title: tooltip
                               }})
            } else {
-              div = dm('div',{"class": "ihm-tgr-node tgr-node",
-                              children:[tidlink],
+              div = dm('div',{"class": "ihm-tgr-node-container",
+                              children:[nodecontent],
                               attributes: { id: tidtree.id+'-'+esctitle,
                                             title: tooltip
                               }})
@@ -117,7 +160,6 @@ exports.buildTable = function(rootTid, tidtree) {
 
   var   filter, tiddlers = [],
         data = [];
-  tidtree.id = (new Date()).valueOf();
   //DEBUG printtree(tidtree.root,true)
   var table = dm('table',{"class": "ihm-tgr-table",
                           attributes: {id: tidtree.id+'-table'}});
@@ -188,8 +230,8 @@ function whichPort(e1,e2) {
    else return [ "R", "L" ]
 }
 
-function error(msg) {
-   return '<span style="color:green">vecmap:</span><span style="color:red">'+msg+'</span>';
+exports.error = function(msg) {
+   return '<span style="color:green; font-size:1.5em">⚠ Tidgraph: </span><span style="color:red">'+msg+'</span>';
 }
 
 /* Produces an svg path element to connect e1 and e2 */
@@ -426,7 +468,7 @@ function bfvisit(n,cb,accInit,opts) {
 
       // process node
       if (!visited(n1,done,skipvisited))
-         if ( cb(n1,parent[getId(n1)],acc) === false) 
+         if ( cb(n1,parent[getId(n1)],acc,depth) === false) 
             return acc
 
       done.push(n1)
@@ -487,15 +529,15 @@ exports.makeTidTree = function(tid,tidtree,opts) {
   }
 
   //Build the tidtree
-  var root=new tnode(undefined,getId(tid),opts.widget);
-  bfvisit(tid,function(n,p,acc) {
+  var root=new tnode(undefined,getId(tid),0,opts.widget);
+  bfvisit(tid,function(n,p,acc,level) {
 	 var node,added;
     //console.log("visited=",n.id," parent=",p ? p.id:"undef")
 	 //console.log(`looking for parent of ${n.id} which supposedly is ${p ? p.id:"undef"}`);
 	 if (p) {
       var n_id = getId(n), p_id = getId(p);
 		node = inArray(acc.visited,p_id);
-		added = node.addChild(n_id,opts.widget);
+		added = node.addChild(n_id,level,opts.widget);
 		acc.visited.push(added)
 	 }
 	 return true
@@ -531,13 +573,50 @@ function countDescendants(node,skipvisited) {
  *                    Tree node class functions                      *
  *********************************************************************/
 
+function findNodeTemplate(title,level,nodetemplate) {
+   var usertemplates=$tw.utils.parseStringArray(nodetemplate);
+   //If tiddler has a _tgr_node_template field, that is the template
+   var template = firstField("_tgr_node_template",[title]);
+
+   //If tiddler does not have individual template
+   //1. seek for template that matches level, if not found
+   //2. use generic template that has no level indication, if not found
+   //3. use tgr-default template
+   if (!template) {
+      //Seek level template
+      firstField("_tgr_node_level",usertemplates,function(val,field,title) {
+         var levels=$tw.utils.parseStringArray(val);
+         if (levels.indexOf( level.toString() ) !== -1) {
+            template = title;
+            return true;
+         }
+      });
+
+      //if not found, Seek template without level condition
+      if (!template) {
+         var len = usertemplates.length;
+         for(var i=0;i<len;i++) {
+            var tid = $tw.wiki.getTiddler(usertemplates[i]);
+            if (tid && !tid.hasField("_tgr_node_level")) {
+               template = usertemplates[i];
+               break;
+            }
+         }
+      }
+
+      //if not found, use default template
+      if (!template) template = "tgr-default"
+   }
+   return template;
+}
+
 /* Tree node functions
  * - Constructor
  * - addChild
  * - toString
 */
 //Tree node constructor
-function tnode(parent,id,widget) {
+function tnode(parent,id,level,widget) {
   if ( !(this instanceof tnode) )
           throw "Error: call new tnode(id="+id+")";
   this.parent = parent;
@@ -545,11 +624,21 @@ function tnode(parent,id,widget) {
   this.children = [];
   this.collapse = false;
   this.widget = widget;
+  this.template = undefined;
+  var template = findNodeTemplate(id,level,widget.nodetemplate);
+  //Add transcluder tiddler if a template is found
+  if (template !== "tgr-default") {
+        var text =  "{{"+   id + "||" + template +  "}}";
+        var title = "$:/temp/tidgraph/" + widget.tidtree.id + "/" + id;
+        this.transcluder = title;
+        this.template = template;
+        $tw.wiki.addTiddler( new $tw.Tiddler({"title": title, "text": text}) );
+  }
 }
 
 //Return child that was added
-tnode.prototype.addChild = function(id,widget) {
-  var ch =new tnode(this,id,widget)
+tnode.prototype.addChild = function(id,level,widget) {
+  var ch =new tnode(this,id,level,widget)
   this.children.push(ch)
   return ch;
 }

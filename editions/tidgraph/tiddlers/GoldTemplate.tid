@@ -1,0 +1,9 @@
+_tgr_node_class_add: my-gold-node
+_tgr_node_level: 2
+created: 20151116230444607
+modified: 20151116235650920
+tags: 
+title: GoldTemplate
+type: text/vnd.tiddlywiki
+
+<$link>{{!!title}}</$link>
