@@ -163,6 +163,8 @@ Error message and password prompt
 
 <li>Abstinence</li>
 
+<li>Advanced Node Templates</li>
+
 <li>Available Plugins</li>
 
 <li>Bible plugin</li>
@@ -172,8 +174,6 @@ Error message and password prompt
 <li>Chastity</li>
 
 <li>CloudTemplate</li>
-
-<li>CloudTemplate-0</li>
 
 <li>Continence</li>
 
@@ -195,11 +195,13 @@ Error message and password prompt
 
 <li>Humility</li>
 
+<li>IconTemplate</li>
+
 <li>Justice</li>
 
-<li>Meekness</li>
+<li>LightBulb.svg</li>
 
-<li>MyMode</li>
+<li>Meekness</li>
 
 <li>Node Template Demo Stylesheet</li>
 
@@ -220,6 +222,8 @@ Error message and password prompt
 <li>Sizes</li>
 
 <li>Sobriety</li>
+
+<li>SomeMode</li>
 
 <li>Temperance</li>
 
@@ -6503,7 +6507,7 @@ exports.run = function(text, tiddler) {
     }
 }</pre>
 </div>
-<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog documentation" plugin-type="plugin" source="https://ihm4u.github.io/tw5plugs" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.9.0-rc2">
+<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog documentation" plugin-type="plugin" source="https://ihm4u.github.io/tw5plugs" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.9.0-rc3">
 <pre>{
     &quot;tiddlers&quot;: {
         &quot;$:/plugins/ihm/tidgraph/changelog&quot;: {
@@ -6541,7 +6545,7 @@ exports.run = function(text, tiddler) {
             &quot;text&quot;: &quot;/*Eliminate border in table and cells*/\n.ihm-tgr-table {\n   border-collapse: collapse;\n   border: none;\n   background-color: transparent;\n   padding: 0;\n   margin: 0;\n}\n\n.ihm-tgr-tablediv {\n   /* We need this margin to prevent spurius vertical scroll\n   * in tgr-container. It needs to have the SAME pixel value\n   * as top and left in tgr-svg-int class so that the SVG\n   * arrows match properly (this assures same origin coordinates\n   * for table and svg)\n   */\n   margin: 10px; \n}\n\n.tgr-container table  td {\n   border: none;\n   background-color: transparent;\n}\n\n/*nice round box around tiddlers*/\n.tgr-container td  a  {\n \n}\n\n.tgr-container {\n   position:relative; \n   left:0px; \n   top:0px; \n   background-color: transparent;\n   overflow: auto; /* This is needed to scroll on big maps */\n   z-index:1;\n}\n.tgr-svg-int { \n\tz-index: -1;\n\tposition:absolute;\n\tbackground-color:transparent;\n\topacity: 1;\n   left: 10px;\n   top: 10px;\n}\n\n/* SVG arrows */\n.ihm-tgr-link {\n   fill: none;\n   stroke-width: 2;\n   stroke: #aeb0b5;\n}\n\n.tgr-arrow {\n   stroke-width: 0;\n   fill: #aeb0b5;\n}\n\n.ihm-tgr-node-container {\n   position: relative;\n   margin: 6px 10px;\n}\n\n.ihm-tgr-node-container p {\n   margin-top: 0px;\n   margin-bottom: 0px;\n}\n\n.ihm-tgr-node {\n   background-color: #dce4ef;\n   border-radius: 15px;\n   padding: 0.1em 0.4em;\n   /* border: 0px dashed #cd2026; */\n   box-shadow: 4px 4px 5px #888888;\n   text-align: center;\n   vertical-align: middle;\n   font-size: 1em;\n   color: #0071bc;\n}\n\n/* Collapse feature */\n.ihm-tgr-collapse {\n    position: absolute;\n    cursor: pointer;\n    color: white !important;\n    border-radius: 20px;\n    line-height: 14px;\n    width: 12px;\n    height: 15px;\n    background: #aeb0b5;\n    top: 50%;\n    transform: translateY(-50%);\n    -ms-transform: translateY(-50%);\n    -webkit-transform: translateY(-50%);\n    right: -14px;\n    font: 12px Arial, sans-serif;\n}\n\na.ihm-tgr-collapse:hover {\n    text-decoration: none;\n    background: #999999;\n}\n&quot;
         },
         &quot;$:/plugins/ihm/tidgraph/utils.js&quot;: {
-            &quot;text&quot;: &quot;/*\\\ntitle: $:/plugins/ihm/tidgraph/utils.js\ntype: application/javascript\nmodule-type: library\n\nInternal utility functions for tidgraph plugin.\n\n\\*/\n(function(){function u(a){var d=a.getBoundingClientRect(),b=document.body,c=document.documentElement,e=d.top-(a.scrollTop||window.pageYOffset||c.scrollTop||b.scrollTop)-(c.clientTop||b.clientTop||0);a=d.left-(a.scrollLeft||window.pageXOffset||c.scrollLeft||b.scrollLeft)-(c.clientLeft||b.clientLeft||0);return{top:e,left:a,width:d.width,height:d.height,right:a+d.width,bottom:e+d.height}}function p(a,d,b){b=b||function(a,b,d){if(a)return!0};a=$tw.utils.parseStringArray(a);for(var c=a.length,e=d.length,\nf=0;f&lt;e;f++)for(var k=0;k&lt;c;k++){var g=$tw.wiki.getTiddler(d[f]);if(g&amp;&amp;(g=g.getFieldString(a[k]),b(g,a[k],d[f])))return g}return\&quot;\&quot;}function x(a){var d=!1;return(a=p(\&quot;_tgr_node_class _tgr_node_class_add\&quot;,[a.id,a.template],function(a,c,e){if(a)return d=\&quot;_tgr_node_class_add\&quot;===c?!0:!1,!0}))&amp;&amp;\&quot;tgr-default\&quot;!==a?d?\&quot;ihm-tgr-node tgr-node \&quot;+a:a:\&quot;ihm-tgr-node tgr-node\&quot;}function w(a,d,b){var c;a=u(a);if(\&quot;string\&quot;===typeof b){if(c=document.querySelector(b),null==c)return null}else b instanceof HTMLElement&amp;&amp;(c=\nb);var e=u(c);b=e.bottom-a.top;c=e.left-a.left;var f=e.right-a.left;a=e.top-a.top;e=\&quot;\&quot;;switch(d.toUpperCase()){case \&quot;L\&quot;:e=[Math.round(c),Math.round(b/2+a/2)];break;case \&quot;R\&quot;:e=[Math.round(f),Math.round(b/2+a/2)];break;case \&quot;T\&quot;:e=[Math.round(f/2+c/2),Math.round(a)];break;case \&quot;B\&quot;:e=[Math.round(f/2+c/2),Math.round(b)]}return e}function y(a,d,b){var c;c=u(d);var e=u(b);c=4&gt;e.left+e.width/2-(c.left+c.width/2)?[\&quot;R\&quot;,\&quot;R\&quot;]:[\&quot;R\&quot;,\&quot;L\&quot;];e=w(a,c[0],d);a=w(a,c[1],b);var f,k,g=10;if(null==d||null==b)return error(\&quot;can't connect null element\&quot;);\nif(null==e)return error(\&quot;port not found for \&quot;+d.tagName+\&quot; - \&quot;+d.innerHTML);if(null==a)return error(\&quot;port not found for \&quot;+b.tagName+\&quot; - \&quot;+b.innerHTML);d=Math.abs(a[1]-e[1]);a[1]&gt;e[1]&amp;&amp;(f=d/2);a[1]&lt;e[1]&amp;&amp;(f=-d/2);5&gt;d&amp;&amp;(f=0);\&quot;L\&quot;==c[1]&amp;&amp;(k=-10);\&quot;R\&quot;==c[1]&amp;&amp;(k=10,g=20);return'&lt;path d=\&quot;M'+e[0]+\&quot;,\&quot;+e[1]+\&quot; Q\&quot;+(e[0]+g)+\&quot;,\&quot;+e[1]+\&quot;  \&quot;+(e[0]+g)+\&quot;,\&quot;+(e[1]+f)+\&quot; Q\&quot;+(e[0]+g)+\&quot;,\&quot;+a[1]+\&quot;  \&quot;+(a[0]+k)+\&quot;,\&quot;+a[1]+'\&quot; marker-end=\&quot;url(#tgr-arrow)\&quot;/&gt;'}function v(a,d){var b;switch(d.mode){case \&quot;tagging\&quot;:b=\&quot;[[\&quot;+a+\&quot;]tagging[]]+\&quot;+\nd.filter;break;case \&quot;linking\&quot;:b=\&quot;[[\&quot;+a+\&quot;]links[]!is[missing]]+\&quot;+d.filter;break;default:(b=$tw.wiki.getTiddlerText(d.mode))||(b=\&quot;tagging[]\&quot;),b=\&quot;[[\&quot;+a+\&quot;]\&quot;+b+\&quot;]+\&quot;+d.filter}return $tw.wiki.filterTiddlers(b)}function z(a,d,b){switch(b.mode.toLowerCase()){case \&quot;tagging\&quot;:return(b=$tw.wiki.getTiddler(a))?b.hasTag(d):!1;default:return b=v(d,b),-1!==b.indexOf(a)}}function A(a,d){function b(b,h){k=h;g=b;n=encodeURIComponent(k);r=encodeURIComponent(g);e=document.getElementById(d.id+\&quot;-\&quot;+n);f=document.getElementById(d.id+\n\&quot;-\&quot;+r);e&amp;&amp;f&amp;&amp;c.push(y(a,e,f))}var c=[],e,f,k,g,n,r;t(d.root,function(a,d,c){(d=a.parent)&amp;&amp;b(a.id,d.id)},{},{skipvisited:!0});for(var h=d.outliers.length,m=0;m&lt;h;m++)b(d.outliers[m][0],d.outliers[m][1],!0);return c.join(\&quot; \&quot;)}function t(a,d,b,c){c=c||{};var e=c.done||[],f=c.getCh||function(a){return a.collapse?[]:a.children},k=c.lvl||0,g=void 0===c.skipvisited?!0:c.skipvisited;c.leave=c.leave||!1;if(g&amp;&amp;-1!==e.indexOf(a))return b;e.push(a);f=f(a);g=f.length;b=b||{};c.lvl=k+1;c.done=e;if(!1===d(a,b,k))return c.leave=\n!0,b;for(a=0;a&lt;g;a++)if(b=t(f[a],d,b,c),c.leave)return b;c.lvl--;return b}function B(a,d,b,c){c=c||{};var e=c.getCh||function(a){return a.collapse?[]:a.children},f=c.getId||function(a){return a.id},k=void 0===c.skipvisited?!0:c.skipvisited,g=c.maxdepth||-1;b=b||{};var n=[],r=[],h=[],m=0;n.push(a);h[f(a)]=void 0;do{a=n.length;for(var p=0;p&lt;a;p++){var q=n.shift(),l;l=k?-1===r.indexOf(q)?!1:!0:!1;if(!l&amp;&amp;!1===d(q,h[f(q)],b,m))return b;r.push(q);l=e(q);n=n.concat(l);l&amp;&amp;l.forEach(function(a){var b=h[f(a)];\nb?f(b)!==f(q)&amp;&amp;c.outlier&amp;&amp;c.outlier(a,q):h[f(a)]=q})}m++}while(0!==n.length&amp;&amp;m&lt;=g);return b}function C(a,d){return t(a,function(a,d){d.cnt++;return!0},{cnt:0},{skipvisited:d}).cnt-1}function D(a,d,b){b=$tw.utils.parseStringArray(b);var c=p(\&quot;_tgr_node_template\&quot;,[a]);if(!c){p(\&quot;_tgr_node_level\&quot;,b,function(a,b,f){if(-1!==$tw.utils.parseStringArray(a).indexOf(d.toString()))return c=f,!0});if(!c){a=b.length;for(var e=0;e&lt;a;e++){var f=$tw.wiki.getTiddler(b[e]);if(f&amp;&amp;!f.hasField(\&quot;_tgr_node_level\&quot;)){c=b[e];\nbreak}}}c||(c=\&quot;tgr-default\&quot;)}return c}function l(a,d,b,c){if(!(this instanceof l))throw\&quot;Error: call new tnode(id=\&quot;+d+\&quot;)\&quot;;this.parent=a;this.id=d;this.children=[];this.collapse=!1;this.widget=c;this.template=void 0;a=D(d,b,c.nodetemplate);\&quot;tgr-default\&quot;!==a&amp;&amp;(this.transcluder=b=\&quot;$:/temp/tidgraph/\&quot;+c.tidtree.id+\&quot;/\&quot;+d,this.template=a,$tw.wiki.addTiddler(new $tw.Tiddler({title:b,text:\&quot;{{\&quot;+d+\&quot;||\&quot;+a+\&quot;}}\&quot;})),c.templatesInUse.push(a))}exports.buildTable=function(a,d){function b(a,b){return $tw.utils.domMaker(a,\n$tw.utils.extend(b,{document:d.document}))}var c=b(\&quot;table\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-table\&quot;,attributes:{id:d.id+\&quot;-table\&quot;}});(function(a){t(d.root,function(c,k,g){k=1+C(c,!0);var n=encodeURIComponent(c.id),l=p(d.tooltip,[c.id]),h;h=c.id;h=$tw.wiki.tiddlerExists(h)?d.nodetitle?p(d.nodetitle,[h]):p(\&quot;caption title\&quot;,[h]):h;if(g&gt;=d.startat){var m=$tw.wiki.tiddlerExists(c.id)?\&quot;tc-tiddlylink-resolves\&quot;:\&quot;tc-tiddlylink-missing\&quot;,m=\&quot;tc-tiddlylink \&quot;+m;g=x(c);c.template?g=b(\&quot;div\&quot;,{\&quot;class\&quot;:g,innerHTML:$tw.wiki.renderTiddler(\&quot;text/html\&quot;,\nc.transcluder)}):(h=b(\&quot;a\&quot;,{\&quot;class\&quot;:m,text:h,attributes:{href:\&quot;#\&quot;+n}}),g=b(\&quot;div\&quot;,{\&quot;class\&quot;:g,children:[h]}));!1===d.nocollapse&amp;&amp;c.children&amp;&amp;0&lt;c.children.length?(h=b(\&quot;a\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-collapse tc-tiddlylink\&quot;,text:c.collapse?\&quot;\\u2295\&quot;:\&quot;\\u2296\&quot;}),$tw.utils.addEventListeners(h,[{name:\&quot;click\&quot;,handlerObject:c,handlerMethod:\&quot;collapseClickEvent\&quot;}]),c=b(\&quot;div\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-node-container\&quot;,children:[g,h],attributes:{id:d.id+\&quot;-\&quot;+n,title:l}})):c=b(\&quot;div\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-node-container\&quot;,children:[g],attributes:{id:d.id+\n\&quot;-\&quot;+n,title:l}});c=b(\&quot;td\&quot;,{attributes:{rowspan:k},children:[c]});c=b(\&quot;tr\&quot;,{children:[c]});a.appendChild(c)}},{},{skipvisited:!0})})(c);return c};exports.error=function(a){return'&lt;span style=\&quot;color:green; font-size:1.5em\&quot;&gt;\\u26a0 Tidgraph: &lt;/span&gt;&lt;span style=\&quot;color:red\&quot;&gt;'+a+\&quot;&lt;/span&gt;\&quot;};exports.buildSVG=function(a,d){var b=document.getElementById(d.id+\&quot;-table\&quot;);if(b)return getComputedStyle(b),'&lt;svg  xmlns=\&quot;http://www.w3.org/2000/svg\&quot; height=\&quot;'+a.offsetHeight+'px\&quot; width=\&quot;'+a.offsetWidth+'px\&quot; style=\&quot;overflow: visible\&quot;&gt;&lt;g class=\&quot;ihm-tgr-link tgr-link\&quot; style=\&quot;overflow: visible\&quot;&gt; &lt;defs&gt; &lt;marker id=\&quot;tgr-arrow\&quot; viewBox=\&quot;0 0 10 10\&quot; refX=\&quot;1\&quot; refY=\&quot;5\&quot; markerUnits=\&quot;strokeWidth\&quot; orient=\&quot;auto\&quot; markerWidth=\&quot;8\&quot; markerHeight=\&quot;6\&quot;&gt; &lt;polyline class=\&quot;ihm-tgr-arrow tgr-arrow\&quot; points=\&quot;0,0 10,5 0,10 0,5\&quot; style=\&quot;opacity:1;\&quot; /&gt;&lt;/marker&gt;&lt;/defs&gt; '+\nA(a,d)+\&quot;&lt;/g&gt; &lt;/svg&gt;\&quot;};exports.isDescendant=function(a,d,b){if(z(a,d,b))return!0;var c=!1;t(d,function(b,d,k){if(b===a)return c=!0,!1},{},{skipvisited:!0,getCh:function(a){return v(a,b)}});return c};exports.makeTidTree=function(a,d,b){b=b||{};var c=!1;d.outliers=[];var e=new l(void 0,a,0,b.widget);B(a,function(a,c,d,e){if(c){a:{for(var l=d.visited,h=l.length,m=0;m&lt;h;m++)if(l[m].id===c){c=l[m];break a}c=void 0}a=c.addChild(a,e,b.widget);d.visited.push(a)}return!0},{visited:[e]},{getId:function(a){return a},\ngetCh:function(a){return v(a,d)},maxdepth:d.maxdepth,skipvisited:!0,outlier:function(a,b){c=!1;$tw.utils.each(d.outliers,function(d){d[0]===a&amp;&amp;d[1]===b&amp;&amp;(c=!0)});c||d.outliers.push([a,b])}});return e};l.prototype.addChild=function(a,d,b){a=new l(this,a,d,b);this.children.push(a);return a};l.prototype.toString=function(){return\&quot;tnode(id=\&quot;+this.id+\&quot;)\&quot;};l.prototype.collapseClickEvent=function(a){this.collapse=!this.collapse;console.log(this.id+\&quot; collapse=\&quot;,this.collapse,this.widget);this.widget.paint()}})();\n&quot;,
+            &quot;text&quot;: &quot;/*\\\ntitle: $:/plugins/ihm/tidgraph/utils.js\ntype: application/javascript\nmodule-type: library\n\nInternal utility functions for tidgraph plugin.\n\n\\*/\n(function(){function u(a){var c=a.getBoundingClientRect(),b=document.body,d=document.documentElement,e=c.top-(a.scrollTop||window.pageYOffset||d.scrollTop||b.scrollTop)-(d.clientTop||b.clientTop||0);a=c.left-(a.scrollLeft||window.pageXOffset||d.scrollLeft||b.scrollLeft)-(d.clientLeft||b.clientLeft||0);return{top:e,left:a,width:c.width,height:c.height,right:a+c.width,bottom:e+c.height}}function p(a,c,b){b=b||function(a,b,c){if(a)return!0};a=$tw.utils.parseStringArray(a);for(var d=a.length,e=c.length,\nf=0;f&lt;e;f++)for(var k=0;k&lt;d;k++){var g=$tw.wiki.getTiddler(c[f]);if(g&amp;&amp;(g=g.getFieldString(a[k]),b(g,a[k],c[f])))return g}return\&quot;\&quot;}function x(a){var c=!1;return(a=p(\&quot;_tgr_node_class _tgr_node_class_add\&quot;,[a.id,a.template],function(a,d,e){if(a)return c=\&quot;_tgr_node_class_add\&quot;===d?!0:!1,!0}))&amp;&amp;\&quot;tgr-default\&quot;!==a?c?\&quot;ihm-tgr-node tgr-node \&quot;+a:a:\&quot;ihm-tgr-node tgr-node\&quot;}function w(a,c,b){var d;a=u(a);if(\&quot;string\&quot;===typeof b){if(d=document.querySelector(b),null==d)return null}else b instanceof HTMLElement&amp;&amp;(d=\nb);var e=u(d);b=e.bottom-a.top;d=e.left-a.left;var f=e.right-a.left;a=e.top-a.top;e=\&quot;\&quot;;switch(c.toUpperCase()){case \&quot;L\&quot;:e=[Math.round(d),Math.round(b/2+a/2)];break;case \&quot;R\&quot;:e=[Math.round(f),Math.round(b/2+a/2)];break;case \&quot;T\&quot;:e=[Math.round(f/2+d/2),Math.round(a)];break;case \&quot;B\&quot;:e=[Math.round(f/2+d/2),Math.round(b)]}return e}function y(a,c,b){var d;d=u(c);var e=u(b);d=4&gt;e.left+e.width/2-(d.left+d.width/2)?[\&quot;R\&quot;,\&quot;R\&quot;]:[\&quot;R\&quot;,\&quot;L\&quot;];e=w(a,d[0],c);a=w(a,d[1],b);var f,k,g=10;if(null==c||null==b)return error(\&quot;can't connect null element\&quot;);\nif(null==e)return error(\&quot;port not found for \&quot;+c.tagName+\&quot; - \&quot;+c.innerHTML);if(null==a)return error(\&quot;port not found for \&quot;+b.tagName+\&quot; - \&quot;+b.innerHTML);c=Math.abs(a[1]-e[1]);a[1]&gt;e[1]&amp;&amp;(f=c/2);a[1]&lt;e[1]&amp;&amp;(f=-c/2);5&gt;c&amp;&amp;(f=0);\&quot;L\&quot;==d[1]&amp;&amp;(k=-10);\&quot;R\&quot;==d[1]&amp;&amp;(k=10,g=20);return'&lt;path d=\&quot;M'+e[0]+\&quot;,\&quot;+e[1]+\&quot; Q\&quot;+(e[0]+g)+\&quot;,\&quot;+e[1]+\&quot;  \&quot;+(e[0]+g)+\&quot;,\&quot;+(e[1]+f)+\&quot; Q\&quot;+(e[0]+g)+\&quot;,\&quot;+a[1]+\&quot;  \&quot;+(a[0]+k)+\&quot;,\&quot;+a[1]+'\&quot; marker-end=\&quot;url(#tgr-arrow)\&quot;/&gt;'}function v(a,c){var b;switch(c.mode){case \&quot;tagging\&quot;:b=\&quot;[[\&quot;+a+\&quot;]tagging[]]+\&quot;+\nc.filter;break;case \&quot;linking\&quot;:b=\&quot;[[\&quot;+a+\&quot;]links[]!is[missing]]+\&quot;+c.filter;break;default:b=\&quot;[[\&quot;+a+\&quot;]\&quot;+c.mode+\&quot;]+\&quot;+c.filter}return $tw.wiki.filterTiddlers(b)}function z(a,c,b){switch(b.mode.toLowerCase()){case \&quot;tagging\&quot;:return(b=$tw.wiki.getTiddler(a))?b.hasTag(c):!1;default:return b=v(c,b),-1!==b.indexOf(a)}}function A(a,c){function b(b,h){k=h;g=b;m=encodeURIComponent(k);r=encodeURIComponent(g);e=document.getElementById(c.id+\&quot;-\&quot;+m);f=document.getElementById(c.id+\&quot;-\&quot;+r);e&amp;&amp;f&amp;&amp;d.push(y(a,e,f))}var d=\n[],e,f,k,g,m,r;t(c.root,function(a,c,d){(c=a.parent)&amp;&amp;b(a.id,c.id)},{},{skipvisited:!0});for(var h=c.outliers.length,n=0;n&lt;h;n++)b(c.outliers[n][0],c.outliers[n][1],!0);return d.join(\&quot; \&quot;)}function t(a,c,b,d){d=d||{};var e=d.done||[],f=d.getCh||function(a){return a.collapse?[]:a.children},k=d.lvl||0,g=void 0===d.skipvisited?!0:d.skipvisited;d.leave=d.leave||!1;if(g&amp;&amp;-1!==e.indexOf(a))return b;e.push(a);f=f(a);g=f.length;b=b||{};d.lvl=k+1;d.done=e;if(!1===c(a,b,k))return d.leave=!0,b;for(a=0;a&lt;g;a++)if(b=\nt(f[a],c,b,d),d.leave)return b;d.lvl--;return b}function B(a,c,b,d){d=d||{};var e=d.getCh||function(a){return a.collapse?[]:a.children},f=d.getId||function(a){return a.id},k=void 0===d.skipvisited?!0:d.skipvisited,g=d.maxdepth||-1;b=b||{};var m=[],r=[],h=[],n=0;m.push(a);h[f(a)]=void 0;do{a=m.length;for(var p=0;p&lt;a;p++){var q=m.shift(),l;l=k?-1===r.indexOf(q)?!1:!0:!1;if(!l&amp;&amp;!1===c(q,h[f(q)],b,n))return b;r.push(q);l=e(q);m=m.concat(l);l&amp;&amp;l.forEach(function(a){var b=h[f(a)];b?f(b)!==f(q)&amp;&amp;d.outlier&amp;&amp;\nd.outlier(a,q):h[f(a)]=q})}n++}while(0!==m.length&amp;&amp;n&lt;=g);return b}function C(a,c){return t(a,function(a,c){c.cnt++;return!0},{cnt:0},{skipvisited:c}).cnt-1}function D(a,c,b){function d(a,b){if(-1!==$tw.utils.parseStringArray(b).indexOf(c.toString()))return!0}b=$tw.utils.parseStringArray(b);var e=p(\&quot;_tgr_node_template\&quot;,[a]),f=[];$tw.utils.each(b,function(b){var c=$tw.wiki.getTiddler(b),c=c?c.getFieldString(\&quot;_tgr_node_filter\&quot;):\&quot;\&quot;,d=$tw.wiki.filterTiddlers(c);c&amp;&amp;-1===d.indexOf(a)&amp;&amp;f.push(b)});0&lt;f.length&amp;&amp;\n$tw.utils.removeArrayEntries(b,f);e||p(\&quot;_tgr_node_filter\&quot;,b,function(b,c,f){c=$tw.wiki.filterTiddlers(b);if(b&amp;&amp;-1!==c.indexOf(a))if(b=$tw.wiki.getTiddler(f).getFieldString(\&quot;_tgr_node_level\&quot;)){if(d(f,b))return e=f,!0}else return e=f,!0});e||p(\&quot;_tgr_node_level\&quot;,b,function(a,b,c){if(d(c,a))return e=c,!0});if(!e)for(var k=b.length,g=0;g&lt;k;g++){var m=$tw.wiki.getTiddler(b[g]);if(m&amp;&amp;!m.hasField(\&quot;_tgr_node_level\&quot;)&amp;&amp;!m.hasField(\&quot;_tgr_node_filter\&quot;)){e=b[g];break}}e||(e=\&quot;tgr-default\&quot;);return e}function l(a,\nc,b,d){if(!(this instanceof l))throw\&quot;Error: call new tnode(id=\&quot;+c+\&quot;)\&quot;;this.parent=a;this.id=c;this.children=[];this.collapse=!1;this.widget=d;this.template=void 0;a=D(c,b,d.nodetemplate);\&quot;tgr-default\&quot;!==a&amp;&amp;(this.transcluder=b=\&quot;$:/temp/tidgraph/\&quot;+d.tidtree.id+\&quot;/\&quot;+c,this.template=a,$tw.wiki.addTiddler(new $tw.Tiddler({title:b,text:\&quot;{{\&quot;+c+\&quot;||\&quot;+a+\&quot;}}\&quot;})),-1===d.templatesInUse.indexOf(a)&amp;&amp;d.templatesInUse.push(a))}exports.buildTable=function(a,c){function b(a,b){return $tw.utils.domMaker(a,$tw.utils.extend(b,\n{document:c.document}))}var d=b(\&quot;table\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-table\&quot;,attributes:{id:c.id+\&quot;-table\&quot;}});(function(a){t(c.root,function(d,k,g){k=1+C(d,!0);var m=encodeURIComponent(d.id),l=p(c.tooltip,[d.id]),h;h=d.id;h=$tw.wiki.tiddlerExists(h)?c.nodetitle?p(c.nodetitle,[h]):p(\&quot;caption title\&quot;,[h]):h;if(g&gt;=c.startat){var n=$tw.wiki.tiddlerExists(d.id)?\&quot;tc-tiddlylink-resolves\&quot;:\&quot;tc-tiddlylink-missing\&quot;,n=\&quot;tc-tiddlylink \&quot;+n;g=x(d);d.template?g=b(\&quot;div\&quot;,{\&quot;class\&quot;:g,innerHTML:$tw.wiki.renderTiddler(\&quot;text/html\&quot;,d.transcluder)}):\n(h=b(\&quot;a\&quot;,{\&quot;class\&quot;:n,text:h,attributes:{href:\&quot;#\&quot;+m}}),g=b(\&quot;div\&quot;,{\&quot;class\&quot;:g,children:[h]}));!1===c.nocollapse&amp;&amp;d.children&amp;&amp;0&lt;d.children.length?(h=b(\&quot;a\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-collapse tc-tiddlylink\&quot;,text:d.collapse?\&quot;\\u2295\&quot;:\&quot;\\u2296\&quot;}),$tw.utils.addEventListeners(h,[{name:\&quot;click\&quot;,handlerObject:d,handlerMethod:\&quot;collapseClickEvent\&quot;}]),d=b(\&quot;div\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-node-container\&quot;,children:[g,h],attributes:{id:c.id+\&quot;-\&quot;+m,title:l}})):d=b(\&quot;div\&quot;,{\&quot;class\&quot;:\&quot;ihm-tgr-node-container\&quot;,children:[g],attributes:{id:c.id+\n\&quot;-\&quot;+m,title:l}});d=b(\&quot;td\&quot;,{attributes:{rowspan:k},children:[d]});d=b(\&quot;tr\&quot;,{children:[d]});a.appendChild(d)}},{},{skipvisited:!0})})(d);return d};exports.error=function(a){return'&lt;span style=\&quot;color:green; font-size:1.5em\&quot;&gt;\\u26a0 Tidgraph: &lt;/span&gt;&lt;span style=\&quot;color:red\&quot;&gt;'+a+\&quot;&lt;/span&gt;\&quot;};exports.buildSVG=function(a,c){var b=document.getElementById(c.id+\&quot;-table\&quot;);if(b)return getComputedStyle(b),'&lt;svg  xmlns=\&quot;http://www.w3.org/2000/svg\&quot; height=\&quot;'+a.offsetHeight+'px\&quot; width=\&quot;'+a.offsetWidth+'px\&quot; style=\&quot;overflow: visible\&quot;&gt;&lt;g class=\&quot;ihm-tgr-link tgr-link\&quot; style=\&quot;overflow: visible\&quot;&gt; &lt;defs&gt; &lt;marker id=\&quot;tgr-arrow\&quot; viewBox=\&quot;0 0 10 10\&quot; refX=\&quot;1\&quot; refY=\&quot;5\&quot; markerUnits=\&quot;strokeWidth\&quot; orient=\&quot;auto\&quot; markerWidth=\&quot;8\&quot; markerHeight=\&quot;6\&quot;&gt; &lt;polyline class=\&quot;ihm-tgr-arrow tgr-arrow\&quot; points=\&quot;0,0 10,5 0,10 0,5\&quot; style=\&quot;opacity:1;\&quot; /&gt;&lt;/marker&gt;&lt;/defs&gt; '+\nA(a,c)+\&quot;&lt;/g&gt; &lt;/svg&gt;\&quot;};exports.isDescendant=function(a,c,b){if(z(a,c,b))return!0;var d=!1;t(c,function(b,c,k){if(b===a)return d=!0,!1},{},{skipvisited:!0,getCh:function(a){return v(a,b)}});return d};exports.makeTidTree=function(a,c,b){b=b||{};var d=!1;c.outliers=[];var e=new l(void 0,a,0,b.widget);B(a,function(a,c,d,e){if(c){a:{for(var l=d.visited,h=l.length,n=0;n&lt;h;n++)if(l[n].id===c){c=l[n];break a}c=void 0}a=c.addChild(a,e,b.widget);d.visited.push(a)}return!0},{visited:[e]},{getId:function(a){return a},\ngetCh:function(a){return v(a,c)},maxdepth:c.maxdepth,skipvisited:!0,outlier:function(a,b){d=!1;$tw.utils.each(c.outliers,function(c){c[0]===a&amp;&amp;c[1]===b&amp;&amp;(d=!0)});d||c.outliers.push([a,b])}});return e};l.prototype.addChild=function(a,c,b){a=new l(this,a,c,b);this.children.push(a);return a};l.prototype.toString=function(){return\&quot;tnode(id=\&quot;+this.id+\&quot;)\&quot;};l.prototype.collapseClickEvent=function(a){this.collapse=!this.collapse;console.log(this.id+\&quot; collapse=\&quot;,this.collapse,this.widget);this.widget.paint()}})();\n&quot;,
             &quot;title&quot;: &quot;$:/plugins/ihm/tidgraph/utils.js&quot;,
             &quot;type&quot;: &quot;application/javascript&quot;,
             &quot;module-type&quot;: &quot;library&quot;
@@ -6554,7 +6558,7 @@ exports.run = function(text, tiddler) {
             &quot;text&quot;: &quot;iVBORw0KGgoAAAANSUhEUgAAAKIAAADPCAMAAABBRvqtAAAC/VBMVEWBoPCHiYaIioeKjImLjYqMjouNj4ySlJGVk5eUlpOTmJp1mPR+l/V1m/F9mfCWm52FmPF/m/KYnZ+AnPN5n/WcnpuJm/SAn++CnvWdn5yRmvWboKKJnvCXmvF6o/KfoZ6DofKKn/JzpvN8pPOEovOSnvJ9pfSho6CFo/SDpe58p++bnvSOovWmo6iVofWcn/WFp/CNpfCkpqOGqPGlp6SVpPF/q/J4rfSjqKujofKWpfOdo/OHq+6JqvSCrfWRqfWfpfWBr/Cpq6iCsPGQrPCyovClpvB8tPOurLCEsvOtpvK0pPOMsPOarfOhq/O1pfSwrrKLs++pqvWwqPWjrPWEtvCxr7Ovr7mssbO7p/B+ufKysLSzsbWOtvKwrPGHufO3q/KGu+61s7e/q/Wutr6zr/Wxtrm0trO3tbm4sPC1t7S2uLXAsPK3uba7svK7uL21ur28s/O2u77CsvSZv+6Swe+5u7iLxPC6vLm4t/W9u7+7vbqiv/CLx+ywvPC8vru/vcHKtfLEt/K6v8KWxfLBvsONyu+VyO/GufS6wsqPzPHMu/CYy/LFwsemx/G/xMbCxMHAxcjDxcKXzu3Iv/PExsPPvvTJwPTDwvPCx8qZ0O/Ixsqa0fHEyczJxPDKyMzRxPKh0+3FyPLMx/Ow0O2q0u7EzdXTxvWj1e/OzNDJztDSyfDQzdHKz9HI0NjHzvHO0MzNzfHUy/Ku1/LP0c651e3PzvPT0NXQ0s/WzfSt2u/K0fTO09bR09DH0+7XzvXV0O/S1NHcz/DT1dLQ0/C92fHX0vHU1tO43PLC2uzY0/PS1fLP2ODS2Nq93e3W2NXZ1PTc1O7Q2eHa2NzX1+/S2uLY2ta/4PDH3/HF4ezb2vLO3vHe2+DY3eDb3drW3uff2+3c3tvM4e3I5O/b3+/e4N3c4PDQ5PDZ4uri4OTc4uTR5fHa4+vY5PPb5Ozd5e7j5eHk5uPn5enf5/Dp5uvj6Ovm6OXk6ezn6ebo6ufi6/Pp6+jj7PTm7O7k7fWGi86GAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAAHdElNRQffChgGLRopZLysAAAAHWlUWHRDb21tZW50AAAAAABDcmVhdGVkIHdpdGggR0lNUGQuZQcAAAr0SURBVHja7Z0PcBRXGcA3/ROsQeVakFTqNAhJz0SBoBNtaFGSgprA9GrJMyUJ0rOGaqkXUQumVi5cGyp4hpQibZg2tNrCHKWlYWyHemi96IlTj5lOW5CSAF6Ou3rJLUzwD5Yu4+57e7nb3bd72cu+69fxvmGG3J95+c292337/fK9bzkuH/nIRz7ykY98/J/Ee2d503H2vdzxXeKzjvO5ITzPTyBG/gWdkOff+fsFRmCDFswyib/2n2OD6EX7yA/03xucbCsubkjgn3ffJv4f+HRMj/HxQ+cYISICqYNYEk57FKkeMkDsur//AitECfJdI8TTSyrtLbFdtSuLlv521vKZ845T3/t8zSMnGRDGmxGJkQyfYnTuK7tqX5s9FLAd5hf3UN97atrq/dZ/jCF0NyH08QbfxR9Flld+acoegihO9B3b6IiTarafsZpQQHE80T7OeKJ3LBqOzs2I+Gzh/A1HrUbs9kvfRR+X6XB5uCFxcDJGDBsg3nXFDev/bPWH6BQPFx/HZUR8s9Te8p15j9VGKha+oI84gwGiz2/d4sLzPytgMNFI8WhkYoRvFV5m/eESdyke/uedCRF+rOBK6086inkW4+RbE5jlwoIrrqrZavWpu21U+fhC/+Ndz58yj3fq2btmFFx25VWft34BROonzh1aXzNtUuHlBabj8sJJ02ru/4PVlxFxt+apc/1bV9fMv/7aaSbj2uvn16x+xPqLMb9P+9yFk/u3b7jv3nu+ayruufe+Ddv3n7R+ffaGaM/++8zR/kP7Tcah/qNnWFyHIUHvlYv/NRkXGaUECHzGLMBHDHnBI/p6wSPSD2hQwqRtELww0Z5zwAkTDSI4YZI85wAWJqNoPMJESl2iNz41PkarhUnIOR5hYgrRamGSPHMbC5Mk4vfs9q/FArOWzaw6zv9Y/DmcC2HiI4iDxsIkONlmsxU91SdmpvWbAx89zNc/cPCmGL+qMxfChOTPHtRsKEzkT7FjRUJM918VQR9u2PiRysrKB3MhTPDi4nFzxsJEg9jRsFG2jeyFSauI6HNyGYSJjChNdJ040Uf42zsPTg/zq/bkQpigEDl7GwuT5OHyfbv9tlhg+rLPVIWlw6UllgthIuL53OYWFwNBy0SYiIgobk6YGCNaLkwEJMSdHGhhIiL2qpNUYMJEvIpojXOghckooqRXsIRJCPldHGxhEkJeii8BJUxCqHWQgy1MQm59XwJEmPgeAi8jvGvhI94N3pd4neB9ibeZ6ksgCRMvoiDCEiYeyjkHmDBBFisdBsIEJc85cIXJGKK+MHm92mZrCasvtXGZSU6EiSOFqCNMIhWbEtG6TdpsIFI9lBNh4nByGYRJXxlmC+CKElJiEpy9pPxJqcykbpv0whBbYeIgV4v+7iY9YbKlFs/oWEVJdO4rwSnP8LhAYu+8GL/mAcbCBCP6EfK69IRJEhEXGpASEymrxojRigOR0mOMhYmE+ITkIXSFSd+sWAqRlJgEZw8RRH5Lw6+03sRiYSIi+nEerStMIhXrEtFvbyKIpMQkiRjm3y6tPsBamDh2CmQJ1Bcmry+wFbfIRS+kxOR3GDFSsTDMf6s8xlqYIJ/bNYHFJVrXw1qYCGgnUqfRJipMtlz3w2HWwkRA7U71c8CEiYCatDkqLGEiIM08QxMmQiMtuwIlTP6JmmlPQxImA6id+jwgYTLQ6NZ5BYwwGUA7DV4FIUyMEUHEG+g56Igvo5fziKZdh9pp6CIyFCaXzDkNOiJTYXLepNNwoWwHyVaYnDfrNFobLSbMJEwumXYajU1cboWJ9IY6XAuwt+xpfaGRchou1MvpC5NA0dRrqlT7RW7tmViFSUoe1G02lhpd66VLum7UlCYaNcIkIKant68zj2ggTN4l+1H28HzwuuO7aiWtsbJo6Yvlw9LAuB7k9HK7/eZj2GlsXdvViBpHFYgqYSIhbmyQhiFjRL9uXzpHHilQhnfkPGq33/Q3da2JgTA5O2YP1twp5blTnuHFjPf3eHhSD7J7UYJ/8TfYaXx4xhcbv4G0MaJAjNzYKdkRMsbesljkE/JIUpXJ4p6gmEr/4M6XVLUmBsKEIJ4uPSz+kxBLwinEDlwP8vacm3/yF+I0PnT1Z7+K2kNjQREmgaLikpaYZEfkMVYk+Hp5JJJW/xLLlA5VrYmBMJHnaM26XYuGZaEhI4oDy17jjz/9+M+TTqPXgTzKiVYKkwBWJZJ6kMcgiHgkBaLKmRgJE7nUwr5A/DomEcPiLzotTg+uB9n7a/GLIA0oOw3UmI6oFiYpRDLG7rLUSAQxOPUYv+UrL6lqTYyEifyW+k/FkoiRioUnlpTc8uUeUg/yZrW98nN/SjmNN1KpC0WYpBCjeIxoXcktC7aRkeRNQ4/OnFl1RF1rYiRMxr0ujDmNpkarF5dMwmScriPlNGhrNNstOeNzHWlOowuNZjlI1sJkPK4j3WlQL8bYCpNMrkPtNKiIjIVJZtehcBr0S1rGwiST61A6DZ3EgLEwMXYdKqcxgJ54X4SJoetQOg39VJ+9MLk4PqcxgLrhC5N26Kn+P5ALOqKAEHxEhwAfEXqFiYCcnhwLE/OIXpRbYZIFYq/Tl0thks2fKZ/zkzIYwBUmHs7l0REmyb+WzilSK4jd47ExliG6xMn2cMZbcpRdNnQrSxhVmODVxYn2CUZbchb3kFyf+JaVRUufrE1QVQmTChOyAPqowkSDSHyLmLVKwoimSphUmCTXaGGtwZacJCLxLRhxB1WVMKkwQQ59YaJCrO8hviUdkbotx+IKk3REeoXJqk2RTx4gxoT4ltdmh8WJpqoSJhUmKUS9CpNXS23fHCbGhPiWSMXCx8TDhaZK2FSYOCze72n9lpxm7cUYtB4mXkc8x8IkC8RQjoWJeUSnP9fCxDyiN+fCxCyiqy33wsQkYjt6P4SJmQjpbSYBtCWnjeJpQQkTLoTcIeCJdAj1Qt/wMoji0JWJgAz66YBBpH4ZAW3JEZDg94AWJtL+aM2mVGg9TMRvossHWphIW8zjraCFCW4n4NqnI0zSW73SXQmtnMPqHibS8TyKBunCRNnqVXYlCmFCQ7S6hwlubRFH+9w0YSIj4s4lcsEK3oqjrThh2cPEi9e/uJMqTAgi6VwSJAUruFpAW3HCsodJshOMmyZMSKtX0hZELlhJQ0yvOGHZwyTkMRAm5FOUEUnByhiisuKEZQ+TQWQgTFITXbc5SApWSMdXTcUJyx4mybWFKkzkwwV3LgmSghXc8fWEpuKEZQ8Ta5c/Jj1MtNdi8Jq+anIXeE1ftT3vwDV99fqBCxNq/0VoTV/jbcCFiU6jTWBNXxFwYSKGKw5bmIjRC92YfCBaqgqt4BE/AO19Oe8gaGGCv4y9sIUJZaYh3iVHeWYEeZecwW74d8lxCkphsqp4ctHUqliWjEzukhNqUwsT8lf77ILNXXLcnoeUwkRCxCakb96ya35RPfVIeqdXyZ2cwN1MqDtzGN0lx60SJiIiMSF908Md5bE7OtM7vUruhHQzoe7MYXOXHI0wERGJCekrT+xoSKzpDKR1epXSa9LNhLozh8ldcrTCRELEJqTvC4kdK2TEZKdXKesn3UyoO3OY3CVHK0ykicYmZAwxrdOrhEi6mVB35rC4Sw5FmMiHS0tsDDGt06uESLqZvEDbmTODEWKmxSVDp1emwkQTIxNDZHKXHPDCRBsA75IDXphQAtxdcjjwwoQ+17CECQdfmOgHGGGSj3zkIx/5yAct/gfhibVPlKNM1wAAAABJRU5ErkJggg==\n&quot;
         },
         &quot;$:/plugins/ihm/widgets/tidgraph.js&quot;: {
-            &quot;text&quot;: &quot;/*\\\ntitle: $:/plugins/ihm/widgets/tidgraph.js\ntype: application/javascript\nmodule-type: widget\n\nTidgraph widget to render HTML5/SVG graph of tiddlers\n\n\\*/\n(function(){var e=require(\&quot;$:/core/modules/widgets/widget.js\&quot;).widget,c=function(b,f){this.initialise(b,f)},d=require(\&quot;$:/plugins/ihm/tidgraph/utils.js\&quot;);c.prototype=new e;c.prototype.render=function(b,f){this.tidtree&amp;&amp;this.delTempTiddlers();this.parentDomNode=b;this.nextSiblingDomNode=f;this.templatesInUse=[];this.computeAttributes();this.execute();this.tidtree=[];this.tidtree.mode=this.mode;this.tidtree.maxdepth=this.maxdepth;this.tidtree.startat=this.startat;this.tidtree.nodetitle=this.nodetitle;\nthis.tidtree.tooltip=this.tooltip;this.tidtree.filter=this.filter;this.tidtree.nocollapse=this.nocollapse;this.tidtree.document=this.document;this.tidtree.nodetemplate=this.nodetemplate;this.tidtree.id=(new Date).valueOf();if($tw.wiki.getTiddler(this.startTid)){this.div=this.document.createElement(\&quot;div\&quot;);this.div.className=\&quot;tgr-container tgr\&quot;;this.tablediv=this.document.createElement(\&quot;div\&quot;);this.tablediv.className=\&quot;ihm-tgr-tablediv\&quot;;this.table=void 0;this.div.appendChild(this.tablediv);this.svgdiv=\nthis.document.createElement(\&quot;div\&quot;);this.svgdiv.className=\&quot;tgr-svg-int\&quot;;this.div.appendChild(this.svgdiv);this.parentDomNode.insertBefore(this.div,this.nextSiblingDomNode);this.domNodes.push(this.div);this.tidtree.root=d.makeTidTree(this.startTid,this.tidtree,{widget:this});this.paint();var a=this,c=function(){a.svgdiv.innerHTML=d.buildSVG(a.tablediv,a.tidtree);a.oldresize&amp;&amp;a.oldresize()},e=function(){a.svgdiv.innerHTML=d.buildSVG(a.tablediv,a.tidtree)};this.div.onscroll=function(){a.scroll_to||clearTimeout(a.scroll_to);\na.scroll_to=setTimeout(e,100)};this.onresize_updated||(window.onresize&amp;&amp;void 0==this.oldresize&amp;&amp;(this.oldresize=window.onresize),window.onresize=function(){a.resize_to||clearTimeout(a.resize_to);a.resize_to=setTimeout(c,100)},this.onresize_updated=!0)}};c.prototype.delTempTiddlers=function(){var b=$tw.wiki.filterTiddlers(\&quot;[prefix[$:/temp/tidgraph/\&quot;+this.tidtree.id+\&quot;]]\&quot;);$tw.utils.each(b,function(b){$tw.wiki.deleteTiddler(b)})};c.prototype.paint=function(){this.sidebar=$tw.wiki.getTiddlerText(\&quot;$:/state/sidebar\&quot;);\nvar b=d.buildTable(this.startTid,this.tidtree);this.table?this.tablediv.replaceChild(b,this.table):this.tablediv.appendChild(b);this.svgdiv.innerHTML=d.buildSVG(this.tablediv,this.tidtree);this.table=b};c.prototype.execute=function(){this.startTid=this.getAttribute(\&quot;start\&quot;);this.mode=this.getAttribute(\&quot;mode\&quot;,\&quot;tagging\&quot;);this.maxdepth=parseInt(this.getAttribute(\&quot;maxdepth\&quot;,\&quot;10\&quot;));this.startat=this.getAttribute(\&quot;startat\&quot;,\&quot;0\&quot;);this.nodetitle=this.getAttribute(\&quot;nodetitle\&quot;);this.tooltip=this.getAttribute(\&quot;tooltip\&quot;,\n\&quot;summary\&quot;);this.filter=this.getAttribute(\&quot;filter\&quot;,\&quot;[!is[system]]\&quot;);this.nocollapse=this.hasAttribute(\&quot;nocollapse\&quot;);this.nodetemplate=this.getAttribute(\&quot;nodetemplate\&quot;,\&quot;\&quot;)};c.prototype.refresh=function(b){var c=!1,a;this.computeAttributes();this.execute();for(a in b)if((b=document.getElementById(this.tidtree.id+\&quot;-\&quot;+encodeURIComponent(a))||d.isDescendant(a,this.startTid,this.tidtree)||-1!==this.templatesInUse.indexOf(a))||(b=(b=$tw.wiki.getTiddler(a))&amp;&amp;b.hasTag(\&quot;$:/tags/Stylesheet\&quot;)?!0:!1),b){c=!0;break}$tw.wiki.getTiddlerText(\&quot;$:/state/sidebar\&quot;)!==\nthis.sidebar&amp;&amp;(c=!0);return c?(this.refreshSelf(),!0):!1};exports.tidgraph=c})();\n&quot;,
+            &quot;text&quot;: &quot;/*\\\ntitle: $:/plugins/ihm/widgets/tidgraph.js\ntype: application/javascript\nmodule-type: widget\n\nTidgraph widget to render HTML5/SVG graph of tiddlers\n\n\\*/\n(function(){var f=require(\&quot;$:/core/modules/widgets/widget.js\&quot;).widget,a=function(g,a){this.initialise(g,a)},d=require(\&quot;$:/plugins/ihm/tidgraph/utils.js\&quot;);a.prototype=new f;a.prototype.render=function(g,a){this.tidtree&amp;&amp;this.delTempTiddlers();this.parentDomNode=g;this.nextSiblingDomNode=a;this.computeAttributes();this.execute();if(-1===[\&quot;tagging\&quot;,\&quot;linking\&quot;].indexOf(this.mode)){var e=$tw.wiki.filterTiddlers(\&quot;[_tgr_mode[\&quot;+this.mode+\&quot;]!has[draft.of]]\&quot;);e.length&amp;&amp;$tw.wiki.tiddlerExists(e[0])&amp;&amp;(this.mode=\n$tw.wiki.getTiddlerText(e[0]))}this.tidtree=[];this.tidtree.mode=this.mode;this.tidtree.maxdepth=this.maxdepth;this.tidtree.startat=this.startat;this.tidtree.nodetitle=this.nodetitle;this.tidtree.tooltip=this.tooltip;this.tidtree.filter=this.filter;this.tidtree.nocollapse=this.nocollapse;this.tidtree.document=this.document;this.tidtree.nodetemplate=this.nodetemplate;this.templatesInUse=$tw.utils.parseStringArray(this.nodetemplate);this.tidtree.id=(new Date).valueOf();if($tw.wiki.getTiddler(this.startTid)){this.div=\nthis.document.createElement(\&quot;div\&quot;);this.div.className=\&quot;tgr-container tgr\&quot;;this.tablediv=this.document.createElement(\&quot;div\&quot;);this.tablediv.className=\&quot;ihm-tgr-tablediv\&quot;;this.table=void 0;this.div.appendChild(this.tablediv);this.svgdiv=this.document.createElement(\&quot;div\&quot;);this.svgdiv.className=\&quot;tgr-svg-int\&quot;;this.div.appendChild(this.svgdiv);this.parentDomNode.insertBefore(this.div,this.nextSiblingDomNode);this.domNodes.push(this.div);this.tidtree.root=d.makeTidTree(this.startTid,this.tidtree,{widget:this});\nthis.paint();var b=this,c=function(){b.svgdiv.innerHTML=d.buildSVG(b.tablediv,b.tidtree);b.oldresize&amp;&amp;b.oldresize()},h=function(){b.svgdiv.innerHTML=d.buildSVG(b.tablediv,b.tidtree)};this.div.onscroll=function(){b.scroll_to||clearTimeout(b.scroll_to);b.scroll_to=setTimeout(h,100)};this.onresize_updated||(window.onresize&amp;&amp;void 0==this.oldresize&amp;&amp;(this.oldresize=window.onresize),window.onresize=function(){b.resize_to||clearTimeout(b.resize_to);b.resize_to=setTimeout(c,100)},this.onresize_updated=!0)}};\na.prototype.delTempTiddlers=function(){var a=$tw.wiki.filterTiddlers(\&quot;[prefix[$:/temp/tidgraph/\&quot;+this.tidtree.id+\&quot;]]\&quot;);$tw.utils.each(a,function(a){$tw.wiki.deleteTiddler(a)})};a.prototype.paint=function(){this.sidebar=$tw.wiki.getTiddlerText(\&quot;$:/state/sidebar\&quot;);var a=d.buildTable(this.startTid,this.tidtree);this.table?this.tablediv.replaceChild(a,this.table):this.tablediv.appendChild(a);this.svgdiv.innerHTML=d.buildSVG(this.tablediv,this.tidtree);this.table=a};a.prototype.execute=function(){this.startTid=\nthis.getAttribute(\&quot;start\&quot;);this.mode=this.getAttribute(\&quot;mode\&quot;,\&quot;tagging\&quot;);this.maxdepth=parseInt(this.getAttribute(\&quot;maxdepth\&quot;,\&quot;10\&quot;));this.startat=this.getAttribute(\&quot;startat\&quot;,\&quot;0\&quot;);this.nodetitle=this.getAttribute(\&quot;nodetitle\&quot;);this.tooltip=this.getAttribute(\&quot;tooltip\&quot;,\&quot;summary\&quot;);this.filter=this.getAttribute(\&quot;filter\&quot;,\&quot;[!is[system]]\&quot;);this.nocollapse=this.hasAttribute(\&quot;nocollapse\&quot;);this.nodetemplate=this.getAttribute(\&quot;nodetemplate\&quot;,\&quot;\&quot;)};a.prototype.refresh=function(a){function f(a){return(a=$tw.wiki.getTiddler(a))&amp;&amp;\na.hasTag(\&quot;$:/tags/Stylesheet\&quot;)?!0:!1}function e(a){return(a=$tw.wiki.getTiddler(a))&amp;&amp;a.hasField(\&quot;_tgr_mode\&quot;)?!0:!1}var b=!1,c;this.computeAttributes();this.execute();for(c in a)if(document.getElementById(this.tidtree.id+\&quot;-\&quot;+encodeURIComponent(c))||d.isDescendant(c,this.startTid,this.tidtree)||-1!==this.templatesInUse.indexOf(c)||f(c)||e(c)){b=!0;break}$tw.wiki.getTiddlerText(\&quot;$:/state/sidebar\&quot;)!==this.sidebar&amp;&amp;(b=!0);return b?(this.refreshSelf(),!0):!1};exports.tidgraph=a})();\n&quot;,
             &quot;title&quot;: &quot;$:/plugins/ihm/widgets/tidgraph.js&quot;,
             &quot;type&quot;: &quot;application/javascript&quot;,
             &quot;module-type&quot;: &quot;widget&quot;
@@ -6861,6 +6865,35 @@ exports.run = function(text, tiddler) {
 <div created="20151112215325866" modified="20151114010007913" tags="Temperance" title="Abstinence" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
+<div created="20151117224225944" modified="20151117224257617" tags="Demo" title="Advanced Node Templates" type="text/vnd.tiddlywiki">
+<pre>!! Advanced templates
+You can also make very advanced templates, as you can see in the graph below.
+
+This is the line that draws the graph:
+
+``&lt;$tidgraph start=&quot;Virtues&quot; nodetemplate=&quot;PotOfGold CloudTemplate GoldTemplate&quot; /&gt;``
+
+The templates are applied in the order specified, if the conditions match.
+It uses these user defined  templates:
+
+;PotOfGold
+* simple SVG icon
+* uses `_tgr_node_filter` to select one node
+
+;GoldTemplate
+*One-liner with three fields:
+** uses the  `_tgr_node_class_add` field to add a CSS class to the node
+** uses the `_tgr_node_level` field to apply only to levels 2 and 3
+** uses the `_tgr_node_filter` field which excludes the [[Others]] node
+
+;CloudTemplate 
+* has advanced SVG inside to render a cloud with text
+* uses the `_tgr_node_level` field to only apply to level 1
+* uses the `_tgr_node_class` field to replace the default node class with a non-existent CSS class (in effect erasing it)
+
+&lt;$tidgraph start=&quot;Virtues&quot; nodetemplate=&quot;PotOfGold  CloudTemplate  GoldTemplate &quot; /&gt;
+</pre>
+</div>
 <div created="20151026065644020" creator="ihm4u" modified="20151030022900530" modifier="ihm4u" tags="" title="Available Plugins">
 <pre># [[vecmap - Easy tiddler maps for TW5]] (v{{$:/plugins/ihm/vecmap!!version}})
 # [[Bible plugin]] - Alpha  (v{{$:/plugins/ihm/bible!!version}}) </pre>
@@ -6901,7 +6934,7 @@ or in Greek ``&lt;&lt;bqb Mt 1,1 NA28&gt;&gt;``. Notice the verse numbers are no
 <div created="20151025033754918" creator="ihm4u" modified="20151114010037321" modifier="ihm4u" summary="Charity is the theological virtue by which we love God above all things for his own sake, and our neighbor as ourselves for the love of God." tags="Virtues" title="Charity" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
-<div _tgr_node_template="PotOfGold" created="20151112215459887" modified="20151117035800236" tags="Temperance" title="Chastity" type="text/vnd.tiddlywiki">
+<div created="20151112215459887" modified="20151117195522412" tags="Temperance" title="Chastity" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
 <div _tgr_node_class="none" _tgr_node_level="1" created="20151114042445793" modified="20151117003410642" tags="" title="CloudTemplate" type="text/vnd.tiddlywiki">
@@ -6930,37 +6963,13 @@ or in Greek ``&lt;&lt;bqb Mt 1,1 NA28&gt;&gt;``. Notice the verse numbers are no
 &lt;/svg&gt;
 &lt;/div&gt;</pre>
 </div>
-<div _tgr_node_class="none" _tgr_node_level="0" created="20151117011622064" modified="20151117011702916" tags="" title="CloudTemplate-0" type="text/vnd.tiddlywiki">
-<pre>&lt;div style=&quot;position:relative; display: flex; align-items: center; height:85px; width:128px;&quot;&gt;
-&lt;svg version=&quot;1.1&quot;  xmlns=&quot;http://www.w3.org/2000/svg&quot;  x=&quot;0px&quot;
-	 y=&quot;0px&quot; width=&quot;128px&quot; height=&quot;85px&quot; viewBox=&quot;0 0 128 85&quot; preserveAspectRatio=&quot;none&quot;  &gt;
-&lt;g transform=&quot;translate(0,-22)&quot;&gt;
-&gt;
-	&lt;path fill=&quot;#dce4ef&quot; d=&quot;M110.01,53.41c0-9.65-7.82-17.46-17.47-17.46c-1.15,0-2.28,0.11-3.37,0.33
-		C85.73,27.9,77.51,21.99,67.9,21.99c-7.27,0-13.73,3.38-17.95,8.64c-2.71-1.39-5.78-2.18-9.03-2.18
-		c-10.33,0-18.82,7.87-19.82,17.94c-11.45,0.57-20.57,10-20.57,21.6c0,11.96,9.69,21.65,21.65,21.65c0.84,0,1.67-0.06,2.49-0.15
-		c4.63,9.76,14.54,16.52,26.06,16.52c6.93,0,13.29-2.44,18.26-6.5c3.81,2.87,8.54,4.6,13.7,4.6c10.45,0,19.23-7.04,21.92-16.63
-		c1.7,0.56,3.52,0.87,5.41,0.87c9.65,0,17.47-7.82,17.47-17.47C127.48,61.22,119.66,53.41,110.01,53.41z M110.01,81.1
-		c-1.07,0-2.13-0.17-3.17-0.51c-0.73-0.24-1.48-0.36-2.24-0.36c-1.18,0-2.36,0.29-3.42,0.86c-1.74,0.93-3.02,2.54-3.55,4.43
-		c-1.87,6.68-8.02,11.34-14.95,11.34c-3.38,0-6.61-1.08-9.33-3.14c-1.3-0.98-2.83-1.46-4.36-1.46c-1.63,0-3.25,0.55-4.58,1.63
-		c-3.91,3.19-8.63,4.87-13.68,4.87c-8.29,0-15.95-4.86-19.52-12.39c-1.21-2.54-3.77-4.14-6.54-4.14c-0.27,0-0.55,0.01-0.83,0.05
-		c-0.62,0.07-1.16,0.1-1.66,0.1c-7.95,0-14.41-6.47-14.41-14.41c0-7.67,6.01-13.99,13.69-14.37c3.58-0.18,6.49-2.95,6.85-6.52
-		c0.64-6.5,6.07-11.41,12.61-11.41c2,0,3.94,0.47,5.75,1.4c1.05,0.54,2.17,0.79,3.29,0.79c2.14,0,4.24-0.95,5.65-2.71
-		c3.02-3.76,7.5-5.92,12.3-5.92c6.41,0,12.14,3.84,14.58,9.79c1.13,2.76,3.8,4.5,6.69,4.5c0.46,0,0.93-0.05,1.4-0.14
-		c0.67-0.13,1.33-0.19,1.98-0.19c5.64,0,10.23,4.58,10.23,10.23c0,4,3.24,7.23,7.23,7.24c5.64,0,10.23,4.59,10.23,10.23
-		S115.65,81.1,110.01,81.1z&quot;/&gt;
-   &lt;foreignObject x=&quot;10&quot; y=&quot;55&quot; width=&quot;110px&quot; height=&quot;50px&quot;&gt;
-      &lt;body&gt;&lt;div style=&quot;text-align: center; font-size: 16px;&quot;&gt;&lt;$link&gt; ⇒{{!!title}}&lt;/$link&gt;&lt;/div&gt;&lt;/body&gt;
-   &lt;/foreignObject&gt;
-&lt;/g&gt;
-&lt;/svg&gt;
-&lt;/div&gt;</pre>
-</div>
 <div created="20151112215622274" modified="20151112215627936" tags="Temperance" title="Continence" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
-<div created="20151117003633437" modified="20151117054256278" tags="Demo" title="Custom Mode Demo" type="text/vnd.tiddlywiki">
-<pre>''Custom Modes'' allow you to define the way in which children of a node are chosen. It uses a //user defined// subfilter, stored in a tiddler whose title is the mode name. In this case the tiddler is called MyMode and the text of it is  `fields[]`. This filter returns the fields in a tiddler. The following graph is generated with:
+<div created="20151117003633437" modified="20151117193414970" tags="Demo" title="Custom Mode Demo" type="text/vnd.tiddlywiki">
+<pre>''Custom Modes'' allow you to define the way in which children of a node are chosen. It uses a //user defined// subfilter, stored in a tiddler. The tiddler must have a field called `_tgr_mode` with the name of the mode as its value.
+
+In this example, we have a tiddler (named SomeMode) with a `_tgr_mode` field with the value //~MyMode//. The text of this tiddler is  `fields[]` which is the subfilter that will be used to find the children of a node. In this case `fields[]` returns the fields of its parent. The following graph is generated with:
 
 ``&lt;$tidgraph start=&quot;Faith&quot; mode=&quot;MyMode&quot;&gt;``
 
@@ -6983,7 +6992,7 @@ or in Greek ``&lt;&lt;bqb Mt 1,1 NA28&gt;&gt;``. Notice the verse numbers are no
 &lt;/$list&gt;
 &lt;/$list&gt;</pre>
 </div>
-<div created="20151025032624944" creator="ihm4u" modified="20151025060826806" modifier="ihm4u" summary="Faith is the theological virtue by which we believe in God and believe all that He has said and revealed to us, and that Holy Church proposes for our belief, because He is Truth itself." tags="Virtues" title="Faith">
+<div created="20151025032624944" creator="ihm4u" icon="LightBulb.svg" modified="20151117200329840" modifier="ihm4u" summary="Faith is the theological virtue by which we believe in God and believe all that He has said and revealed to us, and that Holy Church proposes for our belief, because He is Truth itself." tags="Virtues" title="Faith" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
 <div created="20151025033845210" creator="ihm4u" def="A great virtue, please give it to me my Lord" modified="20151025060948164" modifier="ihm4u" summary="Fortitude is the moral virtue that ensures firmness in difficulties and constancy in the pursuit of the good." tags="Virtues" title="Fortitude">
@@ -6992,7 +7001,7 @@ or in Greek ``&lt;&lt;bqb Mt 1,1 NA28&gt;&gt;``. Notice the verse numbers are no
 <div created="20151024065617056" modified="20151024065621436" tags="One" title="Four">
 <pre></pre>
 </div>
-<div _tgr_node_class_add="my-gold-node" _tgr_node_level="2 3" created="20151116230444607" modified="20151117034634483" tags="" title="GoldTemplate" type="text/vnd.tiddlywiki">
+<div _tgr_node_class_add="my-gold-node" _tgr_node_filter="[![Others]]" _tgr_node_level="2 3" created="20151116230444607" modified="20151117223517549" tags="" title="GoldTemplate" type="text/vnd.tiddlywiki">
 <pre>&lt;$link&gt;{{!!title}}&lt;/$link&gt;</pre>
 </div>
 <div created="20151112215052372" modified="20151112215126623" summary="whereby one loves the beauty of temperance" tags="Temperance" title="Honesty" type="text/vnd.tiddlywiki">
@@ -7004,14 +7013,47 @@ or in Greek ``&lt;&lt;bqb Mt 1,1 NA28&gt;&gt;``. Notice the verse numbers are no
 <div created="20151112215801484" modified="20151112215808343" tags="Temperance" title="Humility" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
+<div created="20151117194954462" modified="20151117222649840" title="IconTemplate" type="text/vnd.tiddlywiki">
+<pre>&lt;div style=&quot;display:table; margin-left: auto; margin-right:auto;&quot;&gt;
+   &lt;$transclude tiddler={{!!icon}}/&gt;
+   &lt;div style=&quot;display: table-cell; vertical-align: middle;&quot;&gt;
+      &lt;$link&gt;{{!!title}}&lt;/$link&gt;
+   &lt;/div&gt;
+&lt;/div&gt;</pre>
+</div>
 <div created="20151025033831840" creator="ihm4u" modified="20151112063147317" modifier="ihm4u" summary="Justice is the moral virtue that consists in the constant and firm will to give their due to God and neighbor." tags="Virtues" title="Justice" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
+<div created="20151117200213419" modified="20151117201035718" tags="" title="LightBulb.svg" type="image/svg+xml">
+<pre>&lt;svg version=&quot;1.1&quot; id=&quot;Layer_1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; x=&quot;0px&quot; y=&quot;0px&quot;
+	 width=&quot;32px&quot; height=&quot;32px&quot; viewBox=&quot;0 0 100 100&quot; enable-background=&quot;new 0 0 100 100&quot; xml:space=&quot;preserve&quot;&gt;
+&lt;g&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M49.958,28.688c-9.278,0-16.804,7.525-16.804,16.81c0,3.056,0.857,5.898,2.24,8.391
+		c4.126,7.438,5.221,11.613,5.896,15.654c0.564,3.387,1.344,4.174,3.902,4.174c1.091,0,2.869,0,4.766,0c1.901,0,3.683,0,4.767,0
+		c2.563,0,3.344-0.787,3.907-4.174c0.677-4.043,1.771-8.219,5.896-15.654c1.388-2.492,2.24-5.334,2.24-8.391
+		C66.771,36.212,59.245,28.688,49.958,28.688z&quot;/&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M55.971,74.934H43.958c-0.5,0-0.903,0.402-0.903,0.9v0.602c0,0.496,0.403,0.9,0.903,0.9h12.013
+		c0.493,0,0.897-0.404,0.897-0.9v-0.602C56.87,75.336,56.464,74.934,55.971,74.934z&quot;/&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M55.971,78.537H43.958c-0.5,0-0.903,0.4-0.903,0.9v0.602c0,0.496,0.403,0.898,0.903,0.898h12.013
+		c0.493,0,0.897-0.402,0.897-0.898v-0.602C56.87,78.938,56.464,78.537,55.971,78.537z&quot;/&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M55.971,82.141H43.958c-0.5,0-0.903,0.402-0.903,0.9v0.602c0,0.498,0.403,0.9,0.903,0.9h12.013
+		c0.493,0,0.897-0.402,0.897-0.9v-0.602C56.87,82.543,56.464,82.141,55.971,82.141z&quot;/&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M45.458,85.744h9.013c0,1.801-2.406,3.002-4.513,3.002C47.861,88.746,45.458,87.545,45.458,85.744z&quot;/&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M69.264,16.854c1.532-2.683-2.605-5.092-4.15-2.414c-0.809,1.399-6.662,11.541-6.662,11.541l4.162,2.402
+		c0,0,5.199-9.017,6.646-11.518c0.003-0.001,0.003-0.003,0.003-0.003L69.264,16.854L69.264,16.854z&quot;/&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M78.633,26.247L78.633,26.247L78.63,26.25c-0.008,0.001-0.008,0.001-0.008,0.001
+		C76.51,27.472,67.456,32.7,67.456,32.7l2.397,4.16c0,0,9.076-5.239,11.188-6.458C83.727,28.854,81.316,24.713,78.633,26.247z&quot;/&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M52.452,11.071c0,0.729,0,12.812,0,12.812h-4.806c0,0,0-12.084,0-12.812
+		C47.646,7.973,52.452,7.973,52.452,11.071z&quot;/&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M30.737,16.854c-1.532-2.683,2.606-5.092,4.152-2.414c0.808,1.399,6.661,11.541,6.661,11.541l-4.158,2.402
+		c0,0-5.208-9.017-6.652-11.518c0-0.001,0-0.003,0-0.003L30.737,16.854L30.737,16.854z&quot;/&gt;
+	&lt;path fill=&quot;#FFE75A&quot; d=&quot;M21.371,26.247L21.371,26.247v0.003c0.007,0.001,0.007,0.001,0.007,0.001
+		c2.116,1.221,11.167,6.449,11.167,6.449l-2.402,4.16c0,0-9.076-5.239-11.187-6.458C16.273,28.854,18.683,24.713,21.371,26.247z&quot;/&gt;
+&lt;/g&gt;
+&lt;/svg&gt;</pre>
+</div>
 <div created="20151112215824633" modified="20151112215830937" tags="Temperance" title="Meekness" type="text/vnd.tiddlywiki">
 <pre></pre>
-</div>
-<div created="20151117054056739" modified="20151117054309958" tags="" title="MyMode" type="text/vnd.tiddlywiki">
-<pre>fields[]</pre>
 </div>
 <div created="20151116233711203" modified="20151117000753893" tags="$:/tags/Stylesheet" title="Node Template Demo Stylesheet" type="text/css">
 <pre>.my-gold-node {
@@ -7019,15 +7061,28 @@ or in Greek ``&lt;&lt;bqb Mt 1,1 NA28&gt;&gt;``. Notice the verse numbers are no
    background-color: #fad980;
 }</pre>
 </div>
-<div created="20151114042517146" modified="20151117010650760" tags="Demo" title="Node Templates Demo" type="text/vnd.tiddlywiki">
-<pre>''Node Templates'' are very powerful!! They are //user defined templates// that allow you to make the nodes look however you want. Node templates can be applied to individual nodes, to individual levels or to all the nodes. The following graph is generated with:
+<div created="20151114042517146" modified="20151117224529069" tags="Demo" title="Node Templates Demo" type="text/vnd.tiddlywiki">
+<pre>''Node Templates'' are very powerful!! They are //user defined templates// that allow you to make the nodes look however you want. Node templates can be applied to individual nodes, to individual levels or to all the nodes. They can also apply to some tiddlers only (using filters). 
 
-Take a look at the GoldTemplate for an easy template with a related stylesheet or at the CloudTemplate for a very advanced template.
+!! Simple Template
+You can use a simple  IconTemplate to show the icon next to the title:
 
-``&lt;$tidgraph start=&quot;Virtues&quot; nodetemplate=&quot;CloudTemplate GoldTemplate&quot; /&gt;``
+``&lt;$tidgraph start=&quot;Virtues&quot; nodetemplate=&quot;IconTemplate&quot;/&gt;``
 
-&lt;$tidgraph start=&quot;Virtues&quot; nodetemplate=&quot;CloudTemplate GoldTemplate&quot; /&gt;
+In this case the [[Faith]] tiddler has a field named icon with it's image. The other tiddlers don't have an icon field. This is how the graph looks like:
 
+&lt;$tidgraph start=&quot;Virtues&quot; nodetemplate=&quot;IconTemplate&quot;/&gt;
+
+The IconTemplate is very simple HTML and Wikitext:
+
+&lt;code&gt;&lt;$text text={{IconTemplate}}/&gt;&lt;/code&gt;
+
+The `div`(s) are simply to center the text horizontally and vertically. If you don't want that you could simply use:
+
+`&lt;$transclude tiddler={{!!icon}}/&gt;&lt;$link&gt;{{!!title}}&lt;/$link&gt;`
+
+!! Advanced Node Templates
+This is just scratching the surface of what can be done with Node templates, see [[Advanced Node Templates]] for more than you ever wanted to know.
 </pre>
 </div>
 <div created="20151024065548265" modified="20151024065552732" tags="" title="One">
@@ -7036,7 +7091,7 @@ Take a look at the GoldTemplate for an easy template with a related stylesheet o
 <div created="20151112215943481" modified="20151112215948540" tags="Temperance" title="Others" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
-<div _tgr_node_class_add="my-gold-node" created="20151117031704784" modified="20151117041218149" tags="" title="PotOfGold" type="text/vnd.tiddlywiki">
+<div _tgr_node_class_add="my-gold-node" _tgr_node_filter="[[Chastity]]" created="20151117031704784" modified="20151117205844237" tags="" title="PotOfGold" type="text/vnd.tiddlywiki">
 <pre>&lt;div style=&quot;display: flex; align-items: center; height: 55px; width:175px;&quot;&gt;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; preserveAspectRatio=&quot;none&quot;  height=&quot;55&quot; width=&quot;75&quot;&gt;
     &lt;linearGradient id=&quot;coin&quot; x2=&quot;50%&quot; y2=&quot;40%&quot; spreadMethod=&quot;reflect&quot;&gt;
         &lt;stop stop-color=&quot;gold&quot; offset=&quot;30%&quot; /&gt;
@@ -7093,6 +7148,9 @@ Take a look at the GoldTemplate for an easy template with a related stylesheet o
 </div>
 <div created="20151112215412469" modified="20151112215420594" tags="Temperance" title="Sobriety" type="text/vnd.tiddlywiki">
 <pre></pre>
+</div>
+<div _tgr_mode="MyMode" created="20151117054056739" modified="20151117224109081" tags="" title="SomeMode" type="text/vnd.tiddlywiki">
+<pre>fields[]</pre>
 </div>
 <div created="20151025033858373" creator="ihm4u" modified="20151025060617414" modifier="ihm4u" summary="Temperance is the moral virtue that moderates the attraction of pleasures and provides balance in the use of created goods." tags="Virtues" title="Temperance">
 <pre></pre>
@@ -7187,7 +7245,7 @@ Take a look at the GoldTemplate for an easy template with a related stylesheet o
 * fix export to static html
 </pre>
 </div>
-<div created="20151024065631952" creator="ihm4u" modified="20151117012057826" modifier="ihm4u" tags="home tidgraph" title="Tidgraph - Easy tiddler graphs for TW5" type="text/vnd.tiddlywiki">
+<div created="20151024065631952" creator="ihm4u" modified="20151117195727581" modifier="ihm4u" tags="home tidgraph" title="Tidgraph - Easy tiddler graphs for TW5" type="text/vnd.tiddlywiki">
 <pre>! New! Node Templates!
 
 We have exciting new features thanks to Tobias Beer from the Tiddlywiki group. This is a release candidate version {{$:/plugins/ihm/tidgraph!!version}}, You can see a demo of what you can do with custom node templates in the [[Node Templates Demo]].
@@ -7198,7 +7256,7 @@ Please report any bugs in the Tiddlywiki [[google group|https://groups.google.co
 
 !!Introduction
 The [[tidgraph|$:/plugins/ihm/tidgraph]] plugin shows tiddlers with an SVG/HTML5 diagram like the following:
-&lt;$tidgraph start=&quot;Virtues&quot; /&gt;
+&lt;$tidgraph start=&quot;Virtues&quot; nodetemplate=&quot;PotOfGold&quot; /&gt;
 
 It uses the tags to figure out the tree structure. It can optionally use links also. If a tiddler has a `summary` field then it is used as a tooltip. If a tiddler has a `caption` field then it is used as title for the node. There are attributes to specify each, see the [[Documentaion|$:/plugins/ihm/tidgraph/documentation]] for options. 
 
