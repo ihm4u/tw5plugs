@@ -1,0 +1,15 @@
+created: 20151118163502260
+modified: 20151118163705138
+tags: $:/tags/Stylesheet
+title: IconTemplate Stylesheet
+type: text/css
+
+.icon-node {
+   display:table;
+   margin:0 auto;
+} 
+
+.icon-node > a {
+   display: table-cell;
+   vertical-align: middle;
+} 

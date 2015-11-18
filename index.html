@@ -197,6 +197,8 @@ Error message and password prompt
 
 <li>IconTemplate</li>
 
+<li>IconTemplate Stylesheet</li>
+
 <li>Justice</li>
 
 <li>LightBulb.svg</li>
@@ -7015,15 +7017,23 @@ In this example, we have a tiddler (named SomeMode) with a `_tgr_mode` field wit
 <div created="20151112215801484" modified="20151112215808343" tags="Temperance" title="Humility" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
-<div created="20151117194954462" modified="20151118161222549" title="IconTemplate" type="text/vnd.tiddlywiki">
+<div created="20151117194954462" modified="20151118163550523" title="IconTemplate" type="text/vnd.tiddlywiki">
 <pre>&lt;div class=&quot;icon-node&quot;&gt; 
   &lt;$transclude tiddler={{!!icon}}/&gt; 
   &lt;$link&gt;{{!!title}}&lt;/$link&gt;
 &lt;/div&gt; 
-&lt;style&gt; 
-  .icon-node{display:table;margin:0 auto;} 
-  .icon-node &gt; a {display: table-cell;vertical-align: middle;} 
-&lt;/style&gt; </pre>
+</pre>
+</div>
+<div created="20151118163502260" modified="20151118163705138" tags="$:/tags/Stylesheet" title="IconTemplate Stylesheet" type="text/css">
+<pre>.icon-node {
+   display:table;
+   margin:0 auto;
+} 
+
+.icon-node &gt; a {
+   display: table-cell;
+   vertical-align: middle;
+} </pre>
 </div>
 <div created="20151025033831840" creator="ihm4u" modified="20151112063147317" modifier="ihm4u" summary="Justice is the moral virtue that consists in the constant and firm will to give their due to God and neighbor." tags="Virtues" title="Justice" type="text/vnd.tiddlywiki">
 <pre></pre>
@@ -7065,7 +7075,7 @@ In this example, we have a tiddler (named SomeMode) with a `_tgr_mode` field wit
    background-color: #fad980;
 }</pre>
 </div>
-<div created="20151114042517146" modified="20151118161413800" tags="Demo" title="Node Templates Demo" type="text/vnd.tiddlywiki">
+<div created="20151114042517146" modified="20151118163939862" tags="Demo" title="Node Templates Demo" type="text/vnd.tiddlywiki">
 <pre>''Node Templates'' are very powerful!! They are //user defined templates// that allow you to make the nodes look however you want. Node templates can be applied to individual nodes, to individual levels or to all the nodes. They can also apply to some tiddlers only (using filters). Keep reading to see how a simple template is made, or if you are already knowledgeable jump to [[Advanced Node Templates]]. 
 
 !! Simple Template
@@ -7081,7 +7091,7 @@ The IconTemplate is very simple HTML and Wikitext:
 
 &lt;code&gt;&lt;$text text={{IconTemplate}}/&gt;&lt;/code&gt;
 
-The styles are simply to center the text horizontally and vertically. If you don't want that you could simply use:
+The icon-node class is defined in the [[IconTemplate Stylesheet]]. The class simply centers the text horizontally and vertically. If you don't want that you could simply use:
 
 `&lt;$transclude tiddler={{!!icon}}/&gt;&lt;$link&gt;{{!!title}}&lt;/$link&gt;`
 

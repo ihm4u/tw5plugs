@@ -1,5 +1,5 @@
 created: 20151114042517146
-modified: 20151118161413800
+modified: 20151118163939862
 tags: Demo
 title: Node Templates Demo
 type: text/vnd.tiddlywiki
@@ -19,7 +19,7 @@ The IconTemplate is very simple HTML and Wikitext:
 
 <code><$text text={{IconTemplate}}/></code>
 
-The styles are simply to center the text horizontally and vertically. If you don't want that you could simply use:
+The icon-node class is defined in the [[IconTemplate Stylesheet]]. The class simply centers the text horizontally and vertically. If you don't want that you could simply use:
 
 `<$transclude tiddler={{!!icon}}/><$link>{{!!title}}</$link>`
 

@@ -1,5 +1,5 @@
 created: 20151117194954462
-modified: 20151118161222549
+modified: 20151118163550523
 title: IconTemplate
 type: text/vnd.tiddlywiki
 
@@ -7,7 +7,3 @@ type: text/vnd.tiddlywiki
   <$transclude tiddler={{!!icon}}/> 
   <$link>{{!!title}}</$link>
 </div> 
-<style> 
-  .icon-node{display:table;margin:0 auto;} 
-  .icon-node > a {display: table-cell;vertical-align: middle;} 
-</style> 
