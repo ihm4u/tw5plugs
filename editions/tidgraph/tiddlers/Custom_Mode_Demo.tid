@@ -1,12 +1,14 @@
 created: 20151117003633437
-modified: 20151117193414970
+modified: 20151118201235884
 tags: Demo
 title: Custom Mode Demo
 type: text/vnd.tiddlywiki
 
-''Custom Modes'' allow you to define the way in which children of a node are chosen. It uses a //user defined// subfilter, stored in a tiddler. The tiddler must have a field called `_tgr_mode` with the name of the mode as its value.
+''Custom Modes'' allow you to define the way in which children of a node are chosen (besides the default `tagging` and `linking` modes). It uses a //user defined// subfilter, stored in a tiddler. The mode tiddler must have be named `$:/config/tidgraph/modes/ModeName`. Where `ModeName` is the name you want to use for your custom mode.
 
-In this example, we have a tiddler (named SomeMode) with a `_tgr_mode` field with the value //~MyMode//. The text of this tiddler is  `fields[]` which is the subfilter that will be used to find the children of a node. In this case `fields[]` returns the fields of its parent. The following graph is generated with:
+In this example, we have  `$:/config/tidgraph/modes/ModeName`. The text of this tiddler is  `fields[]` which is the subfilter that will be used to find the children of a node. 
+
+The `fields[]` filter operator returns the fields of its parent. The following graph is generated with:
 
 ``<$tidgraph start="Faith" mode="MyMode">``
 

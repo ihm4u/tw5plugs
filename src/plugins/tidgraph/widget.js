@@ -38,13 +38,11 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
 	this.computeAttributes();
 	this.execute();
 
-   //Read mode from tiddler with _tgr_mode field if it is not
-   //a default mode
+   //Read mode from tiddler with named $:/config/tidgraph/modes/<<mode>>
+   //if it is not a default mode
    if (["tagging","linking"].indexOf(this.mode) === -1)  {
-      var tids = $tw.wiki.filterTiddlers("[_tgr_mode["+this.mode+"]!has[draft.of]]");
-      if (tids.length && $tw.wiki.tiddlerExists(tids[0])) {
-         this.mode = $tw.wiki.getTiddlerText(tids[0]);
-      }
+      var m = $tw.wiki.getTiddlerText("$:/config/tidgraph/modes/" + this.mode);
+      this.mode = m || "tagging";
    }
 
    this.tidtree = [];
@@ -197,9 +195,7 @@ TidgraphWidget.prototype.refresh = function(changedTiddlers) {
     }
 
     function isMode(t) {
-       var tid = $tw.wiki.getTiddler(t);
-       if (tid && tid.hasField("_tgr_mode")) return true;
-       return false;
+       return ( t.indexOf("$:/config/tidgraph/modes") !== -1 );
     }
     
     //Set dirty flag if children have changed

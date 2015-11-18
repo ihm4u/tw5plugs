@@ -125,6 +125,8 @@ Error message and password prompt
 
 <li>$:/config/Plugins/Disabled/$:/plugins/tiddlywiki/codemirror</li>
 
+<li>$:/config/tidgraph/modes/MyMode</li>
+
 <li>$:/core</li>
 
 <li>$:/core/modules/filters/lsort.js</li>
@@ -181,6 +183,8 @@ Error message and password prompt
 
 <li>Development</li>
 
+<li>Draft of 'New Tiddler'</li>
+
 <li>Faith</li>
 
 <li>Fortitude</li>
@@ -205,6 +209,8 @@ Error message and password prompt
 
 <li>Meekness</li>
 
+<li>New Tiddler</li>
+
 <li>Node Template Demo Stylesheet</li>
 
 <li>Node Templates Demo</li>
@@ -224,8 +230,6 @@ Error message and password prompt
 <li>Sizes</li>
 
 <li>Sobriety</li>
-
-<li>SomeMode</li>
 
 <li>Temperance</li>
 
@@ -284,6 +288,9 @@ Error message and password prompt
 </div>
 <div created="20151112213634956" modified="20151112213633922" title="$:/config/Plugins/Disabled/$:/plugins/tiddlywiki/codemirror" type="text/vnd.tiddlywiki">
 <pre>yes</pre>
+</div>
+<div created="20151117054056739" modified="20151118201205615" tags="" title="$:/config/tidgraph/modes/MyMode" type="text/vnd.tiddlywiki">
+<pre>fields[]</pre>
 </div>
 <div author="JeremyRuston" core-version="&gt;=5.0.0" dependents="" description="TiddlyWiki5 core" list="readme" plugin-priority="0" plugin-type="plugin" title="$:/core" type="application/json" version="5.1.9">
 <pre>{
@@ -6509,7 +6516,7 @@ exports.run = function(text, tiddler) {
     }
 }</pre>
 </div>
-<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog documentation" plugin-type="plugin" source="https://ihm4u.github.io/tw5plugs" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.9.0-rc3">
+<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog documentation" plugin-type="plugin" source="https://ihm4u.github.io/tw5plugs" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.9.0-rc4">
 <pre>{
     &quot;tiddlers&quot;: {
         &quot;$:/plugins/ihm/tidgraph/changelog&quot;: {
@@ -6560,7 +6567,7 @@ exports.run = function(text, tiddler) {
             &quot;text&quot;: &quot;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\n&quot;
         },
         &quot;$:/plugins/ihm/widgets/tidgraph.js&quot;: {
-            &quot;text&quot;: &quot;/*\\\ntitle: $:/plugins/ihm/widgets/tidgraph.js\ntype: application/javascript\nmodule-type: widget\n\nTidgraph widget to render HTML5/SVG graph of tiddlers\n\n\\*/\n(function(){var f=require(\&quot;$:/core/modules/widgets/widget.js\&quot;).widget,a=function(g,a){this.initialise(g,a)},d=require(\&quot;$:/plugins/ihm/tidgraph/utils.js\&quot;);a.prototype=new f;a.prototype.render=function(g,a){this.tidtree&amp;&amp;this.delTempTiddlers();this.parentDomNode=g;this.nextSiblingDomNode=a;this.computeAttributes();this.execute();if(-1===[\&quot;tagging\&quot;,\&quot;linking\&quot;].indexOf(this.mode)){var e=$tw.wiki.filterTiddlers(\&quot;[_tgr_mode[\&quot;+this.mode+\&quot;]!has[draft.of]]\&quot;);e.length&amp;&amp;$tw.wiki.tiddlerExists(e[0])&amp;&amp;(this.mode=\n$tw.wiki.getTiddlerText(e[0]))}this.tidtree=[];this.tidtree.mode=this.mode;this.tidtree.maxdepth=this.maxdepth;this.tidtree.startat=this.startat;this.tidtree.nodetitle=this.nodetitle;this.tidtree.tooltip=this.tooltip;this.tidtree.filter=this.filter;this.tidtree.nocollapse=this.nocollapse;this.tidtree.document=this.document;this.tidtree.nodetemplate=this.nodetemplate;this.templatesInUse=$tw.utils.parseStringArray(this.nodetemplate);this.tidtree.id=(new Date).valueOf();if($tw.wiki.getTiddler(this.startTid)){this.div=\nthis.document.createElement(\&quot;div\&quot;);this.div.className=\&quot;tgr-container tgr\&quot;;this.tablediv=this.document.createElement(\&quot;div\&quot;);this.tablediv.className=\&quot;ihm-tgr-tablediv\&quot;;this.table=void 0;this.div.appendChild(this.tablediv);this.svgdiv=this.document.createElement(\&quot;div\&quot;);this.svgdiv.className=\&quot;tgr-svg-int\&quot;;this.div.appendChild(this.svgdiv);this.parentDomNode.insertBefore(this.div,this.nextSiblingDomNode);this.domNodes.push(this.div);this.tidtree.root=d.makeTidTree(this.startTid,this.tidtree,{widget:this});\nthis.paint();var b=this,c=function(){b.svgdiv.innerHTML=d.buildSVG(b.tablediv,b.tidtree);b.oldresize&amp;&amp;b.oldresize()},h=function(){b.svgdiv.innerHTML=d.buildSVG(b.tablediv,b.tidtree)};this.div.onscroll=function(){b.scroll_to||clearTimeout(b.scroll_to);b.scroll_to=setTimeout(h,100)};this.onresize_updated||(window.onresize&amp;&amp;void 0==this.oldresize&amp;&amp;(this.oldresize=window.onresize),window.onresize=function(){b.resize_to||clearTimeout(b.resize_to);b.resize_to=setTimeout(c,100)},this.onresize_updated=!0)}};\na.prototype.delTempTiddlers=function(){var a=$tw.wiki.filterTiddlers(\&quot;[prefix[$:/temp/tidgraph/\&quot;+this.tidtree.id+\&quot;]]\&quot;);$tw.utils.each(a,function(a){$tw.wiki.deleteTiddler(a)})};a.prototype.paint=function(){this.sidebar=$tw.wiki.getTiddlerText(\&quot;$:/state/sidebar\&quot;);var a=d.buildTable(this.startTid,this.tidtree);this.table?this.tablediv.replaceChild(a,this.table):this.tablediv.appendChild(a);this.svgdiv.innerHTML=d.buildSVG(this.tablediv,this.tidtree);this.table=a};a.prototype.execute=function(){this.startTid=\nthis.getAttribute(\&quot;start\&quot;);this.mode=this.getAttribute(\&quot;mode\&quot;,\&quot;tagging\&quot;);this.maxdepth=parseInt(this.getAttribute(\&quot;maxdepth\&quot;,\&quot;10\&quot;));this.startat=this.getAttribute(\&quot;startat\&quot;,\&quot;0\&quot;);this.nodetitle=this.getAttribute(\&quot;nodetitle\&quot;);this.tooltip=this.getAttribute(\&quot;tooltip\&quot;,\&quot;summary\&quot;);this.filter=this.getAttribute(\&quot;filter\&quot;,\&quot;[!is[system]]\&quot;);this.nocollapse=this.hasAttribute(\&quot;nocollapse\&quot;);this.nodetemplate=this.getAttribute(\&quot;nodetemplate\&quot;,\&quot;\&quot;)};a.prototype.refresh=function(a){function f(a){return(a=$tw.wiki.getTiddler(a))&amp;&amp;\na.hasTag(\&quot;$:/tags/Stylesheet\&quot;)?!0:!1}function e(a){return(a=$tw.wiki.getTiddler(a))&amp;&amp;a.hasField(\&quot;_tgr_mode\&quot;)?!0:!1}var b=!1,c;this.computeAttributes();this.execute();for(c in a)if(document.getElementById(this.tidtree.id+\&quot;-\&quot;+encodeURIComponent(c))||d.isDescendant(c,this.startTid,this.tidtree)||-1!==this.templatesInUse.indexOf(c)||f(c)||e(c)){b=!0;break}$tw.wiki.getTiddlerText(\&quot;$:/state/sidebar\&quot;)!==this.sidebar&amp;&amp;(b=!0);return b?(this.refreshSelf(),!0):!1};exports.tidgraph=a})();\n&quot;,
+            &quot;text&quot;: &quot;/*\\\ntitle: $:/plugins/ihm/widgets/tidgraph.js\ntype: application/javascript\nmodule-type: widget\n\nTidgraph widget to render HTML5/SVG graph of tiddlers\n\n\\*/\n(function(){var e=require(\&quot;$:/core/modules/widgets/widget.js\&quot;).widget,c=function(b,f){this.initialise(b,f)},d=require(\&quot;$:/plugins/ihm/tidgraph/utils.js\&quot;);c.prototype=new e;c.prototype.render=function(b,f){this.tidtree&amp;&amp;this.delTempTiddlers();this.parentDomNode=b;this.nextSiblingDomNode=f;this.computeAttributes();this.execute();-1===[\&quot;tagging\&quot;,\&quot;linking\&quot;].indexOf(this.mode)&amp;&amp;(this.mode=$tw.wiki.getTiddlerText(\&quot;$:/config/tidgraph/modes/\&quot;+this.mode)||\&quot;tagging\&quot;);this.tidtree=[];this.tidtree.mode=this.mode;\nthis.tidtree.maxdepth=this.maxdepth;this.tidtree.startat=this.startat;this.tidtree.nodetitle=this.nodetitle;this.tidtree.tooltip=this.tooltip;this.tidtree.filter=this.filter;this.tidtree.nocollapse=this.nocollapse;this.tidtree.document=this.document;this.tidtree.nodetemplate=this.nodetemplate;this.templatesInUse=$tw.utils.parseStringArray(this.nodetemplate);this.tidtree.id=(new Date).valueOf();if($tw.wiki.getTiddler(this.startTid)){this.div=this.document.createElement(\&quot;div\&quot;);this.div.className=\&quot;tgr-container tgr\&quot;;\nthis.tablediv=this.document.createElement(\&quot;div\&quot;);this.tablediv.className=\&quot;ihm-tgr-tablediv\&quot;;this.table=void 0;this.div.appendChild(this.tablediv);this.svgdiv=this.document.createElement(\&quot;div\&quot;);this.svgdiv.className=\&quot;tgr-svg-int\&quot;;this.div.appendChild(this.svgdiv);this.parentDomNode.insertBefore(this.div,this.nextSiblingDomNode);this.domNodes.push(this.div);this.tidtree.root=d.makeTidTree(this.startTid,this.tidtree,{widget:this});this.paint();var a=this,c=function(){a.svgdiv.innerHTML=d.buildSVG(a.tablediv,\na.tidtree);a.oldresize&amp;&amp;a.oldresize()},e=function(){a.svgdiv.innerHTML=d.buildSVG(a.tablediv,a.tidtree)};this.div.onscroll=function(){a.scroll_to||clearTimeout(a.scroll_to);a.scroll_to=setTimeout(e,100)};this.onresize_updated||(window.onresize&amp;&amp;void 0==this.oldresize&amp;&amp;(this.oldresize=window.onresize),window.onresize=function(){a.resize_to||clearTimeout(a.resize_to);a.resize_to=setTimeout(c,100)},this.onresize_updated=!0)}};c.prototype.delTempTiddlers=function(){var b=$tw.wiki.filterTiddlers(\&quot;[prefix[$:/temp/tidgraph/\&quot;+\nthis.tidtree.id+\&quot;]]\&quot;);$tw.utils.each(b,function(b){$tw.wiki.deleteTiddler(b)})};c.prototype.paint=function(){this.sidebar=$tw.wiki.getTiddlerText(\&quot;$:/state/sidebar\&quot;);var b=d.buildTable(this.startTid,this.tidtree);this.table?this.tablediv.replaceChild(b,this.table):this.tablediv.appendChild(b);this.svgdiv.innerHTML=d.buildSVG(this.tablediv,this.tidtree);this.table=b};c.prototype.execute=function(){this.startTid=this.getAttribute(\&quot;start\&quot;);this.mode=this.getAttribute(\&quot;mode\&quot;,\&quot;tagging\&quot;);this.maxdepth=\nparseInt(this.getAttribute(\&quot;maxdepth\&quot;,\&quot;10\&quot;));this.startat=this.getAttribute(\&quot;startat\&quot;,\&quot;0\&quot;);this.nodetitle=this.getAttribute(\&quot;nodetitle\&quot;);this.tooltip=this.getAttribute(\&quot;tooltip\&quot;,\&quot;summary\&quot;);this.filter=this.getAttribute(\&quot;filter\&quot;,\&quot;[!is[system]]\&quot;);this.nocollapse=this.hasAttribute(\&quot;nocollapse\&quot;);this.nodetemplate=this.getAttribute(\&quot;nodetemplate\&quot;,\&quot;\&quot;)};c.prototype.refresh=function(b){var c=!1,a;this.computeAttributes();this.execute();for(a in b)if((b=document.getElementById(this.tidtree.id+\&quot;-\&quot;+encodeURIComponent(a))||\nd.isDescendant(a,this.startTid,this.tidtree)||-1!==this.templatesInUse.indexOf(a))||(b=(b=$tw.wiki.getTiddler(a))&amp;&amp;b.hasTag(\&quot;$:/tags/Stylesheet\&quot;)?!0:!1),b||-1!==a.indexOf(\&quot;$:/config/tidgraph/modes\&quot;)){c=!0;break}$tw.wiki.getTiddlerText(\&quot;$:/state/sidebar\&quot;)!==this.sidebar&amp;&amp;(c=!0);return c?(this.refreshSelf(),!0):!1};exports.tidgraph=c})();\n&quot;,
             &quot;title&quot;: &quot;$:/plugins/ihm/widgets/tidgraph.js&quot;,
             &quot;type&quot;: &quot;application/javascript&quot;,
             &quot;module-type&quot;: &quot;widget&quot;
@@ -6970,10 +6977,12 @@ or in Greek ``&lt;&lt;bqb Mt 1,1 NA28&gt;&gt;``. Notice the verse numbers are no
 <div created="20151112215622274" modified="20151112215627936" tags="Temperance" title="Continence" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
-<div created="20151117003633437" modified="20151117193414970" tags="Demo" title="Custom Mode Demo" type="text/vnd.tiddlywiki">
-<pre>''Custom Modes'' allow you to define the way in which children of a node are chosen. It uses a //user defined// subfilter, stored in a tiddler. The tiddler must have a field called `_tgr_mode` with the name of the mode as its value.
+<div created="20151117003633437" modified="20151118201235884" tags="Demo" title="Custom Mode Demo" type="text/vnd.tiddlywiki">
+<pre>''Custom Modes'' allow you to define the way in which children of a node are chosen (besides the default `tagging` and `linking` modes). It uses a //user defined// subfilter, stored in a tiddler. The mode tiddler must have be named `$:/config/tidgraph/modes/ModeName`. Where `ModeName` is the name you want to use for your custom mode.
 
-In this example, we have a tiddler (named SomeMode) with a `_tgr_mode` field with the value //~MyMode//. The text of this tiddler is  `fields[]` which is the subfilter that will be used to find the children of a node. In this case `fields[]` returns the fields of its parent. The following graph is generated with:
+In this example, we have  `$:/config/tidgraph/modes/ModeName`. The text of this tiddler is  `fields[]` which is the subfilter that will be used to find the children of a node. 
+
+The `fields[]` filter operator returns the fields of its parent. The following graph is generated with:
 
 ``&lt;$tidgraph start=&quot;Faith&quot; mode=&quot;MyMode&quot;&gt;``
 
@@ -6995,6 +7004,50 @@ In this example, we have a tiddler (named SomeMode) with a `_tgr_mode` field wit
 &lt;/li&gt;
 &lt;/$list&gt;
 &lt;/$list&gt;</pre>
+</div>
+<div created="20151118165727760" draft.of="New Tiddler" draft.title="New Tiddler" modified="20151118175601819" tags="" title="Draft of 'New Tiddler'" type="text/vnd.tiddlywiki">
+<pre>&lt;style&gt;
+.tgr-container {
+   display: table;
+}
+
+.tgr-node-group {
+   display: table-row;
+   border: 1px dotted blue;
+}
+
+.tgr-node {
+   display: table-cell;
+   border: dotted 1px red;
+   margin: 0px 5px;
+
+   text-align: center;
+}
+
+&lt;/style&gt;
+&lt;div class=&quot;tgr-container&quot;&gt;
+&lt;div class=&quot;tgr-node&quot;&gt; root 
+&lt;div class=&quot;tgr-node-group&quot;&gt;
+&lt;div class=&quot;tgr-node&quot;&gt;
+    1
+    &lt;div class=&quot;tgr-node-group&quot;&gt;
+    &lt;div class=&quot;tgr-node&quot;&gt; 1.1 &lt;/div&gt;
+    &lt;div class=&quot;tgr-node&quot;&gt; 1.2 &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;tgr-node&quot;&gt;
+    2
+&lt;/div&gt;
+&lt;div class=&quot;tgr-node&quot;&gt;
+    3
+    &lt;div class=&quot;tgr-node-group&quot;&gt;
+    &lt;div class=&quot;tgr-node&quot;&gt; 3.1 &lt;/div&gt;
+    &lt;div class=&quot;tgr-node&quot;&gt; 3.2 &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</pre>
 </div>
 <div created="20151025032624944" creator="ihm4u" icon="LightBulb.svg" modified="20151117200329840" modifier="ihm4u" summary="Faith is the theological virtue by which we believe in God and believe all that He has said and revealed to us, and that Holy Church proposes for our belief, because He is Truth itself." tags="Virtues" title="Faith" type="text/vnd.tiddlywiki">
 <pre></pre>
@@ -7068,6 +7121,47 @@ In this example, we have a tiddler (named SomeMode) with a `_tgr_mode` field wit
 </div>
 <div created="20151112215824633" modified="20151112215830937" tags="Temperance" title="Meekness" type="text/vnd.tiddlywiki">
 <pre></pre>
+</div>
+<div created="20151118165727760" modified="20151118173119223" tags="" title="New Tiddler" type="text/vnd.tiddlywiki">
+<pre>&lt;style&gt;
+.tgr-container {
+   display: table;
+}
+
+.tgr-node-group {
+   display: table-row;
+   border: 1px solid blue;
+}
+
+.tgr-node {
+   display: table-cell;
+   border: solid 1px red;
+}
+
+&lt;/style&gt;
+&lt;div class=&quot;tgr-node&quot;&gt;
+root
+&lt;div class=&quot;tgr-node-group&quot;&gt;
+&lt;div class=&quot;tgr-node&quot;&gt;
+    1
+    &lt;div class=&quot;trg-node-group&quot;&gt;
+    &lt;div class=&quot;trg-node&quot;&gt;
+    1.1
+    &lt;/div&gt;
+    &lt;div class=&quot;trg-node&quot;&gt;
+    1.2
+    &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;trg-node&quot;&gt;
+    2
+&lt;/div&gt;
+&lt;div class=&quot;trg-node&quot;&gt;
+    3
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</pre>
 </div>
 <div created="20151116233711203" modified="20151117000753893" tags="$:/tags/Stylesheet" title="Node Template Demo Stylesheet" type="text/css">
 <pre>.my-gold-node {
@@ -7162,9 +7256,6 @@ This is just scratching the surface of what can be done with Node templates, see
 </div>
 <div created="20151112215412469" modified="20151112215420594" tags="Temperance" title="Sobriety" type="text/vnd.tiddlywiki">
 <pre></pre>
-</div>
-<div _tgr_mode="MyMode" created="20151117054056739" modified="20151117224109081" tags="" title="SomeMode" type="text/vnd.tiddlywiki">
-<pre>fields[]</pre>
 </div>
 <div created="20151025033858373" creator="ihm4u" modified="20151025060617414" modifier="ihm4u" summary="Temperance is the moral virtue that moderates the attraction of pleasures and provides balance in the use of created goods." tags="Virtues" title="Temperance">
 <pre></pre>

@@ -1,8 +1,7 @@
-_tgr_mode: MyMode
 created: 20151117054056739
-modified: 20151117224109081
+modified: 20151118201205615
 tags: 
-title: SomeMode
+title: $:/config/tidgraph/modes/MyMode
 type: text/vnd.tiddlywiki
 
 fields[]
