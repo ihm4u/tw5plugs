@@ -6865,7 +6865,7 @@ exports.run = function(text, tiddler) {
 <div created="20151112215325866" modified="20151114010007913" tags="Temperance" title="Abstinence" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
-<div created="20151117224225944" modified="20151117224257617" tags="Demo" title="Advanced Node Templates" type="text/vnd.tiddlywiki">
+<div created="20151117224225944" modified="20151118161441417" tags="Demo" title="Advanced Node Templates" type="text/vnd.tiddlywiki">
 <pre>!! Advanced templates
 You can also make very advanced templates, as you can see in the graph below.
 
@@ -6890,6 +6890,8 @@ It uses these user defined  templates:
 * has advanced SVG inside to render a cloud with text
 * uses the `_tgr_node_level` field to only apply to level 1
 * uses the `_tgr_node_class` field to replace the default node class with a non-existent CSS class (in effect erasing it)
+
+This is how the graph looks like:
 
 &lt;$tidgraph start=&quot;Virtues&quot; nodetemplate=&quot;PotOfGold  CloudTemplate  GoldTemplate &quot; /&gt;
 </pre>
@@ -7013,13 +7015,15 @@ In this example, we have a tiddler (named SomeMode) with a `_tgr_mode` field wit
 <div created="20151112215801484" modified="20151112215808343" tags="Temperance" title="Humility" type="text/vnd.tiddlywiki">
 <pre></pre>
 </div>
-<div created="20151117194954462" modified="20151117222649840" title="IconTemplate" type="text/vnd.tiddlywiki">
-<pre>&lt;div style=&quot;display:table; margin-left: auto; margin-right:auto;&quot;&gt;
-   &lt;$transclude tiddler={{!!icon}}/&gt;
-   &lt;div style=&quot;display: table-cell; vertical-align: middle;&quot;&gt;
-      &lt;$link&gt;{{!!title}}&lt;/$link&gt;
-   &lt;/div&gt;
-&lt;/div&gt;</pre>
+<div created="20151117194954462" modified="20151118161222549" title="IconTemplate" type="text/vnd.tiddlywiki">
+<pre>&lt;div class=&quot;icon-node&quot;&gt; 
+  &lt;$transclude tiddler={{!!icon}}/&gt; 
+  &lt;$link&gt;{{!!title}}&lt;/$link&gt;
+&lt;/div&gt; 
+&lt;style&gt; 
+  .icon-node{display:table;margin:0 auto;} 
+  .icon-node &gt; a {display: table-cell;vertical-align: middle;} 
+&lt;/style&gt; </pre>
 </div>
 <div created="20151025033831840" creator="ihm4u" modified="20151112063147317" modifier="ihm4u" summary="Justice is the moral virtue that consists in the constant and firm will to give their due to God and neighbor." tags="Virtues" title="Justice" type="text/vnd.tiddlywiki">
 <pre></pre>
@@ -7061,8 +7065,8 @@ In this example, we have a tiddler (named SomeMode) with a `_tgr_mode` field wit
    background-color: #fad980;
 }</pre>
 </div>
-<div created="20151114042517146" modified="20151117224529069" tags="Demo" title="Node Templates Demo" type="text/vnd.tiddlywiki">
-<pre>''Node Templates'' are very powerful!! They are //user defined templates// that allow you to make the nodes look however you want. Node templates can be applied to individual nodes, to individual levels or to all the nodes. They can also apply to some tiddlers only (using filters). 
+<div created="20151114042517146" modified="20151118161413800" tags="Demo" title="Node Templates Demo" type="text/vnd.tiddlywiki">
+<pre>''Node Templates'' are very powerful!! They are //user defined templates// that allow you to make the nodes look however you want. Node templates can be applied to individual nodes, to individual levels or to all the nodes. They can also apply to some tiddlers only (using filters). Keep reading to see how a simple template is made, or if you are already knowledgeable jump to [[Advanced Node Templates]]. 
 
 !! Simple Template
 You can use a simple  IconTemplate to show the icon next to the title:
@@ -7077,7 +7081,7 @@ The IconTemplate is very simple HTML and Wikitext:
 
 &lt;code&gt;&lt;$text text={{IconTemplate}}/&gt;&lt;/code&gt;
 
-The `div`(s) are simply to center the text horizontally and vertically. If you don't want that you could simply use:
+The styles are simply to center the text horizontally and vertically. If you don't want that you could simply use:
 
 `&lt;$transclude tiddler={{!!icon}}/&gt;&lt;$link&gt;{{!!title}}&lt;/$link&gt;`
 
