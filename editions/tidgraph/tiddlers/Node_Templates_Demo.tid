@@ -1,10 +1,10 @@
 created: 20151114042517146
-modified: 20151117224529069
+modified: 20151118161413800
 tags: Demo
 title: Node Templates Demo
 type: text/vnd.tiddlywiki
 
-''Node Templates'' are very powerful!! They are //user defined templates// that allow you to make the nodes look however you want. Node templates can be applied to individual nodes, to individual levels or to all the nodes. They can also apply to some tiddlers only (using filters). 
+''Node Templates'' are very powerful!! They are //user defined templates// that allow you to make the nodes look however you want. Node templates can be applied to individual nodes, to individual levels or to all the nodes. They can also apply to some tiddlers only (using filters). Keep reading to see how a simple template is made, or if you are already knowledgeable jump to [[Advanced Node Templates]]. 
 
 !! Simple Template
 You can use a simple  IconTemplate to show the icon next to the title:
@@ -19,7 +19,7 @@ The IconTemplate is very simple HTML and Wikitext:
 
 <code><$text text={{IconTemplate}}/></code>
 
-The `div`(s) are simply to center the text horizontally and vertically. If you don't want that you could simply use:
+The styles are simply to center the text horizontally and vertically. If you don't want that you could simply use:
 
 `<$transclude tiddler={{!!icon}}/><$link>{{!!title}}</$link>`
 

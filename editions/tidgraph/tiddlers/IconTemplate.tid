@@ -1,11 +1,13 @@
 created: 20151117194954462
-modified: 20151117222649840
+modified: 20151118161222549
 title: IconTemplate
 type: text/vnd.tiddlywiki
 
-<div style="display:table; margin-left: auto; margin-right:auto;">
-   <$transclude tiddler={{!!icon}}/>
-   <div style="display: table-cell; vertical-align: middle;">
-      <$link>{{!!title}}</$link>
-   </div>
-</div>
+<div class="icon-node"> 
+  <$transclude tiddler={{!!icon}}/> 
+  <$link>{{!!title}}</$link>
+</div> 
+<style> 
+  .icon-node{display:table;margin:0 auto;} 
+  .icon-node > a {display: table-cell;vertical-align: middle;} 
+</style> 

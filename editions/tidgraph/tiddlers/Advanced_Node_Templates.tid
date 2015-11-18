@@ -1,5 +1,5 @@
 created: 20151117224225944
-modified: 20151117224257617
+modified: 20151118161441417
 tags: Demo
 title: Advanced Node Templates
 type: text/vnd.tiddlywiki
@@ -28,5 +28,7 @@ It uses these user defined  templates:
 * has advanced SVG inside to render a cloud with text
 * uses the `_tgr_node_level` field to only apply to level 1
 * uses the `_tgr_node_class` field to replace the default node class with a non-existent CSS class (in effect erasing it)
+
+This is how the graph looks like:
 
 <$tidgraph start="Virtues" nodetemplate="PotOfGold  CloudTemplate  GoldTemplate " />
