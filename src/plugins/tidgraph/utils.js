@@ -277,7 +277,7 @@ exports.buildSVG = function (tgrdiv, tidtree) {
 
 return '<svg  xmlns="http://www.w3.org/2000/svg" height="'+height+'px" width="'+width+
        'px" style="overflow: visible">'+
-       '<g class="ihm-tgr-link tgr-link" style="overflow: visible"> '+
+       '<g class="ihm-tgr-link tgr-link tgr-edge" style="overflow: visible"> '+
        '<defs> <marker id="tgr-arrow" viewBox="0 0 10 10" refX="1" refY="5" '+
        'markerUnits="strokeWidth" orient="auto" '+
        'markerWidth="8" markerHeight="6"> '+
