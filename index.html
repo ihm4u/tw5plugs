@@ -6978,7 +6978,7 @@ or in Greek ``&lt;&lt;bqb Mt 1,1 NA28&gt;&gt;``. Notice the verse numbers are no
 <pre></pre>
 </div>
 <div created="20151117003633437" modified="20151118201235884" tags="Demo" title="Custom Mode Demo" type="text/vnd.tiddlywiki">
-<pre>''Custom Modes'' allow you to define the way in which children of a node are chosen (besides the default `tagging` and `linking` modes). It uses a //user defined// subfilter, stored in a tiddler. The mode tiddler must have be named `$:/config/tidgraph/modes/ModeName`. Where `ModeName` is the name you want to use for your custom mode.
+<pre>''Custom Modes'' allow you to define the way in which children of a node are chosen (besides the default `tagging` and `linking` modes). It uses a //user defined// subfilter, stored in a tiddler. The mode tiddler is named `$:/config/tidgraph/modes/ModeName`. Where `ModeName` is the name you want to use for your custom mode.
 
 In this example, we have  `$:/config/tidgraph/modes/ModeName`. The text of this tiddler is  `fields[]` which is the subfilter that will be used to find the children of a node. 
 
@@ -6986,7 +6986,8 @@ The `fields[]` filter operator returns the fields of its parent. The following g
 
 ``&lt;$tidgraph start=&quot;Faith&quot; mode=&quot;MyMode&quot;&gt;``
 
-&lt;$tidgraph start=&quot;Faith&quot; mode=&quot;MyMode&quot;&gt;</pre>
+&lt;$tidgraph start=&quot;Faith&quot; mode=&quot;MyMode&quot;&gt;
+</pre>
 </div>
 <div created="20151024153452455" creator="ihm4u" modified="20151029054004111" modifier="ihm4u" tags="" title="Development">
 <pre>&lt;$list filter=&quot;[prefix[$:/plugins/ihm/]!suffix[backup]][prefix[$:/config/ihm/]]&quot;&gt;
