@@ -75,6 +75,7 @@ function getRenderedNode(node) {
    return $tw.wiki.renderTiddler("text/html",node.transcluder);
 }
 
+
 exports.buildTable = function(rootTid, tidtree) {
   function dm(tag,opts) {
      return $tw.utils.domMaker(tag, $tw.utils.extend(opts,{document: tidtree.document }) );
@@ -97,64 +98,90 @@ exports.buildTable = function(rootTid, tidtree) {
     }
   }
 
+  function makeNodeDiv(node) {
+     var esctitle = encodeURIComponent(node.id);
+     var title =  getNodeTitle(node.id,tidtree);
+     var isMissing = !$tw.wiki.tiddlerExists(node.id);
+     var linkclass = isMissing ? "tc-tiddlylink-missing":"tc-tiddlylink-resolves";
+     var linkclass = "tc-tiddlylink " + linkclass;
+     var nodeclass = getNodeClasses(node);
+     var nodecontent;
+     if ( node.template ) {
+        nodecontent = dm('div',{ "class": nodeclass,
+                                 innerHTML: getRenderedNode(node) } );
+     } else {
+        var tidlink = dm('a',{"class": linkclass,
+                               text: title,
+                               attributes: { href: '#'+esctitle }
+        });
+        nodecontent = dm('div', {"class": nodeclass, 
+                                 children: [tidlink] });
+     }
+     return nodecontent;
+  }
+
+  function makeCollapseLink(node) {
+     //Build collapse link
+     var collapse = dm('a',{"class": "ihm-tgr-collapse tc-tiddlylink",
+                             text: node.collapse ?   '⊕' : '⊖'});
+
+    // Add a click event handler for the collapse + or -
+    $tw.utils.addEventListeners(collapse,[
+          {name: "click", 
+           handlerObject: node, 
+           handlerMethod: "collapseClickEvent"}
+          ]);
+    return collapse;
+  }
+
+  function makeTD(node,nodecontent) {
+     var cnt = 1+countDescendants(node,true);//skipvisited shouldn't matter, tree is already prunned
+     var esctitle = encodeURIComponent(node.id);
+     var tooltip = getTooltip(node.id,tidtree);
+     var tddiv,divchildren;
+     //Add collapse link if needed
+     if ( ( tidtree.nocollapse === false )
+            && node.children
+            && node.children.length > 0) {
+        // Add collapse link to the content div of td
+        var collapse = makeCollapseLink(node);
+        divchildren = [nodecontent,collapse];
+     } else {
+     //Collapse link not needed
+        divchildren = [nodecontent];
+     }
+
+     //Build td element
+     tddiv = dm('div',{"class": "ihm-tgr-node-container",
+                        children: divchildren,
+                        attributes: { id: tidtree.id+'-'+esctitle,
+                                      title: tooltip
+                        }});
+     var td = dm('td',{attributes:{rowspan: cnt}, children: [tddiv]}); 
+     return td;
+  }
+
+  function eastAddChild(node,table,currdepth) {
+     if (currdepth >= tidtree.startat) {
+        var nodecontent = makeNodeDiv(node);
+        var td = makeTD(node,nodecontent);
+        var tr = dm('tr',{children: [td]});
+        table.appendChild(tr);
+     }
+  }
+
+  function southAddChild(node,currdepth) {
+  }
+  
   function getTooltip(title,tidtree) {
      return  firstField(tidtree.tooltip,[title]);
   }
 
   /*Add children to the unfinished table*/
-  var addChildren = function(table) {
-
+  function addChildren(table) {
      dfvisit(tidtree.root,function(node,acc,currdepth) {
-        var cnt = 1+countDescendants(node,true);//skipvisited shouldn't matter, tree is already prunned
-        var esctitle = encodeURIComponent(node.id);
-        var tooltip = getTooltip(node.id,tidtree);
-        var title =  getNodeTitle(node.id,tidtree);
-        
-        if (currdepth >= tidtree.startat) {
-           var isMissing = !$tw.wiki.tiddlerExists(node.id);
-           var linkclass = isMissing ? "tc-tiddlylink-missing":"tc-tiddlylink-resolves";
-           var linkclass = "tc-tiddlylink " + linkclass;
-           var nodeclass = getNodeClasses(node);
-           var nodecontent;
-           if ( node.template ) {
-              nodecontent = dm('div',{ "class": nodeclass,
-                                       innerHTML: getRenderedNode(node) } );
-           } else {
-              var tidlink = dm('a',{"class": linkclass,
-                                     text: title,
-                                     attributes: { href: '#'+esctitle }
-                                   });
-              nodecontent = dm('div', {"class": nodeclass, children: [tidlink] });
-           }
-
-           var div;
-           //Add collapse link if node has children
-           if ( ( tidtree.nocollapse === false ) &&
-                 node.children && node.children.length > 0) {
-				  var collapse = dm('a',{"class": "ihm-tgr-collapse tc-tiddlylink",
-                                     text: node.collapse ?   '⊕' : '⊖'});
-              // Add a click event handler for the collapse + or -
-              $tw.utils.addEventListeners(collapse,[
-                    {name: "click", handlerObject: node, handlerMethod: "collapseClickEvent"}
-              ]);
-              div = dm('div',{"class": "ihm-tgr-node-container",
-                              children:[nodecontent,collapse],
-                              attributes: { id: tidtree.id+'-'+esctitle,
-                                            title: tooltip
-                              }})
-           } else {
-              div = dm('div',{"class": "ihm-tgr-node-container",
-                              children:[nodecontent],
-                              attributes: { id: tidtree.id+'-'+esctitle,
-                                            title: tooltip
-                              }})
-           }
-           
-           var td = dm('td',{attributes:{rowspan: cnt}, children: [div]}); 
-           var tr = dm('tr',{children: [td]});
-           table.appendChild(tr);
-        }
-
+        //Add tr(s) to table
+        eastAddChild(node,table,currdepth);
      },{},{skipvisited:true})
   }
 
