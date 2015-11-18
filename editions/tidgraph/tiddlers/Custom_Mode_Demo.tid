@@ -4,7 +4,7 @@ tags: Demo
 title: Custom Mode Demo
 type: text/vnd.tiddlywiki
 
-''Custom Modes'' allow you to define the way in which children of a node are chosen (besides the default `tagging` and `linking` modes). It uses a //user defined// subfilter, stored in a tiddler. The mode tiddler must have be named `$:/config/tidgraph/modes/ModeName`. Where `ModeName` is the name you want to use for your custom mode.
+''Custom Modes'' allow you to define the way in which children of a node are chosen (besides the default `tagging` and `linking` modes). It uses a //user defined// subfilter, stored in a tiddler. The mode tiddler is named `$:/config/tidgraph/modes/ModeName`. Where `ModeName` is the name you want to use for your custom mode.
 
 In this example, we have  `$:/config/tidgraph/modes/ModeName`. The text of this tiddler is  `fields[]` which is the subfilter that will be used to find the children of a node. 
 
