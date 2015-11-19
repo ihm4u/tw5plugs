@@ -126,6 +126,14 @@ type: text/css
     -webkit-transform: translateX(-50%);
 }
 
+.ihm-tgr-collapse-open:before{
+	content:"+";
+}
+
+.ihm-tgr-collapse-close:before{
+	content:"&middot;";
+}
+
 a.ihm-tgr-collapse:hover {
     text-decoration: none;
     background: #999999;

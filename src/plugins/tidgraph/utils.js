@@ -122,15 +122,17 @@ exports.buildTable = function(rootTid, tidtree) {
 
   function makeCollapseLink(node) {
      //Build collapse link
-     var layoutcls = (node.widget.tidtree.layout=='E') ? 
-        "ihm-tgr-collapse-east":"ihm-tgr-collapse-south";
-     var collapse = dm('a',{"class": "ihm-tgr-collapse "+ layoutcls + " tc-tiddlylink",
-                             text: node.collapse ?   '⊕' : '⊖'});
+     var layoutcls = (node.widget.tidtree.layout=='E') ?
+        "ihm-tgr-collapse-east": "ihm-tgr-collapse-south";
+     var collapse = dm('a',{
+		"class": "ihm-tgr-collapse " + layoutcls,
+		"innerHTML": "<span class='ihm-tgr-collapse-" + (node.collapse ? "open" : "close") + "'/>"
+	 });
 
     // Add a click event handler for the collapse + or -
     $tw.utils.addEventListeners(collapse,[
-          {name: "click", 
-           handlerObject: node, 
+          {name: "click",
+           handlerObject: node,
            handlerMethod: "collapseClickEvent"}
           ]);
     return collapse;
