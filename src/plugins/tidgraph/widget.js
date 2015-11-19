@@ -55,6 +55,7 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    this.tidtree.nocollapse = this.nocollapse;
    this.tidtree.document = this.document;
    this.tidtree.nodetemplate = this.nodetemplate;
+   this.tidtree.layout = this.layout;
 
    //templatesInUse is used for refresh only
    this.templatesInUse = $tw.utils.parseStringArray(this.nodetemplate);
@@ -160,6 +161,8 @@ TidgraphWidget.prototype.execute = function() {
    this.filter  = this.getAttribute("filter","[!is[system]]");
    this.nocollapse = this.hasAttribute("nocollapse");
    this.nodetemplate = this.getAttribute("nodetemplate","");
+   this.layout = this.getAttribute("layout","E");
+   if (["E","S"].indexOf(this.layout) == -1) this.layout="E";
 
 	// FIXME: We could build the descendant tree here?
 };

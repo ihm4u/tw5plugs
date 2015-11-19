@@ -122,7 +122,9 @@ exports.buildTable = function(rootTid, tidtree) {
 
   function makeCollapseLink(node) {
      //Build collapse link
-     var collapse = dm('a',{"class": "ihm-tgr-collapse tc-tiddlylink",
+     var layoutcls = (node.widget.tidtree.layout=='E') ? 
+        "ihm-tgr-collapse-east":"ihm-tgr-collapse-south";
+     var collapse = dm('a',{"class": "ihm-tgr-collapse "+ layoutcls + " tc-tiddlylink",
                              text: node.collapse ?   '⊕' : '⊖'});
 
     // Add a click event handler for the collapse + or -
@@ -134,11 +136,11 @@ exports.buildTable = function(rootTid, tidtree) {
     return collapse;
   }
 
-  function makeTD(node,nodecontent) {
+  function makeCell(node,nodecontent) {
      var cnt = 1+countDescendants(node,true);//skipvisited shouldn't matter, tree is already prunned
      var esctitle = encodeURIComponent(node.id);
      var tooltip = getTooltip(node.id,tidtree);
-     var tddiv,divchildren;
+     var tddiv,divchildren,td;
      //Add collapse link if needed
      if ( ( tidtree.nocollapse === false )
             && node.children
@@ -152,25 +154,60 @@ exports.buildTable = function(rootTid, tidtree) {
      }
 
      //Build td element
-     tddiv = dm('div',{"class": "ihm-tgr-node-container",
+     var layoutcls = (node.widget.tidtree.layout=="E") ? 
+        "ihm-tgr-node-container-east":"ihm-tgr-node-container-south";
+     tddiv = dm('div',{"class": "ihm-tgr-node-container " + layoutcls,
                         children: divchildren,
                         attributes: { id: tidtree.id+'-'+esctitle,
                                       title: tooltip
                         }});
-     var td = dm('td',{attributes:{rowspan: cnt}, children: [tddiv]}); 
+     if (tidtree.layout==="E") 
+        td = dm('td',{attributes:{rowspan: cnt}, children: [tddiv]}); 
+     else
+        td = dm('div',{attributes:{"class": "ihm-tgr-node-cell" }, children: [tddiv]}); 
+
      return td;
   }
 
   function eastAddChild(node,table,currdepth) {
      if (currdepth >= tidtree.startat) {
         var nodecontent = makeNodeDiv(node);
-        var td = makeTD(node,nodecontent);
+        var td = makeCell(node,nodecontent);
         var tr = dm('tr',{children: [td]});
         table.appendChild(tr);
      }
   }
 
-  function southAddChild(node,currdepth) {
+  function southAddChild(node,table,acc,currdepth) {
+     if (currdepth >= tidtree.startat) {
+        var nodecontent = makeNodeDiv(node);
+        var cell = makeCell(node,nodecontent);
+        var currgroup = acc.nodegroup[acc.nodegroup.length-1];
+
+        //Append this node to the apropriate nodegroup if it is
+        //defined, otherwise append it to the main table
+        if (currgroup) {
+           if (currdepth >= acc.lastdepth)
+              currgroup.appendChild(cell);
+           else if (currdepth < acc.lastdepth) {
+              acc.nodegroup.pop();
+              currgroup = acc.nodegroup[acc.nodegroup.length-1];
+              currgroup.appendChild(cell);
+           }
+        } else {
+           table.appendChild(cell);
+        }
+
+        //New node group added if this node has children
+        //and we are deeper in the tree, otherwise pop back
+        //to the previous level
+        if ( !node.collapse &&  (node.children.length > 0) ) {
+           var ng = dm('div', { "class": "ihm-tgr-node-group"});
+           acc.nodegroup.push(ng);
+           cell.appendChild(ng);
+        }
+     }
+     acc.lastdepth = currdepth;
   }
   
   function getTooltip(title,tidtree) {
@@ -179,18 +216,37 @@ exports.buildTable = function(rootTid, tidtree) {
 
   /*Add children to the unfinished table*/
   function addChildren(table) {
-     dfvisit(tidtree.root,function(node,acc,currdepth) {
-        //Add tr(s) to table
-        eastAddChild(node,table,currdepth);
-     },{},{skipvisited:true})
+     switch(tidtree.layout) {
+        case 'E':
+           dfvisit(tidtree.root,function(node,acc,currdepth) {
+              //Add tr(s) to table
+              eastAddChild(node,table,currdepth);
+              return true; //continue visiting nodes
+           },{},{skipvisited:true});
+           break;
+        case 'S':
+           var acc = { nodegroup: [], lastdepth: -1 };
+           dfvisit(tidtree.root,function(node,acc,currdepth) {
+              //Add div cells and groups to table
+              southAddChild(node,table,acc,currdepth);
+              return true; //continue visiting nodes
+           },acc,{skipvisited:true});
+           break;
+     }
   }
 
   var   filter, tiddlers = [],
         data = [];
   //DEBUG printtree(tidtree.root,true)
-  var table = dm('table',{"class": "ihm-tgr-table",
-                          attributes: {id: tidtree.id+'-table'}});
-  //{ "str" : '<table id="'+tidtree.id+'-table">' };
+  var table;
+  if (tidtree.layout == "E") {
+      table = dm('table',{"class": "ihm-tgr-table",
+                          "attributes": {id: tidtree.id + "-table"}});
+  } else {
+      table = dm('div',  {"class": "ihm-tgr-divtable",
+                          "attributes": {id: tidtree.id + "-table"}});
+  }
+
   addChildren(table);
 
   //DEBUG console.log(" table = ", out.str, "\ntidtree: ",tidtree);
@@ -238,7 +294,7 @@ function getPort(tgrdiv,edge,criteria) {
 /* firgures our which ports to use to connect
    e1 and e2. There are four ports for each 
    element: T(op), B(ottom), R(ight), L(eft) */
-function whichPort(e1,e2) {
+function whichPort(e1,e2,layout) {
    /* for now presume r,l */
    
    var e1r = getOffsetRect(e1);
@@ -251,6 +307,10 @@ function whichPort(e1,e2) {
    //DEBUG console.log(`e1=(${e1x},${e1y}) e2=(${e2x},${e2y})`)
    //console.log('e1=',e1r,e1,'e2=',e2r,e2)
 
+   //FIXME: needs better code for circular nodes in vertical layout
+   if (layout=="S")
+      return [ "B", "T"];
+      
    //Because map is from left to right
    //default is [R,L]
    if ( e2x - e1x < 4) return [ "R","R" ];
@@ -262,8 +322,8 @@ exports.error = function(msg) {
 }
 
 /* Produces an svg path element to connect e1 and e2 */
-function connect(tgrdiv,e1, e2) {
-   var dir = whichPort(e1,e2);
+function connect(tgrdiv,e1, e2, layout) {
+   var dir = whichPort(e1,e2,layout);
    //DEBUG console.log(`dir=${dir}`)
    var p1 = getPort(tgrdiv,dir[0],e1);
    var p2 = getPort(tgrdiv,dir[1],e2);
@@ -273,17 +333,31 @@ function connect(tgrdiv,e1, e2) {
    if ( p1 == null ) return error('port not found for '+e1.tagName+' - '+e1.innerHTML);
    if ( p2 == null ) return error('port not found for '+e2.tagName+' - '+e2.innerHTML);
    var vdist = Math.abs(p2[1] - p1[1]);
-   if ( p2[1] > p1[1] ) offy = vdist/2; //+10;  // Curve down
-   if ( p2[1] < p1[1] ) offy = -vdist/2; //-10;  // Curve up
-   if ( vdist < 5 ) offy = 0;  //Straight line if vertical distance is less than 5px
-   
    var hdist = Math.abs(p2[0] - p1[0]);
-   if ( dir[1] == "L" ) offx = -10; // 10px left of edge
-   if ( dir[1] == "R" ) { offx = +10; qoff = 20 } // 10px right of edge
-   //if ( hdist < 5) qoff = 18 //Larger loop if horizontal distance is less than 5px (ont )
-   return '<path d="M'+p1[0]+','+p1[1]       +' Q'+(p1[0]+qoff)+','+p1[1]+
-          '  '+(p1[0]+qoff) +','+(p1[1]+offy)+' Q'+(p1[0]+qoff)+','+p2[1]+
-          '  '+(p2[0]+offx) +','+p2[1]+'" marker-end="url(#tgr-arrow)"/>'
+   switch(layout) {
+      case "E":
+         if ( p2[1] > p1[1] ) offy = vdist/2; //+10;  // Curve down
+         if ( p2[1] < p1[1] ) offy = -vdist/2; //-10;  // Curve up
+         if ( vdist < 5 ) offy = 0;  //Straight line if vertical distance is less than 5px
+         
+         if ( dir[1] == "L" ) offx = -10; // 10px left of edge
+         if ( dir[1] == "R" ) { offx = +10; qoff = 20 } // 10px right of edge
+         //if ( hdist < 5) qoff = 18 //Larger loop if horizontal distance is less than 5px (ont )
+         return '<path d="M'+p1[0]+','+p1[1]       +' Q'+(p1[0]+qoff)+','+p1[1]+
+                '  '+(p1[0]+qoff) +','+(p1[1]+offy)+' Q'+(p1[0]+qoff)+','+p2[1]+
+                '  '+(p2[0]+offx) +','+p2[1]+'" marker-end="url(#tgr-arrow)"/>';
+      case "S":
+         if ( p2[0] > p1[0] ) offx = hdist/2; //+10;  // Curve right
+         if ( p2[0] < p1[0] ) offx = -hdist/2; //-10;  // Curve left
+         if ( hdist < 5 ) offx = 0;  //Straight line if vertical distance is less than 5px
+         
+         if ( dir[1] == "T" ) { offy = -10; qoff = 10 } // 10px above edge
+         if ( dir[1] == "B" ) { offy = +10; qoff = 20 } // 10px below edge
+         //if ( hdist < 5) qoff = 18 //Larger loop if horizontal distance is less than 5px (ont )
+         return '<path d="M'+p1[0]+','+p1[1]       +' Q'+p1[0]+','+(p1[1]+qoff)+
+                '  '+(p1[0]+offx) +','+(p1[1]+qoff)+' Q'+p2[0]+','+(p1[1]+qoff)+
+                '  '+p2[0] +','+(p2[1]+offy)+'" marker-end="url(#tgr-arrow)"/>';
+   }
 /*#aeb0b5 */
 }
 
@@ -381,7 +455,7 @@ function connectAll(tgrdiv,tidtree) {
       esctitle2 = encodeURIComponent(title2);
       el1 = document.getElementById(tidtree.id+'-'+esctitle1);
       el2 = document.getElementById(tidtree.id+'-'+esctitle2);
-      if ( el1 && el2 ) res.push( connect(tgrdiv, el1, el2) )//DEBUG,console.log(`${p} -----> ${c}`,el1,el2);
+      if ( el1 && el2 ) res.push( connect(tgrdiv, el1, el2, tidtree.layout) )//DEBUG,console.log(`${p} -----> ${c}`,el1,el2);
    }
    //Collect SVG paths for all nodes in the main tree
    dfvisit(tidtree.root,function(child,acc,currdepth) {
@@ -474,7 +548,7 @@ function bfvisit(n,cb,accInit,opts) {
   var getCh = opts.getCh || function (o) { return o.collapse ? []:o.children }
   var getId = opts.getId || function (o) { return o.id }
   var skipvisited = opts.skipvisited===undefined ? true:opts.skipvisited
-  var maxdepth = opts.maxdepth || -1
+  var maxdepth = opts.maxdepth || Number.MAX_VALUE;
   var accInit = accInit || {}
   var acc = accInit
   var queue = [], done = []

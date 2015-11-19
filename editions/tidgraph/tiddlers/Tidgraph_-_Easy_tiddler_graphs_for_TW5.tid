@@ -1,6 +1,8 @@
 created: 20151024065631952
 creator: ihm4u
-modified: 20151117195727581
+list: 
+lists: [[Node Templates Demo]]
+modified: 20151119085445896
 modifier: ihm4u
 tags: home tidgraph
 title: Tidgraph - Easy tiddler graphs for TW5
@@ -16,7 +18,7 @@ Please report any bugs in the Tiddlywiki [[google group|https://groups.google.co
 
 !!Introduction
 The [[tidgraph|$:/plugins/ihm/tidgraph]] plugin shows tiddlers with an SVG/HTML5 diagram like the following:
-<$tidgraph start="Virtues" nodetemplate="PotOfGold" />
+<$tidgraph start="Virtues" nodetemplate="PotOfGold"/>
 
 It uses the tags to figure out the tree structure. It can optionally use links also. If a tiddler has a `summary` field then it is used as a tooltip. If a tiddler has a `caption` field then it is used as title for the node. There are attributes to specify each, see the [[Documentaion|$:/plugins/ihm/tidgraph/documentation]] for options. 
 
@@ -26,10 +28,8 @@ It uses the tags to figure out the tree structure. It can optionally use links a
 To install simply drag this link to your wiki:
 [[$:/plugins/ihm/tidgraph]]
 
-!!Screenshot
-This is how it looks like with 7 tiddlers tagged by the [[Virtues]] tiddler:
-
-{{$:/plugins/ihm/tidgraph/tidgraph.png}}
+!! Demos
+<<list-links filter:"[tag[Demo]!sort[title]]">>
 
 !!Why?
 I needed a very lightweight plugin to show a mind-map like diagram of tiddlers. I also use tiddlymap, it is very nice, but it is not lightweight. I wanted no third-party libraries, and a simple one-liner to make the graph.

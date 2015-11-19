@@ -66,7 +66,15 @@ type: text/css
 
 .ihm-tgr-node-container {
    position: relative;
+}
+
+.ihm-tgr-node-container-east {
    margin: 6px 10px;
+}
+
+.ihm-tgr-node-container-south {
+   margin: 16px 4px;
+   display: inline-block; /*FIXME*/
 }
 
 .ihm-tgr-node-container p {
@@ -96,15 +104,40 @@ type: text/css
     width: 12px;
     height: 15px;
     background: #aeb0b5;
+    right: -14px;
+    font: 12px Arial, sans-serif;
+}
+
+.ihm-tgr-collapse-east {
     top: 50%;
     transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
-    right: -14px;
-    font: 12px Arial, sans-serif;
+}
+
+.ihm-tgr-collapse-south {
+    left: 50%;
+    transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
 }
 
 a.ihm-tgr-collapse:hover {
     text-decoration: none;
     background: #999999;
+}
+
+/* Vertical layout divs */
+.ihm-tgr-divtable {
+   display: table;
+}
+
+.ihm-tgr-node-group {
+   display: table-row;
+}
+
+.ihm-tgr-node-cell {
+   display: table-cell;
+   vertical-align: top;
+   text-align: center;
 }

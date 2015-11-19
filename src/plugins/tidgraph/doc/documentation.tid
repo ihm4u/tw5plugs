@@ -32,6 +32,7 @@ All  options:
 |`filter` |Only tiddlers matching filter will be used | none |
 |`nocollapse` |Disable ability to collapse nodes. The graph allows node collapsing by default. | false |
 |`nodetemplate` |One or mode node templates to make node look like you want. See the [[Node Templates Demo|https://ihm4u.github.io/tw5plugs/#Node%20Templates%20Demo]] for examples of how to use them. | none |
+|`layout` |`E` for East (Vertical) or `S` for south (Horizontal) layout. | E |
 
 !CSS classes
 You can also change colors, and other styles with the following CSS classes.
