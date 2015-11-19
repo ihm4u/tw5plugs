@@ -65,6 +65,7 @@ type: text/css
 
 .tgr-arrow {
    fill: #aeb0b5;
+   stroke-width: 0;
 }
 
 .ihm-tgr-node-container {

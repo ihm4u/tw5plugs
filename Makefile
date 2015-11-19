@@ -20,10 +20,10 @@ prod:
 	mkdir -p "$(DISTDIR)" "$(DISTDIR)/doc"
 	echo "Making production targets"
 	PROD="yes" make targets
-	echo `grep version $(DISTDIR)/plugin.info`" is it correct?"
+	echo `grep --color=always \"version.*\".*\" $(DISTDIR)/plugin.info`" is it correct?"
 	echo "Making index file"
 	make index
-	echo `grep \"version $(DISTDIR)/plugin.info`
+	echo `grep --color=always \"version.*\".*\" $(DISTDIR)/plugin.info`
 	echo "done."
 
 
