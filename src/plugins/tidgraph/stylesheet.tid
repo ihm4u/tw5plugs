@@ -103,20 +103,23 @@ type: text/css
     position: absolute;
     cursor: pointer;
     color: white !important;
-    border-radius: 20px;
-    line-height: 14px;
-    width: 12px;
-    height: 15px;
+    border-radius: 11px;
+    width: 11px;
+    height: 11px;
     background: #aeb0b5;
     right: -14px;
-    font: 12px Arial, sans-serif;
+	text-align: center;
+    font-size: 11px;
+	line-height:9px;
+	display: table-cell;
+    vertical-align: middle;
 }
 
 .ihm-tgr-collapse-east {
-    top: 50%;
-    transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
+    top: 53%;
+    transform: translateY(-53%);
+    -ms-transform: translateY(-53%);
+    -webkit-transform: translateY(-53%);
 }
 
 .ihm-tgr-collapse-south {
@@ -124,6 +127,18 @@ type: text/css
     transform: translateX(-50%);
     -ms-transform: translateX(-50%);
     -webkit-transform: translateX(-50%);
+}
+
+.ihm-tgr-collapse-open:before{
+	content:"+";
+}
+
+.ihm-tgr-collapse-close{
+	line-height:10px;
+}
+
+.ihm-tgr-collapse-close:before{
+	content:"-";
 }
 
 a.ihm-tgr-collapse:hover {
