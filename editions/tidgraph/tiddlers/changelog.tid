@@ -1,12 +1,24 @@
 created: 20151024161547099
 creator: ihm4u
-modified: 20151117005532732
+modified: 20151119172947195
 modifier: ihm4u
 tags: tidgraph
 title: Tidgraph - Changelog
 type: text/vnd.tiddlywiki
 
 For more information see [[Tidgraph - Easy tiddler graphs for TW5]]
+
+''Version 0.9.2''
+
+* Fix back links in vertical layout
+
+''Version 0.9.1''
+
+* Vertical layout (thanks Sylvain!)
+* Improve docs
+* Fix refresh bug for node templates
+* Support filters in node templates
+* Custom user modes now stored in $:/config/tidgraph/modes tiddlers
 
 ''Version 0.9.0-rc1''
 

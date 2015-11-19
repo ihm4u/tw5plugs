@@ -307,14 +307,18 @@ function whichPort(e1,e2,layout) {
    //DEBUG console.log(`e1=(${e1x},${e1y}) e2=(${e2x},${e2y})`)
    //console.log('e1=',e1r,e1,'e2=',e2r,e2)
 
-   //FIXME: needs better code for circular nodes in vertical layout
-   if (layout=="S")
-      return [ "B", "T"];
-      
-   //Because map is from left to right
-   //default is [R,L]
-   if ( e2x - e1x < 4) return [ "R","R" ];
-   else return [ "R", "L" ]
+   switch(layout) {
+      case "E": 
+         //Because map is from left to right
+         //default is [R,L]
+         if ( e2x - e1x < 4) return [ "R","R" ];
+         else return [ "R", "L" ]
+         break;
+      case "S":
+         if ( e2y - e1y < 4) return [ "B","B" ];
+         else return [ "B", "T"];
+         break;
+   }
 }
 
 exports.error = function(msg) {
