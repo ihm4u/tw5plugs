@@ -6514,7 +6514,7 @@ exports.run = function(text, tiddler) {
     }
 }</pre>
 </div>
-<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog documentation" plugin-type="plugin" source="https://ihm4u.github.io/tw5plugs" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.9.0">
+<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog documentation" plugin-type="plugin" source="https://ihm4u.github.io/tw5plugs" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.9.1">
 <pre>{
     &quot;tiddlers&quot;: {
         &quot;$:/plugins/ihm/tidgraph/changelog&quot;: {
@@ -6532,7 +6532,7 @@ exports.run = function(text, tiddler) {
             &quot;modified&quot;: &quot;20151030035526231&quot;,
             &quot;modifier&quot;: &quot;ihm4u&quot;,
             &quot;title&quot;: &quot;$:/plugins/ihm/tidgraph/documentation&quot;,
-            &quot;text&quot;: &quot;!!Example\nThe following example shows a tiddler which tags 7 children:\n\n``&lt;$tidgraph start=\&quot;Virtues\&quot; /&gt;``\n\nlooks like this:\n\n{{$:/plugins/ihm/tidgraph/tidgraph.png}}\n\n!!Usage\nSimple usage:\n\n``&lt;$tidgraph start=\&quot;MyRootTiddler\&quot; /&gt;``\n\nThe map will start with MyRootTiddler on the left, and show all its children recursively. The default maximum depth is 10 levels, it can be changed with the `maxdepth` attribute.\n\nAll  options:\n\n|!Attribute |!Description|!Default |\n|`start`      |Initial tiddler that starts the map | none |\n|`startat`   |First level to display. 0 is the root tiddler named in the `start` attribute. 1 is the next level, etc. | 0 |\n|`maxdepth`   |Maximum depth to display.| 10 |\n|`mode` |//tagging// or //linking// or custom. This is how to identify the children of a node. With //tagging// Tiddlers that tag other tiddlers become their parent. With //linking// tiddlers that link to other tiddlers become their parent. A custom mode can be specified by a `$:/config/tidgraph/modes/MyMode` tiddler where `MyMode` is the name of the mode. See [[Custom Mode Demo|https://ihm4u.github.io/tw5plugs/#Custom%20Mode%20Demo]] for an example | //tagging//  |\n|`nodetitle` |Field to use as title for the node. | //title// (or //caption// if present) |\n|`tooltip` |List of fields to use for node tooltip. The first field with a non empty value is used. | //summary// |\n|`filter` |Only tiddlers matching filter will be used | none |\n|`nocollapse` |Disable ability to collapse nodes. The graph allows node collapsing by default. | false |\n|`nodetemplate` |One or mode node templates to make node look like you want. See the [[Node Templates Demo|https://ihm4u.github.io/tw5plugs/#Node%20Templates%20Demo]] for examples of how to use them. | none |\n|`layout` |`E` for East (Vertical) or `S` for south (Horizontal) layout. | E |\n\n!CSS classes\nYou can also change colors, and other styles with the following CSS classes.\n\n|!Class |!Description |\n|tgr-node |Style for each node. If a `color` style is specified use `!important` in order to prevent the tiddlywiki classes from overriding your value |\n|tgr-edge |Style for the SVG path that connects the nodes. The old name was tgr-link. |\n|tgr-arrow |Style for the SVG polyline that draws the arrow at the end of the link |\n&quot;
+            &quot;text&quot;: &quot;!!Example\nThe following example shows a tiddler which tags 7 children:\n\n``&lt;$tidgraph start=\&quot;Virtues\&quot; /&gt;``\n\nlooks like this:\n\n{{$:/plugins/ihm/tidgraph/tidgraph.png}}\n\n!!Usage\nSimple usage:\n\n``&lt;$tidgraph start=\&quot;MyRootTiddler\&quot; /&gt;``\n\nThe map will start with MyRootTiddler on the left, and show all its children recursively. The default maximum depth is 10 levels, it can be changed with the `maxdepth` attribute.\n\nAll  options:\n\n|!Attribute |!Description|!Default |\n|`start`      |Initial tiddler that starts the map | none |\n|`startat`   |First level to display. 0 is the root tiddler named in the `start` attribute. 1 is the next level, etc. | 0 |\n|`maxdepth`   |Maximum depth to display.| 10 |\n|`mode` |//tagging// or //linking// or custom. This is how to identify the children of a node. With //tagging// Tiddlers that tag other tiddlers become their parent. With //linking// tiddlers that link to other tiddlers become their parent. A custom mode can be specified by a `$:/config/tidgraph/modes/MyMode` tiddler where `MyMode` is the name of the mode. See [[Custom Mode Demo|https://ihm4u.github.io/tw5plugs/#Custom%20Mode%20Demo]] for an example | //tagging//  |\n|`nodetitle` |Field to use as title for the node. | //title// (or //caption// if present) |\n|`tooltip` |List of fields to use for node tooltip. The first field with a non empty value is used. | //summary// |\n|`filter` |Only tiddlers matching filter will be used | none |\n|`nocollapse` |Disable ability to collapse nodes. The graph allows node collapsing by default. | false |\n|`nodetemplate` |One or mode node templates to make node look like you want. See the [[Node Templates Demo|https://ihm4u.github.io/tw5plugs/#Node%20Templates%20Demo]] for examples of how to use them. | none |\n|`layout` |`E` for East (Vertical) or `S` for south (Horizontal) layout. | E |\n\n!CSS classes\nYou can also change colors, and other styles with the following CSS classes.\n\n|!Class |!Description |\n|tgr-node |Style for each node. If you want to change the color of the links inside the node use the `.tgr-node a` selector. |\n|tgr-edge |Style for the SVG path that connects the nodes. The old name was tgr-link. |\n|tgr-arrow |Style for the SVG polyline that draws the arrow at the end of the link |\n&quot;
         },
         &quot;$:/plugins/ihm/tidgraph/readme&quot;: {
             &quot;created&quot;: &quot;20151024054526558&quot;,
@@ -7302,16 +7302,20 @@ I needed a very lightweight plugin to show a mind-map like diagram of tiddlers. 
 <div created="20151026054558101" creator="ihm4u" modified="20151111074150616" modifier="ihm4u" title="Tidgraph Test CSS" type="text/css">
 <pre>.tgr-node {
    background-color: blue;
-   color: white !important;
 }
 
-.tgr-link {
+.tgr-node a {
+   color: white;
+}
+
+.tgr-edge {
    stroke: red;
 }
 
 .tgr-arrow {
    fill: red;
-}</pre>
+}
+</pre>
 </div>
 <div created="20151117030359432" modified="20151117030509742" summary="A chaste person becomes more free, because they are not enslaved by the pleasures of the moment." tags="Chastity" title="to be truly free" type="text/vnd.tiddlywiki">
 <pre></pre>

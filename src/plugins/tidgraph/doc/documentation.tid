@@ -38,6 +38,6 @@ All  options:
 You can also change colors, and other styles with the following CSS classes.
 
 |!Class |!Description |
-|tgr-node |Style for each node. If a `color` style is specified use `!important` in order to prevent the tiddlywiki classes from overriding your value |
+|tgr-node |Style for each node. If you want to change the color of the links inside the node use the `.tgr-node a` selector. |
 |tgr-edge |Style for the SVG path that connects the nodes. The old name was tgr-link. |
 |tgr-arrow |Style for the SVG polyline that draws the arrow at the end of the link |
