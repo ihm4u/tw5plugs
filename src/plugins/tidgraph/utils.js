@@ -326,12 +326,14 @@ exports.error = function(msg) {
 }
 
 /* Produces an svg path element to connect e1 and e2 */
-function connect(tgrdiv,e1, e2, layout) {
+function connect(tgrdiv,e1, e2, layout,weak) {
    var dir = whichPort(e1,e2,layout);
    //DEBUG console.log(`dir=${dir}`)
    var p1 = getPort(tgrdiv,dir[0],e1);
    var p2 = getPort(tgrdiv,dir[1],e2);
-   var offy,offx,qoff=10;
+   var offy,offx,qoff=10,weakcls="";
+
+   if (weak) weakcls = ' class="tgr-edge-weak"';
 
    if ( e1 == null || e2 == null ) return error("can't connect null element");
    if ( p1 == null ) return error('port not found for '+e1.tagName+' - '+e1.innerHTML);
@@ -349,7 +351,8 @@ function connect(tgrdiv,e1, e2, layout) {
          //if ( hdist < 5) qoff = 18 //Larger loop if horizontal distance is less than 5px (ont )
          return '<path d="M'+p1[0]+','+p1[1]       +' Q'+(p1[0]+qoff)+','+p1[1]+
                 '  '+(p1[0]+qoff) +','+(p1[1]+offy)+' Q'+(p1[0]+qoff)+','+p2[1]+
-                '  '+(p2[0]+offx) +','+p2[1]+'" marker-end="url(#tgr-arrow)"/>';
+                '  '+(p2[0]+offx) +','+p2[1]+ '"' +  weakcls +
+                ' marker-end="url(#tgr-arrow)"/>';
       case "S":
          if ( p2[0] > p1[0] ) offx = hdist/2; //+10;  // Curve right
          if ( p2[0] < p1[0] ) offx = -hdist/2; //-10;  // Curve left
@@ -360,7 +363,8 @@ function connect(tgrdiv,e1, e2, layout) {
          //if ( hdist < 5) qoff = 18 //Larger loop if horizontal distance is less than 5px (ont )
          return '<path d="M'+p1[0]+','+p1[1]       +' Q'+p1[0]+','+(p1[1]+qoff)+
                 '  '+(p1[0]+offx) +','+(p1[1]+qoff)+' Q'+p2[0]+','+(p1[1]+qoff)+
-                '  '+p2[0] +','+(p2[1]+offy)+'" marker-end="url(#tgr-arrow)"/>';
+                '  '+p2[0] +','+(p2[1]+offy)+ '"' + weakcls +
+                ' marker-end="url(#tgr-arrow)"/>';
    }
 /*#aeb0b5 */
 }
@@ -452,14 +456,14 @@ function isChild(child,parent,tidtree) {
 function connectAll(tgrdiv,tidtree) {
    var res = [],el1,el2,title1,title2,esctitle1,esctitle2;
 
-   function addPath(c,p) {
+   function addPath(c,p,weak) {
       title1 = p;
       title2 = c;
       esctitle1 = encodeURIComponent(title1);
       esctitle2 = encodeURIComponent(title2);
       el1 = document.getElementById(tidtree.id+'-'+esctitle1);
       el2 = document.getElementById(tidtree.id+'-'+esctitle2);
-      if ( el1 && el2 ) res.push( connect(tgrdiv, el1, el2, tidtree.layout) )//DEBUG,console.log(`${p} -----> ${c}`,el1,el2);
+      if ( el1 && el2 ) res.push( connect(tgrdiv, el1, el2, tidtree.layout, weak) )//DEBUG,console.log(`${p} -----> ${c}`,el1,el2);
    }
    //Collect SVG paths for all nodes in the main tree
    dfvisit(tidtree.root,function(child,acc,currdepth) {

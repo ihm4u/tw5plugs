@@ -59,8 +59,11 @@ type: text/css
    stroke: #aeb0b5;
 }
 
+.tgr-edge-weak {
+   stroke-dasharray: 3,5;
+}
+
 .tgr-arrow {
-   stroke-width: 0;
    fill: #aeb0b5;
 }
 
