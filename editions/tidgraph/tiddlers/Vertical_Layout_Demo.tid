@@ -1,7 +1,6 @@
 created: 20151119081139436
 layout: S
-levels: 1
-modified: 20151119090022494
+modified: 20151119091237809
 tags: Demo
 title: Vertical Layout Demo
 type: text/vnd.tiddlywiki
@@ -12,9 +11,7 @@ Tidgraph also supports a vertical layout through the `layout` parameter. The val
 
 produces this graph:
 
-<$tidgraph start="Virtues" layout={{!!layout}} maxdepth={{!!levels}}/>
+<$tidgraph start="Virtues" layout={{!!layout}} maxdepth="1"/>
 
 <$button set=!!layout setTo="S">South</$button>
 <$button set=!!layout setTo="E">East</$button>
-<!--$button set=!!levels setTo="10">More Levels</$button-->
-<!--$button set=!!levels setTo="1">Two levels</$button-->
