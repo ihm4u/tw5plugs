@@ -125,8 +125,7 @@ exports.buildTable = function(rootTid, tidtree) {
      var layoutcls = (node.widget.tidtree.layout=='E') ?
         "ihm-tgr-collapse-east": "ihm-tgr-collapse-south";
      var collapse = dm('a',{
-		"class": "ihm-tgr-collapse " + layoutcls,
-		"innerHTML": "<span class='ihm-tgr-collapse-" + (node.collapse ? "open" : "close") + "'/>"
+		"class": "ihm-tgr-collapse " + layoutcls + " ihm-tgr-collapse-" + (node.collapse ? "open" : "close")
 	 });
 
     // Add a click event handler for the collapse + or -
