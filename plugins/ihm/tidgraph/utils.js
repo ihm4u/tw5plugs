@@ -75,6 +75,11 @@ function getRenderedNode(node) {
    return $tw.wiki.renderTiddler("text/html",node.transcluder);
 }
 
+//Tiddler HTML wraped in <span> instead of the normal <p> of TW5
+function tiddlerSpan(title) {
+   //TW5 surrounds the innerHTML with a paragraph, we replace it with a span
+   return $tw.wiki.renderTiddler("text/html",title).replace(/^<p>/,'<span>').replace(/<\/p>$/,'</span>');
+}
 
 exports.buildTable = function(rootTid, tidtree) {
   function dm(tag,opts) {
@@ -122,10 +127,14 @@ exports.buildTable = function(rootTid, tidtree) {
 
   function makeCollapseLink(node) {
      //Build collapse link
+     var collapsesvg,tmpl;
+     var collapsetmpl= "$:/plugins/ihm/templates/" + 
+        ( (node.collapse) ? "expand":"collapse" );
+     var collapsesvg = tiddlerSpan(collapsetmpl);
      var layoutcls = (node.widget.tidtree.layout=='E') ? 
         "ihm-tgr-collapse-east":"ihm-tgr-collapse-south";
-     var collapse = dm('a',{"class": "ihm-tgr-collapse "+ layoutcls + " tc-tiddlylink",
-                             text: node.collapse ?   '⊕' : '⊖'});
+     var collapse = dm('span',{"class": "ihm-tgr-collapse "+ layoutcls + " tc-tiddlylink",
+                                innerHTML: collapsesvg });
 
     // Add a click event handler for the collapse + or -
     $tw.utils.addEventListeners(collapse,[

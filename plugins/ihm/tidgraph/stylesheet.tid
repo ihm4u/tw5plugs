@@ -81,7 +81,7 @@ type: text/css
    display: inline-block; /*FIXME*/
 }
 
-.ihm-tgr-node-container p {
+.ihm-tgr-node-container > p {
    margin-top: 0px;
    margin-bottom: 0px;
 }
@@ -102,14 +102,9 @@ type: text/css
 .ihm-tgr-collapse {
     position: absolute;
     cursor: pointer;
-    color: white !important;
-    border-radius: 20px;
-    line-height: 14px;
-    width: 12px;
-    height: 15px;
-    background: #aeb0b5;
+    width: 14px;
+    height: 14px;
     right: -14px;
-    font: 12px Arial, sans-serif;
 }
 
 .ihm-tgr-collapse-east {
