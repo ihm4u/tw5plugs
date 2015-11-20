@@ -1,5 +1,5 @@
 DISTDIR=editions/tidgraph/plugins/tidgraph
-SRCDIR=src/plugins/tidgraph
+SRCDIR=plugins/ihm/tidgraph
 JSSRC = utils.js widget.js
 SRC= plugin.info $(shell cd $(SRCDIR) > /dev/null && ls *.tid doc/*.tid)
 TARGETS=$(addprefix $(DISTDIR)/,$(JSSRC) $(SRC))
