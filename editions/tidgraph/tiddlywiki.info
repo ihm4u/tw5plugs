@@ -4,7 +4,7 @@
         "tiddlywiki/tiddlyweb",
         "tiddlywiki/filesystem",
         "tiddlywiki/highlight",
-        "plugins/tidgraph"
+        "ihm/tidgraph"
     ],
     "themes": [
         "tiddlywiki/vanilla",
