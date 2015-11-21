@@ -42,7 +42,7 @@ TidgraphWidget.prototype.render = function(parent,nextSibling) {
    //if it is not a default mode
    if (["tagging","linking"].indexOf(this.mode) === -1)  {
       var m = $tw.wiki.getTiddlerText("$:/config/tidgraph/modes/" + this.mode);
-      this.mode = m || "tagging";
+      this.mode = m || this.mode; //Use parameter as filter if tiddler doesn't exist
    }
 
    this.tidtree = [];

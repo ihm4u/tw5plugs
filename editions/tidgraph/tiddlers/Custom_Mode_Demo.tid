@@ -1,5 +1,5 @@
 created: 20151117003633437
-modified: 20151118201235884
+modified: 20151121031116827
 tags: Demo
 title: Custom Mode Demo
 type: text/vnd.tiddlywiki
@@ -12,4 +12,10 @@ The `fields[]` filter operator returns the fields of its parent. The following g
 
 ``<$tidgraph start="Faith" mode="MyMode">``
 
-<$tidgraph start="Faith" mode="MyMode">
+<$tidgraph start="Faith" mode="MyMode"/>
+
+
+if you don't want to store the mode in a config tiddler you can simply use:
+
+``<$tidgraph start="Faith" mode="fields[]">``
+
