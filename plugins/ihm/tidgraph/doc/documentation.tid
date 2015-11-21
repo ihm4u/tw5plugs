@@ -1,7 +1,3 @@
-created: 20151024061703960
-creator: ihm4u
-modified: 20151030035526231
-modifier: ihm4u
 title: $:/plugins/ihm/tidgraph/documentation
 
 !!Example
@@ -26,7 +22,7 @@ All  options:
 |`start`      |Initial tiddler that starts the map | none |
 |`startat`   |First level to display. 0 is the root tiddler named in the `start` attribute. 1 is the next level, etc. | 0 |
 |`maxdepth`   |Maximum depth to display.| 10 |
-|`mode` |//tagging// or //linking// or custom. This is how to identify the children of a node. With //tagging// Tiddlers that tag other tiddlers become their parent. With //linking// tiddlers that link to other tiddlers become their parent. A custom mode can be specified by a `$:/config/tidgraph/modes/MyMode` tiddler where `MyMode` is the name of the mode. See [[Custom Mode Demo|https://ihm4u.github.io/tw5plugs/#Custom%20Mode%20Demo]] for an example | //tagging//  |
+|`mode` |//tagging// or //linking// or custom. This is how to identify the children of a node. With //tagging// Tiddlers that tag other tiddlers become their parent. With //linking// tiddlers that link to other tiddlers become their parent. A custom mode can be specified by a `$:/config/tidgraph/modes/MyMode` tiddler where `MyMode` is the name of the mode. The subfilter can be also specified directly; e.g. `mode="fields[]"`. See [[Custom Mode Demo|https://ihm4u.github.io/tw5plugs/#Custom%20Mode%20Demo]] for an example | //tagging//  |
 |`nodetitle` |Field to use as title for the node. | //title// (or //caption// if present) |
 |`tooltip` |List of fields to use for node tooltip. The first field with a non empty value is used. | //summary// |
 |`filter` |Only tiddlers matching filter will be used | none |
