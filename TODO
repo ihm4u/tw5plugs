@@ -1,0 +1,4 @@
+* For edge templates: 
+*   Use $tw.modules.execute(moduleName) -- moduleName is the tiddler title
+*   returns the exports variable from the module, use run.apply(this,args) to run it
+this is in boot/boot.js 
