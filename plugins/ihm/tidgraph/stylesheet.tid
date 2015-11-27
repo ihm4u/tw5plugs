@@ -77,7 +77,7 @@ type: text/css
    display: inline-block; /*FIXME*/
 }
 
-.ihm-tgr-node-container > p {
+.ihm-tgr-node-container p {
    margin-top: 0px;
    margin-bottom: 0px;
 }
