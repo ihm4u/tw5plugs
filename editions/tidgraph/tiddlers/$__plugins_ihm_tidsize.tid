@@ -1,0 +1,47 @@
+core-version: 5.1.9
+created: 20151126183142054
+description: Tiddler sizes
+plugin-type: plugin
+title: $:/plugins/ihm/tidsize
+type: application/json
+version: 0.1.1
+
+{
+    "tiddlers": {
+        "$:/core/modules/filters/lsort.js": {
+            "text": "/*\\\ntitle: $:/core/modules/filters/lsort.js\ntype: application/javascript\nmodule-type: filteroperator\n\nFilter operator for sorting\n\nlsort[] : sort by tiddler size\nlsort[fieldname] : sort by length of fieldname's value\n\n\\*/\n\n(function(){\n\n/*jslint node: true, browser: true */\n/*global $tw: false */\n\"use strict\";\n\n/*\nExport our filter function\n*/\n\nexports.lsort = function(source,operator,options) {\n    var isDescending = operator.prefix === \"!\";\n    var results = [];\n    if(operator.operand === \"\") {\n        source(function(tiddler,title) {\n            var len = $tw.wiki.getTiddlerAsJson(title).length;\n            results.push( { \"title\": title, \"len\": len } );\n        });\n    }\n    else {\n        source(function(tiddler,title) {\n            var tdlr = $tw.wiki.getTiddler(title);\n            var len = 0;\n            if(tdlr) {\n                len = (tdlr.fields[operator.operand] || \"\").length;\n            }\n            results.push( { \"title\": title, \"len\": len } );\n        });\n    }\n    results.sort(function(a,b) {\n        return isDescending ? b.len - a.len : a.len - b.len;\n    });\n    for( var i = results.length; i--;) {\n        results[i] = results[i].title;\n    }\n    return results;\n};\n})();",
+            "bag": "default",
+            "revision": "0",
+            "type": "application/javascript",
+            "title": "$:/core/modules/filters/lsort.js",
+            "tags": "",
+            "module-type": "filteroperator",
+            "modifier": "Tobias Beer",
+            "modified": "20141203101358416",
+            "creator": "Tobias Beer",
+            "created": "20141203101313141"
+        },
+        "$:/macros/skeeve/length.js": {
+            "text": "/*\\\ntitle: $:/macros/skeeve/length.js\ntype: application/javascript\nmodule-type: macro\n\n<<length text>>\n\nExamples:\n<<length \"sometext\">>\n<<length tiddler:\"tiddlertitle\">>\n<$macrocall $name=\"length\" text=\"sometext\"/>\n<$macrocall $name=\"length\" tiddler={{!!title}}/>\n\n\\*/\n(function(){\n\n/*jslint node: true, browser: true */\n/*global $tw: false */\n\"use strict\";\n\n/*\nInformation about this macro\nThis is a macro to get the length of a string/text or a tiddler.\n\nFor a tiddler's length the string-length of its JSON representation is used.\n*/\n\nexports.name = \"length\";\n\nexports.params = [\n    { name: \"text\" },\n    { name: \"tiddler\" },\n];\n\n/*\nRun the macro\n*/\nexports.run = function(text, tiddler) {\n    if(!text) {\n        if(!tiddler) {\n            return 0;\n        }\n        text = $tw.wiki.getTiddlerAsJson(tiddler);\n    }\n    return text.length.toString();\n};\n\n})();",
+            "bag": "default",
+            "revision": "0",
+            "type": "application/javascript",
+            "title": "$:/macros/skeeve/length.js",
+            "tags": "",
+            "module-type": "macro",
+            "modifier": "Tobias Beer",
+            "modified": "20141203101309588",
+            "creator": "Tobias Beer",
+            "created": "20141203101158786"
+        },
+        "Sizes": {
+            "text": "<$list filter=\"[prefix[$:/plugins/ihm]]\">\n<$macrocall $name=\"length\" tiddler={{!!title}}/>\n<$link><$view field=title/></$link><br>\n</$list>\n",
+            "bag": "default",
+            "revision": "0",
+            "title": "Sizes",
+            "tags": "",
+            "modified": "20151024164113911",
+            "created": "20151024163558704"
+        }
+    }
+}
