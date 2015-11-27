@@ -4,7 +4,7 @@
 	"author": "ihm4u",
 	"plugin-type": "plugin",
    "core-version": ">=5.1.9",
-   "version" : "0.9.5",
+   "version" : "0.9.6",
 	"list": "readme changelog documentation",
    "source": "https://ihm4u.github.io/tw5plugs"
 }

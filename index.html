@@ -129,19 +129,17 @@ Error message and password prompt
 
 <li>$:/core</li>
 
-<li>$:/core/modules/filters/lsort.js</li>
-
 <li>$:/DefaultTiddlers</li>
 
 <li>$:/isEncrypted</li>
-
-<li>$:/macros/skeeve/length.js</li>
 
 <li>$:/palette</li>
 
 <li>$:/plugins/ahahn/tinka</li>
 
 <li>$:/plugins/ihm/tidgraph</li>
+
+<li>$:/plugins/ihm/tidsize</li>
 
 <li>$:/plugins/tiddlywiki/codemirror</li>
 
@@ -220,8 +218,6 @@ Error message and password prompt
 <li>Purity</li>
 
 <li>Shamefacedness</li>
-
-<li>Sizes</li>
 
 <li>Sobriety</li>
 
@@ -5996,113 +5992,11 @@ Error message and password prompt
     }
 }</pre>
 </div>
-<div created="20141203101313141" creator="Tobias Beer" modified="20141203101358416" modifier="Tobias Beer" module-type="filteroperator" tags="" title="$:/core/modules/filters/lsort.js" type="application/javascript">
-<pre>/*\
-title: $:/core/modules/filters/lsort.js
-type: application/javascript
-module-type: filteroperator
-
-Filter operator for sorting
-
-lsort[] : sort by tiddler size
-lsort[fieldname] : sort by length of fieldname's value
-
-\*/
-
-(function(){
-
-/*jslint node: true, browser: true */
-/*global $tw: false */
-&quot;use strict&quot;;
-
-/*
-Export our filter function
-*/
-
-exports.lsort = function(source,operator,options) {
-    var isDescending = operator.prefix === &quot;!&quot;;
-    var results = [];
-    if(operator.operand === &quot;&quot;) {
-        source(function(tiddler,title) {
-            var len = $tw.wiki.getTiddlerAsJson(title).length;
-            results.push( { &quot;title&quot;: title, &quot;len&quot;: len } );
-        });
-    }
-    else {
-        source(function(tiddler,title) {
-            var tdlr = $tw.wiki.getTiddler(title);
-            var len = 0;
-            if(tdlr) {
-                len = (tdlr.fields[operator.operand] || &quot;&quot;).length;
-            }
-            results.push( { &quot;title&quot;: title, &quot;len&quot;: len } );
-        });
-    }
-    results.sort(function(a,b) {
-        return isDescending ? b.len - a.len : a.len - b.len;
-    });
-    for( var i = results.length; i--;) {
-        results[i] = results[i].title;
-    }
-    return results;
-};
-})();</pre>
-</div>
 <div created="20151024053845697" modified="20151024164646810" title="$:/DefaultTiddlers">
 <pre>[tag[home]]</pre>
 </div>
 <div title="$:/isEncrypted">
 <pre>no</pre>
-</div>
-<div created="20141203101158786" creator="Tobias Beer" modified="20141203101309588" modifier="Tobias Beer" module-type="macro" tags="" title="$:/macros/skeeve/length.js" type="application/javascript">
-<pre>/*\
-title: $:/macros/skeeve/length.js
-type: application/javascript
-module-type: macro
-
-&lt;&lt;length text&gt;&gt;
-
-Examples:
-&lt;&lt;length &quot;sometext&quot;&gt;&gt;
-&lt;&lt;length tiddler:&quot;tiddlertitle&quot;&gt;&gt;
-&lt;$macrocall $name=&quot;length&quot; text=&quot;sometext&quot;/&gt;
-&lt;$macrocall $name=&quot;length&quot; tiddler={{!!title}}/&gt;
-
-\*/
-(function(){
-
-/*jslint node: true, browser: true */
-/*global $tw: false */
-&quot;use strict&quot;;
-
-/*
-Information about this macro
-This is a macro to get the length of a string/text or a tiddler.
-
-For a tiddler's length the string-length of its JSON representation is used.
-*/
-
-exports.name = &quot;length&quot;;
-
-exports.params = [
-    { name: &quot;text&quot; },
-    { name: &quot;tiddler&quot; },
-];
-
-/*
-Run the macro
-*/
-exports.run = function(text, tiddler) {
-    if(!text) {
-        if(!tiddler) {
-            return 0;
-        }
-        text = $tw.wiki.getTiddlerAsJson(tiddler);
-    }
-    return text.length.toString();
-};
-
-})();</pre>
 </div>
 <div modified="20151026064041621" modifier="ihm4u" title="$:/palette">
 <pre>$:/palettes/Blanca</pre>
@@ -6361,7 +6255,7 @@ exports.run = function(text, tiddler) {
     }
 }</pre>
 </div>
-<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog documentation" plugin-type="plugin" source="https://ihm4u.github.io/tw5plugs" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.9.5">
+<div author="ihm4u" core-version="&gt;=5.1.9" dependents="" description="Tidgraph - Easy tiddler graphs for TW5" list="readme changelog documentation" plugin-type="plugin" source="https://ihm4u.github.io/tw5plugs" title="$:/plugins/ihm/tidgraph" type="application/json" version="0.9.6">
 <pre>{
     &quot;tiddlers&quot;: {
         &quot;$:/plugins/ihm/tidgraph/changelog&quot;: {
@@ -6388,7 +6282,7 @@ exports.run = function(text, tiddler) {
             &quot;tags&quot;: &quot;$:/tags/Stylesheet&quot;,
             &quot;title&quot;: &quot;$:/plugins/ihm/tidgraph/stylesheet&quot;,
             &quot;type&quot;: &quot;text/css&quot;,
-            &quot;text&quot;: &quot;/*Eliminate border in table and cells*/\n.ihm-tgr-table {\n   border-collapse: collapse;\n   border: none;\n   background-color: transparent;\n   padding: 0;\n   margin: 0;\n}\n\n.ihm-tgr-tablediv {\n   /* We need this margin to prevent spurius vertical scroll\n   * in tgr-container. It needs to have the SAME pixel value\n   * as top and left in tgr-svg-int class so that the SVG\n   * arrows match properly (this assures same origin coordinates\n   * for table and svg)\n   */\n   margin: 10px; \n}\n\n.tgr-container table  td {\n   border: none;\n   background-color: transparent;\n}\n\n/*nice round box around tiddlers*/\n.tgr-container td  a  {\n \n}\n\n.tgr-container {\n   position:relative; \n   left:0px; \n   top:0px; \n   background-color: transparent;\n   overflow: auto; /* This is needed to scroll on big maps */\n   z-index:1;\n}\n.tgr-svg-int { \n\tz-index: -1;\n\tposition:absolute;\n\tbackground-color:transparent;\n\topacity: 1;\n   left: 10px;\n   top: 10px;\n}\n\n/* SVG arrows */\n.ihm-tgr-link {\n   fill: none;\n   stroke-width: 2;\n   stroke: #aeb0b5;\n}\n\n.tgr-edge-weak {\n   stroke-dasharray: 3,5;\n}\n\n.tgr-arrow {\n   fill: #aeb0b5;\n   stroke-width: 0;\n}\n\n.ihm-tgr-node-container {\n   position: relative;\n}\n\n.ihm-tgr-node-container-east {\n   margin: 6px 10px;\n}\n\n.ihm-tgr-node-container-south {\n   margin: 16px 4px;\n   display: inline-block; /*FIXME*/\n}\n\n.ihm-tgr-node-container &gt; p {\n   margin-top: 0px;\n   margin-bottom: 0px;\n}\n\n.ihm-tgr-node {\n   background-color: #dce4ef;\n   border-radius: 15px;\n   padding: 0.1em 0.4em;\n   /* border: 0px dashed #cd2026; */\n   box-shadow: 4px 4px 5px #888888;\n   text-align: center;\n   vertical-align: middle;\n   font-size: 1em;\n   color: #0071bc;\n}\n\n/* Collapse feature */\n.ihm-tgr-collapse {\n    position: absolute;\n    cursor: pointer;\n    width: 14px;\n    height: 14px;\n    right: -14px;\n}\n\n.ihm-tgr-collapse-east {\n    top: 50%;\n    transform: translateY(-50%);\n    -ms-transform: translateY(-50%);\n    -webkit-transform: translateY(-50%);\n}\n\n.ihm-tgr-collapse-south {\n    left: 50%;\n    transform: translateX(-50%);\n    -ms-transform: translateX(-50%);\n    -webkit-transform: translateX(-50%);\n}\n\na.ihm-tgr-collapse:hover {\n    text-decoration: none;\n    background: #999999;\n}\n\n/* Vertical layout divs */\n.ihm-tgr-divtable {\n   display: table;\n}\n\n.ihm-tgr-node-group {\n   display: table-row;\n}\n\n.ihm-tgr-node-cell {\n   display: table-cell;\n   vertical-align: top;\n   text-align: center;\n}\n&quot;
+            &quot;text&quot;: &quot;/*Eliminate border in table and cells*/\n.ihm-tgr-table {\n   border-collapse: collapse;\n   border: none;\n   background-color: transparent;\n   padding: 0;\n   margin: 0;\n}\n\n.ihm-tgr-tablediv {\n   /* We need this margin to prevent spurius vertical scroll\n   * in tgr-container. It needs to have the SAME pixel value\n   * as top and left in tgr-svg-int class so that the SVG\n   * arrows match properly (this assures same origin coordinates\n   * for table and svg)\n   */\n   margin: 10px; \n}\n\n.tgr-container table  td {\n   border: none;\n   background-color: transparent;\n}\n\n/*nice round box around tiddlers*/\n.tgr-container td  a  {\n \n}\n\n.tgr-container {\n   position:relative; \n   left:0px; \n   top:0px; \n   background-color: transparent;\n   overflow: auto; /* This is needed to scroll on big maps */\n   z-index:1;\n}\n.tgr-svg-int { \n\tz-index: -1;\n\tposition:absolute;\n\tbackground-color:transparent;\n\topacity: 1;\n   left: 10px;\n   top: 10px;\n}\n\n/* SVG arrows */\n.ihm-tgr-link {\n   fill: none;\n   stroke-width: 2;\n   stroke: #aeb0b5;\n}\n\n.tgr-edge-weak {\n   stroke-dasharray: 3,5;\n}\n\n.tgr-arrow {\n   fill: #aeb0b5;\n   stroke-width: 0;\n}\n\n.ihm-tgr-node-container {\n   position: relative;\n}\n\n.ihm-tgr-node-container-east {\n   margin: 6px 10px;\n}\n\n.ihm-tgr-node-container-south {\n   margin: 16px 4px;\n   display: inline-block; /*FIXME*/\n}\n\n.ihm-tgr-node-container p {\n   margin-top: 0px;\n   margin-bottom: 0px;\n}\n\n.ihm-tgr-node {\n   background-color: #dce4ef;\n   border-radius: 15px;\n   padding: 0.1em 0.4em;\n   /* border: 0px dashed #cd2026; */\n   box-shadow: 4px 4px 5px #888888;\n   text-align: center;\n   vertical-align: middle;\n   font-size: 1em;\n   color: #0071bc;\n}\n\n/* Collapse feature */\n.ihm-tgr-collapse {\n    position: absolute;\n    cursor: pointer;\n    width: 14px;\n    height: 14px;\n    right: -14px;\n}\n\n.ihm-tgr-collapse-east {\n    top: 50%;\n    transform: translateY(-50%);\n    -ms-transform: translateY(-50%);\n    -webkit-transform: translateY(-50%);\n}\n\n.ihm-tgr-collapse-south {\n    left: 50%;\n    transform: translateX(-50%);\n    -ms-transform: translateX(-50%);\n    -webkit-transform: translateX(-50%);\n}\n\na.ihm-tgr-collapse:hover {\n    text-decoration: none;\n    background: #999999;\n}\n\n/* Vertical layout divs */\n.ihm-tgr-divtable {\n   display: table;\n}\n\n.ihm-tgr-node-group {\n   display: table-row;\n}\n\n.ihm-tgr-node-cell {\n   display: table-cell;\n   vertical-align: top;\n   text-align: center;\n}\n&quot;
         },
         &quot;$:/plugins/ihm/templates/collapse&quot;: {
             &quot;created&quot;: &quot;20151120174133063&quot;,
@@ -6424,6 +6318,47 @@ exports.run = function(text, tiddler) {
             &quot;title&quot;: &quot;$:/plugins/ihm/widgets/tidgraph.js&quot;,
             &quot;type&quot;: &quot;application/javascript&quot;,
             &quot;module-type&quot;: &quot;widget&quot;
+        }
+    }
+}</pre>
+</div>
+<div core-version="5.1.9" created="20151126183142054" description="Tiddler sizes" plugin-type="plugin" title="$:/plugins/ihm/tidsize" type="application/json" version="0.1.1">
+<pre>{
+    &quot;tiddlers&quot;: {
+        &quot;$:/core/modules/filters/lsort.js&quot;: {
+            &quot;text&quot;: &quot;/*\\\ntitle: $:/core/modules/filters/lsort.js\ntype: application/javascript\nmodule-type: filteroperator\n\nFilter operator for sorting\n\nlsort[] : sort by tiddler size\nlsort[fieldname] : sort by length of fieldname's value\n\n\\*/\n\n(function(){\n\n/*jslint node: true, browser: true */\n/*global $tw: false */\n\&quot;use strict\&quot;;\n\n/*\nExport our filter function\n*/\n\nexports.lsort = function(source,operator,options) {\n    var isDescending = operator.prefix === \&quot;!\&quot;;\n    var results = [];\n    if(operator.operand === \&quot;\&quot;) {\n        source(function(tiddler,title) {\n            var len = $tw.wiki.getTiddlerAsJson(title).length;\n            results.push( { \&quot;title\&quot;: title, \&quot;len\&quot;: len } );\n        });\n    }\n    else {\n        source(function(tiddler,title) {\n            var tdlr = $tw.wiki.getTiddler(title);\n            var len = 0;\n            if(tdlr) {\n                len = (tdlr.fields[operator.operand] || \&quot;\&quot;).length;\n            }\n            results.push( { \&quot;title\&quot;: title, \&quot;len\&quot;: len } );\n        });\n    }\n    results.sort(function(a,b) {\n        return isDescending ? b.len - a.len : a.len - b.len;\n    });\n    for( var i = results.length; i--;) {\n        results[i] = results[i].title;\n    }\n    return results;\n};\n})();&quot;,
+            &quot;bag&quot;: &quot;default&quot;,
+            &quot;revision&quot;: &quot;0&quot;,
+            &quot;type&quot;: &quot;application/javascript&quot;,
+            &quot;title&quot;: &quot;$:/core/modules/filters/lsort.js&quot;,
+            &quot;tags&quot;: &quot;&quot;,
+            &quot;module-type&quot;: &quot;filteroperator&quot;,
+            &quot;modifier&quot;: &quot;Tobias Beer&quot;,
+            &quot;modified&quot;: &quot;20141203101358416&quot;,
+            &quot;creator&quot;: &quot;Tobias Beer&quot;,
+            &quot;created&quot;: &quot;20141203101313141&quot;
+        },
+        &quot;$:/macros/skeeve/length.js&quot;: {
+            &quot;text&quot;: &quot;/*\\\ntitle: $:/macros/skeeve/length.js\ntype: application/javascript\nmodule-type: macro\n\n&lt;&lt;length text&gt;&gt;\n\nExamples:\n&lt;&lt;length \&quot;sometext\&quot;&gt;&gt;\n&lt;&lt;length tiddler:\&quot;tiddlertitle\&quot;&gt;&gt;\n&lt;$macrocall $name=\&quot;length\&quot; text=\&quot;sometext\&quot;/&gt;\n&lt;$macrocall $name=\&quot;length\&quot; tiddler={{!!title}}/&gt;\n\n\\*/\n(function(){\n\n/*jslint node: true, browser: true */\n/*global $tw: false */\n\&quot;use strict\&quot;;\n\n/*\nInformation about this macro\nThis is a macro to get the length of a string/text or a tiddler.\n\nFor a tiddler's length the string-length of its JSON representation is used.\n*/\n\nexports.name = \&quot;length\&quot;;\n\nexports.params = [\n    { name: \&quot;text\&quot; },\n    { name: \&quot;tiddler\&quot; },\n];\n\n/*\nRun the macro\n*/\nexports.run = function(text, tiddler) {\n    if(!text) {\n        if(!tiddler) {\n            return 0;\n        }\n        text = $tw.wiki.getTiddlerAsJson(tiddler);\n    }\n    return text.length.toString();\n};\n\n})();&quot;,
+            &quot;bag&quot;: &quot;default&quot;,
+            &quot;revision&quot;: &quot;0&quot;,
+            &quot;type&quot;: &quot;application/javascript&quot;,
+            &quot;title&quot;: &quot;$:/macros/skeeve/length.js&quot;,
+            &quot;tags&quot;: &quot;&quot;,
+            &quot;module-type&quot;: &quot;macro&quot;,
+            &quot;modifier&quot;: &quot;Tobias Beer&quot;,
+            &quot;modified&quot;: &quot;20141203101309588&quot;,
+            &quot;creator&quot;: &quot;Tobias Beer&quot;,
+            &quot;created&quot;: &quot;20141203101158786&quot;
+        },
+        &quot;Sizes&quot;: {
+            &quot;text&quot;: &quot;&lt;$list filter=\&quot;[prefix[$:/plugins/ihm]]\&quot;&gt;\n&lt;$macrocall $name=\&quot;length\&quot; tiddler={{!!title}}/&gt;\n&lt;$link&gt;&lt;$view field=title/&gt;&lt;/$link&gt;&lt;br&gt;\n&lt;/$list&gt;\n&quot;,
+            &quot;bag&quot;: &quot;default&quot;,
+            &quot;revision&quot;: &quot;0&quot;,
+            &quot;title&quot;: &quot;Sizes&quot;,
+            &quot;tags&quot;: &quot;&quot;,
+            &quot;modified&quot;: &quot;20151024164113911&quot;,
+            &quot;created&quot;: &quot;20151024163558704&quot;
         }
     }
 }</pre>
@@ -6721,8 +6656,8 @@ exports.run = function(text, tiddler) {
     }
 }</pre>
 </div>
-<div modified="20151024054358118" title="$/temp/tinka/searchTab--1633687565">
-<pre>$:/plugins/ahahn/tinka/search-default</pre>
+<div created="20151126183009057" modified="20151126183007887" title="$/temp/tinka/searchTab--1633687565" type="text/vnd.tiddlywiki">
+<pre>$:/plugins/ahahn/tinka/search-filter</pre>
 </div>
 <div created="20151112215325866" modified="20151114010007913" tags="Temperance" title="Abstinence" type="text/vnd.tiddlywiki">
 <pre></pre>
@@ -7021,13 +6956,6 @@ This is just scratching the surface of what can be done with Node templates, see
 </div>
 <div created="20151112213458157" modified="20151112215034215" summary="whereby one recoils from the disgrace that is contrary to temperance" tags="Temperance" title="Shamefacedness" type="text/vnd.tiddlywiki">
 <pre></pre>
-</div>
-<div created="20151024163558704" modified="20151024164113911" tags="" title="Sizes">
-<pre>&lt;$list filter=&quot;[prefix[$:/plugins/ihm]]&quot;&gt;
-&lt;$macrocall $name=&quot;length&quot; tiddler={{!!title}}/&gt;
-&lt;$link&gt;&lt;$view field=title/&gt;&lt;/$link&gt;&lt;br&gt;
-&lt;/$list&gt;
-</pre>
 </div>
 <div created="20151112215412469" modified="20151112215420594" tags="Temperance" title="Sobriety" type="text/vnd.tiddlywiki">
 <pre></pre>
