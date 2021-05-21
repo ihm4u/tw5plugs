@@ -126,6 +126,20 @@ exports.buildTable = function(rootTid, tidtree) {
         nodecontent = dm('div', {"class": nodeclass, 
                                  children: [tidlink] });
      }
+	
+	// Make node <a> element draggable so that listeners from other tiddlers can react on drop
+	// See https://groups.google.com/forum/?utm_medium=email&utm_source=footer#!msg/tiddlywiki/V-sJ27fOjek/wBSZSR06BgAJ
+	if (node && nodecontent) {
+        	var domnode = nodecontent.querySelector("a.tc-tiddlylink");
+        	if (domnode) {
+            		$tw.utils.makeDraggable({
+				domNode: domnode,
+                		dragTiddlerFn: function() {return node.id;},
+				widget: node.widget
+			});
+		}
+	}
+
      return nodecontent;
   }
 
