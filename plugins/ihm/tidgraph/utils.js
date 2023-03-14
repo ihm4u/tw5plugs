@@ -420,6 +420,9 @@ return '<svg  xmlns="http://www.w3.org/2000/svg" height="'+height+'px" width="'+
 /* Return an array of the children of tiddler tid */
 function getChildren(tid,tidtree) {
    var filter,res;
+   if (!(['+', "=", "-", "~", ":"].some(word => tidtree.filter.startsWith(word)))) {
+        filter = "+" + tidtree.filter;
+   }
    switch ( tidtree.mode ) {
       case 'tagging':
          filter = '[[' + tid + ']tagging[]]+' + tidtree.filter;
